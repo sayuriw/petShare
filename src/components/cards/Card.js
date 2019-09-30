@@ -2,9 +2,22 @@ import React, { useState }from 'react'
 import styled from 'styled-components/macro'
 import ReactSVG from 'react-svg'
 import petIcon from '../data/paw-solid.svg'
+import PropTypes from 'prop-types'
+import Johny from '../data/images/johny.jpg'
+//import Tag from './Tag'
+
+Card.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  tags:PropTypes.array.isRequired,
+  isBookmarked: PropTypes.bool
+}
+Card.defaultProps = {
+  isBookmarked: false
+}
  
 
-export default function Card() {
+export default function Card({title, description, tags, image}) {
 
   const [isBookmarked, setIsBookmarked] = useState(false)
   
@@ -16,17 +29,12 @@ export default function Card() {
   return (
   <CardStyled>
 
-    <ImgStyled src="https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1576&q=80" alt="happy dog"/>   
+    <ImgStyled src={Johny} alt="happy dog"/>   
     <TextAreaStyled>
     <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled>
-      <TagStyled>Dog</TagStyled>
-      <TagStyled>Flexible</TagStyled>
-      <TagStyled>Large</TagStyled>
-      <h1>Johny is looking for new friends</h1>
-      <p>My dog Johnny is looking for new friends to take
-him for a stroll in the park or just chill in the  
-garden. He is very friendly and gets along with
-other dogs just fine.</p>
+      {/* {tags.map(tag => <Tag text={tag} />)} */}
+      <h1>{title}</h1>
+      <p>{description}</p>
     </TextAreaStyled>
   </CardStyled>
   )
@@ -59,13 +67,4 @@ const BookmarkStyled = styled.div`
   height: 40px;
   right: 30px;
   top: 5px;
-`
-const TagStyled = styled.div`
-  background-color: rgba(71,48,237,0.62);
-  display: inline-block;
-  border-radius: 5px;
-  text-align: justify;
-  margin-right: 10px;
-  padding: 2px 10px;
-
 `
