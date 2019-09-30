@@ -3,7 +3,7 @@ const cors = require('cors')
 const server = express()
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/flashcards-react-jerry', {
+mongoose.connect('mongodb://localhost:27017/petShare', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

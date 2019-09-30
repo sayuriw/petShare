@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState }from 'react'
 import styled from 'styled-components/macro'
 import ReactSVG from 'react-svg'
 import petIcon from '../data/paw-solid.svg'
  
 
-export default function Card({onBookmarkClick, isBookmarked}) {
+export default function Card() {
+
+  const [isBookmarked, setIsBookmarked] = useState(false)
   
   function handleBookmarkClick(event) {
     event.stopPropagation()
-    onBookmarkClick() 
+    setIsBookmarked(!isBookmarked)
   }
 
   return (

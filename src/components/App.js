@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react'
 import Card from './Card'
 import styled from 'styled-components'
 
@@ -6,7 +6,13 @@ import styled from 'styled-components'
 
 export default function App() {
 
-  
+  // const [cards, setCards] = useState({
+  //   "title": "Johny is looking for new friends",
+  //   "description": "My dog Johnny is looking for new friends to take him for a stroll in the park or just chill in the garden. He is very friendly and gets along with other dogs just fine.",
+  //   "tags": ["Dog", "Flexible", "Large"],
+  //   "isBookmarked": "false"
+  // })
+
   return (
     <>
       <AppStyled>

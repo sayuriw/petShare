@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 
 const Card = mongoose.model('Card', {
   title: String,
-  question: String,
-  answer: String,
+  description: String,
   isBookmarked: Boolean,
   tags: [String],
 })
