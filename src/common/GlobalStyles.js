@@ -9,7 +9,6 @@ export default createGlobalStyle`
     margin: 0;
     background: #EFEFEF;
     font-family: Helvetica;
-    font-size: 18px;
-    /* overflow: hidden; */
+    font-size: 17px;
   }
 `
