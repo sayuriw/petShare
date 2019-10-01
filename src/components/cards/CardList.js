@@ -1,18 +1,20 @@
 import React from 'react'
-//import styled from 'styled-components/macro'
 import Card from './Card'
+import { pets } from './pets'
 
-
-export default function CardsList({cards}) {
+export default function CardList() {
+  
   return (
-    <>
-    {cards.map((card) => (
+      <>
+     {pets.map((pet, index) => (
       <Card
-        title={card.title}
-        description={card.description}
-        isBookmarked={card.isBookmarked}
+        key={index}
+        title={pet.title}
+        description={pet.description}
+        isBookmarked={pet.isBookmarked}
+        picture={pet.picture}
       />
-    ))}
+    ))} 
   </>
 )
 }

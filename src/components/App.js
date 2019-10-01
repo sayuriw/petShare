@@ -1,26 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
-import petsData from './data/pets.json'
-//import pictures from './data/images/'
-
 
 export default function App() {
-  const [cards, setCards] = useState(petsData)
   
-
-function renderPage() {
-  return (
+  function renderPage() {
+    return (
     <AppStyled>
-      <CardList cards={cards}/>
+      <CardList />
     </AppStyled>
-  )
-  
-  
+  ) 
 }
 
 return renderPage()
-
 
 }
 

@@ -3,8 +3,6 @@ import styled from 'styled-components/macro'
 import ReactSVG from 'react-svg'
 import petIcon from '../data/paw-solid.svg'
 import PropTypes from 'prop-types'
-import Johny from '../data/images/johny.jpg'
-//import Tag from './Tag'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -16,8 +14,7 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-
-export default function Card({title, description, tags, image}) {
+export default function Card({picture, alt, title, description}) {
 
   const [isBookmarked, setIsBookmarked] = useState(false)
   
@@ -26,13 +23,12 @@ export default function Card({title, description, tags, image}) {
     setIsBookmarked(!isBookmarked)
   }
 
+
   return (
   <CardStyled>
-
-    <ImgStyled src={Johny} alt="happy dog"/>   
+    <ImgStyled src={picture} alt={alt}/>   
     <TextAreaStyled>
-    <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled>
-      {/* {tags.map(tag => <Tag text={tag} />)} */}
+    <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
       <h1>{title}</h1>
       <p>{description}</p>
     </TextAreaStyled>
