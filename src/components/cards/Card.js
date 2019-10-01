@@ -1,8 +1,10 @@
 import React, { useState }from 'react'
 import styled from 'styled-components/macro'
+import Img from './Img'
 import ReactSVG from 'react-svg'
 import petIcon from '../data/paw-solid.svg'
 import PropTypes from 'prop-types'
+import Tag from './Tag'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -14,11 +16,11 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({picture, alt, title, description}) {
+export default function Card({picture, alt, title, description, tags, onBookmarkClick}) {
 
   const [isBookmarked, setIsBookmarked] = useState(false)
   
-  function handleBookmarkClick(event) {
+  function onBookmarkClick(event) {
     event.stopPropagation()
     setIsBookmarked(!isBookmarked)
   }
@@ -26,9 +28,10 @@ export default function Card({picture, alt, title, description}) {
 
   return (
   <CardStyled>
-    <ImgStyled src={picture} alt={alt}/>   
+    <Img src={picture} alt={alt}/>   
     <TextAreaStyled>
-    <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
+    {tags.map(tag => <Tag text={tag}/>)}
+    <BookmarkStyled onClick={onBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
       <h1>{title}</h1>
       <p>{description}</p>
     </TextAreaStyled>
@@ -46,12 +49,6 @@ const CardStyled = styled.section`
   box-shadow: 0 10px 10px #0002;
   `
 
-const ImgStyled = styled.img`
-  height: 40vh;
-  width: 100%;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-`
 const TextAreaStyled = styled.div`
   margin: 10px;
   position: relative;
@@ -61,6 +58,6 @@ const BookmarkStyled = styled.div`
   color: ${({ active }) => (active ? 'hotpink' : '#4730ED')};
   width: 40px;
   height: 40px;
-  right: 30px;
-  top: 5px;
+  right: 15px;
+  top: -5px;
 `

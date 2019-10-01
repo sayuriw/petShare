@@ -9,6 +9,7 @@ export default function CardList() {
      {pets.map((pet, index) => (
       <Card
         key={index}
+        tags={pet.tags}
         title={pet.title}
         description={pet.description}
         isBookmarked={pet.isBookmarked}

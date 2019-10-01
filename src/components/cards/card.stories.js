@@ -1,16 +1,21 @@
 import React from 'react'
+import { action } from '@storybook/addon-actions'
+import { boolean } from '@storybook/addon-knobs'
+import Card from './Card'
+import cardImage from '../data/images/johny.jpg'
+
 
 export default {
   title: 'card'
 }
-
 export const card = () => (
-<section>
-  <h1>Johny is looking for new friends</h1>
-  <p>My dog Johnny is looking for new friends to take
-him for a stroll in the park or just chill in the  
-garden. He is very friendly and gets along with
-other dogs just fine.</p>
-</section>
-)
-  
+  <Card
+        key="index"
+        title="title"
+        description="description"
+        tags={["tags"]}
+        isBookmarked={boolean('isBookmarked', true)} 
+        onBookmarkClick={action('bookmark clicked')} 
+        picture={cardImage}
+      />
+) 

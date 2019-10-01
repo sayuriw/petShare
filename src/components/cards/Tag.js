@@ -1,5 +1,11 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
+
+Tag.propType = {
+  text: PropTypes.string
+}
+
 
 export default function Tag({ text }) {
   return <TagStyled>{text}</TagStyled>
@@ -7,6 +13,8 @@ export default function Tag({ text }) {
 
 const TagStyled = styled.div`
   background-color: rgba(71,48,237,0.62);
+  color: white;
+  font-size: 18px;
   display: inline-block;
   border-radius: 5px;
   text-align: justify;
