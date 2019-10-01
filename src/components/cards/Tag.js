@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
-Tag.prototype = {
+Tag.propType = {
   text: PropTypes.string
 }
 

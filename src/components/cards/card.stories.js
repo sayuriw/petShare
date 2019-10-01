@@ -2,7 +2,7 @@ import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { boolean } from '@storybook/addon-knobs'
 import Card from './Card'
-import johny from '../data/images/johny.jpg'
+import cardImage from '../data/images/johny.jpg'
 
 
 export default {
@@ -16,9 +16,6 @@ export const card = () => (
         tags={["tags"]}
         isBookmarked={boolean('isBookmarked', true)} 
         onBookmarkClick={action('bookmark clicked')} 
-        picture={johny}
+        picture={cardImage}
       />
-)
-
-
-  
+) 
