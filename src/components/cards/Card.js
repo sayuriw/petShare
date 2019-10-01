@@ -16,13 +16,13 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({picture, alt, title, description, tags, onBookmarkClick}) {
+export default function Card({picture, alt, title, description, tags, isBookmarked, onBookmarkClick}) {
 
-  const [isBookmarked, setIsBookmarked] = useState(false)
   
-  function onBookmarkClick(event) {
-    event.stopPropagation()
-    setIsBookmarked(!isBookmarked)
+  
+  function handleBookmarkClick(event) {
+    event.stopPropagation() 
+    onBookmarkClick() 
   }
 
 
@@ -31,7 +31,7 @@ export default function Card({picture, alt, title, description, tags, onBookmark
     <Img src={picture} alt={alt}/>   
     <TextAreaStyled>
     {tags.map(tag => <Tag text={tag}/>)}
-    <BookmarkStyled onClick={onBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
+    <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
       <h1>{title}</h1>
       <p>{description}</p>
     </TextAreaStyled>
@@ -55,7 +55,7 @@ const TextAreaStyled = styled.div`
 `
 const BookmarkStyled = styled.div`
   position: absolute;
-  color: ${({ active }) => (active ? 'hotpink' : '#4730ED')};
+  color: ${({ active }) => (active ? '#4730ED' : 'hotpink')};
   width: 40px;
   height: 40px;
   right: 15px;

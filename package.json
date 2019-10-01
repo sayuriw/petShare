@@ -11,6 +11,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
+    "react-input-switch": "^2.1.31",
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.2",
     "react-svg": "^10.0.22",
