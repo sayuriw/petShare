@@ -13,9 +13,6 @@ export default function App() {
     setPets([
       ...pets.filter(pet => pet.isBookmarked)
     ])
-    // setPets([
-    //   ...pets.map(pet => isBookmarked ? !pet.isBookmarked : pet.isBookmarked)
-    // ])
   }
 
 
