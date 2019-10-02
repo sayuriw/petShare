@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 
-export default function ToggleBookmark({onFavoritesClick}) {
-    
+export default function FavoritesButton({onFavoritesClick}) {
+   
  function handleFavoritesClick(event) {
    event.stopPropagation()
    onFavoritesClick()
