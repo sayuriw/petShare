@@ -1,19 +1,36 @@
-import React from 'react'
+import React, {useState} from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
+import  petsData from './cards/petsData'
+import ToggleButton from './ToggleButton'
+
 
 export default function App() {
-  
-  function renderPage() {
+
+  const [pets, setPets] = useState(petsData)
+
+  function onFavoritesClick() {
+    setPets([
+      ...pets.filter(pet => pet.isBookmarked)
+    ])
+  }
+
+
+  function handleBookmarkClick(pet) {
+      const index = pets.indexOf(pet)
+      setPets([
+        ...pets.slice(0, index),
+        { ...pet, isBookmarked: !pet.isBookmarked },
+        ...pets.slice(index + 1),
+      ])
+    }
+
     return (
     <AppStyled>
-      <CardList />
+      <ToggleButton onFavoritesClick={() => onFavoritesClick()}/>
+      <CardList onBookmarkClick={handleBookmarkClick} pets={pets}/>
     </AppStyled>
   ) 
-}
-
-return renderPage()
-
 }
 
 const AppStyled = styled.div`

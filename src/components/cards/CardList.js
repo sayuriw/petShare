@@ -1,8 +1,7 @@
 import React from 'react'
 import Card from './Card'
-import { pets } from './pets'
 
-export default function CardList() {
+export default function CardList({onBookmarkClick, pets}) {
   
   return (
       <>
@@ -12,6 +11,7 @@ export default function CardList() {
         tags={pet.tags}
         title={pet.title}
         description={pet.description}
+        onBookmarkClick={() => onBookmarkClick(pet)}
         isBookmarked={pet.isBookmarked}
         picture={pet.picture}
       />
