@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import Img from './Img'
 import ReactSVG from 'react-svg'
@@ -55,7 +55,7 @@ const TextAreaStyled = styled.div`
 `
 const BookmarkStyled = styled.div`
   position: absolute;
-  color: ${({ active }) => (active ? '#4730ED' : 'hotpink')};
+  color: ${({ active }) => (active ? 'hotpink' : '#4730ED')};
   width: 40px;
   height: 40px;
   right: 15px;

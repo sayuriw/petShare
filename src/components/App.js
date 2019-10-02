@@ -11,7 +11,7 @@ export default function App() {
 
   function onFavoritesClick() {
     setPets([
-      ...pets.filter(pet => !pet.isBookmarked)
+      ...pets.filter(pet => pet.isBookmarked)
     ])
     // setPets([
     //   ...pets.map(pet => isBookmarked ? !pet.isBookmarked : pet.isBookmarked)
