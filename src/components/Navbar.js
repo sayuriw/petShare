@@ -3,15 +3,15 @@ import styled from 'styled-components/macro'
 import { NavLink } from 'react-router-dom'
 
 export default function Navbar() {
+  
   return (
     <NavbarStyled>
       <NavLinkStyled exact to="/">Home</NavLinkStyled>
       <NavLinkStyled to="/favorites">Favorites</NavLinkStyled>  
     </NavbarStyled>
   )
-
-
 }
+
 const NavLinkStyled = styled(NavLink)`
   text-decoration: none;
   display: flex;
@@ -22,9 +22,10 @@ const NavLinkStyled = styled(NavLink)`
   color: white;
   background-color: #4730ED;
 `
-
 const NavbarStyled = styled.nav`
   display: grid;
   grid-auto-flow: column;
   gap: 2px;
+  position: relative;
+  z-index: 1;
 `

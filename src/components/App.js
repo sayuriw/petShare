@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
 import  petsData from './cards/petsData'
-import FavoritesButton from './FavoritesButton'
 import NavBar from './Navbar'
 import { BrowserRouter as Router, Route  } from 'react-router-dom'
 
@@ -50,4 +49,5 @@ const AppStyled = styled.div`
   `
 const WrapperStyled = styled.div`
   overflow-y: scroll;
+  
 `
