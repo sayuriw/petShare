@@ -30,7 +30,7 @@ export default function Card({picture, alt, title, description, tags, isBookmark
   <CardStyled>
     <Img src={picture} alt={alt}/>   
     <TextAreaStyled>
-    {tags.map(tag => <Tag text={tag}/>)}
+    {Object.values(tags).map(tag => <Tag text={tag}/>)}
     <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
       <h1>{title}</h1>
       <p>{description}</p>

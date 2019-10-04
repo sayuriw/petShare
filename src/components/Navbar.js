@@ -21,6 +21,9 @@ const NavLinkStyled = styled(NavLink)`
   font-size: 1.5em;
   color: white;
   background-color: #4730ED;
+  &.active {
+    background: hotpink;
+  }
 `
 const NavbarStyled = styled.nav`
   display: grid;

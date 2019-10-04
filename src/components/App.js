@@ -9,32 +9,62 @@ import { BrowserRouter as Router, Route  } from 'react-router-dom'
 export default function App() {
 
   const [pets, setPets] = useState(petsData)
+  const [selectedTag, setSelectedTag] = useState('all')
 
-  function onFavoritesClick() {
-    const filteredPets= pets.filter(pet => pet.isBookmarked)
-    return filteredPets
-  }
+  const allTags = {}
+  pets.forEach(pet => {
+    Object.keys(pet.tags).forEach(tag => {
+      allTags[tag] === undefined
+        ? allTags[tag] = [pet.tags[tag]]
+        : allTags[tag] = Array.from(new Set([...allTags[tag], pet.tags[tag]]))
+    })
+  })
 
-  function handleBookmarkClick(pet) {
-      const index = pets.indexOf(pet)
-      setPets([
-        ...pets.slice(0, index),
-        { ...pet, isBookmarked: !pet.isBookmarked },
-        ...pets.slice(index + 1),
-      ])
-    }
+  console.log(allTags)
+
+  const filteredByTags = selectedTag === 'all'
+          ? pets
+          : pets.filter(pet => pet.tags.includes(selectedTag))
+        
+
+  
+
+  
 
     return (
     <Router>
       <AppStyled>
         <WrapperStyled>
-          <Route exact path="/" render={() => <CardList onBookmarkClick={handleBookmarkClick} pets={pets}/>}/>
-          <Route path="/favorites" render={() => <CardList onBookmarkClick={handleBookmarkClick} pets={onFavoritesClick()}/>}/> 
+          <Route exact path="/" render={() => 
+            <CardList tags={allTags}  
+                      onBookmarkClick={handleBookmarkClick} 
+                      pets={filteredByTags}/>}
+            />
+          <Route path="/favorites" render={() => 
+            <CardList cards={pets} 
+                      tags={allTags} 
+                      onSelectTag={setSelectedTag} 
+                      onBookmarkClick={handleBookmarkClick} 
+                      pets={onFavoritesClick()}/>}/> 
         </WrapperStyled>
         <NavBar/>
       </AppStyled>
     </Router>
   )
+
+  function handleBookmarkClick(pet) {
+    const index = pets.indexOf(pet)
+    setPets([
+      ...pets.slice(0, index),
+      { ...pet, isBookmarked: !pet.isBookmarked },
+      ...pets.slice(index + 1),
+    ])
+  }
+
+  function onFavoritesClick() {
+    const filteredPets= pets.filter(pet => pet.isBookmarked)
+    return filteredPets
+  }
 }
 
 const AppStyled = styled.div`

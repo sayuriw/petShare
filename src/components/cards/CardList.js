@@ -1,10 +1,12 @@
 import React from 'react'
 import Card from './Card'
+import Filter from '../Filter'
 
-export default function CardList({onBookmarkClick, pets}) {
+export default function CardList({onBookmarkClick, pets, onSelectTag, tags}) {
   
   return (
-      <>
+    <>
+      <Filter tags={tags} onClick={onSelectTag} />
      {pets.map((pet, index) => (
       <Card
         key={index}
