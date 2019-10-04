@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route  } from 'react-router-dom'
 export default function App() {
 
   const [pets, setPets] = useState(petsData)
+  const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedTag, setSelectedTag] = useState('all')
 
   const allTags = {}
@@ -20,25 +21,15 @@ export default function App() {
     })
   })
 
-  console.log(allTags)
-
-  const filteredByTags = selectedTag === 'all'
-          ? pets
-          : pets.filter(pet => pet.tags.includes(selectedTag))
-        
-
-  
-
-  
-
     return (
     <Router>
       <AppStyled>
         <WrapperStyled>
           <Route exact path="/" render={() => 
             <CardList tags={allTags}  
+                      onTagClick={handleTagClick}
                       onBookmarkClick={handleBookmarkClick} 
-                      pets={filteredByTags}/>}
+                      pets={petsFiltered}/>}
             />
           <Route path="/favorites" render={() => 
             <CardList cards={pets} 
@@ -51,6 +42,15 @@ export default function App() {
       </AppStyled>
     </Router>
   )
+
+  function handleTagClick(selectedFilter, clickedTag) {
+    if (selectedFilter === 'all') {
+      setPetsFiltered(pets)
+    } else {
+      const newPetsFiltered = pets.filter(pet => pet.tags[selectedFilter] === clickedTag)
+      setPetsFiltered(newPetsFiltered)
+    }
+  }
 
   function handleBookmarkClick(pet) {
     const index = pets.indexOf(pet)
