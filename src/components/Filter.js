@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 export default function Filter ({onTagClick, tags}) {
-  const [isPoped, setIsPoped] = useState(false)
+  const [isPopped, setIsPopped] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('all')
 
   function togglePopup(tag) {
     if (selectedFilter === tag) {
-      setIsPoped(!isPoped)
+      setIsPopped(!isPopped)
     }
     else {
       setSelectedFilter(tag)
-      setIsPoped(true)
+      setIsPopped(true)
     }
   }
   function handleTagClick(event) {
@@ -25,16 +25,16 @@ export default function Filter ({onTagClick, tags}) {
     <>
     <FilterWrapperStyled>
       <ButtonStyled onClick={event => {
-        setIsPoped(false)
+        setIsPopped(false)
         setSelectedFilter(event.currentTarget.textContent)
         onTagClick('all')
       }}>all</ButtonStyled>
-      { Object.keys(tags).map(tag => <ButtonStyled onClick={() => togglePopup(tag)}>{tag}</ButtonStyled>) }
+      { Object.keys(tags).map(tag => <ButtonStyled onClick={() => togglePopup(tag)}key={tag}>{tag}</ButtonStyled>) }
     </FilterWrapperStyled>
-    {isPoped && 
+    {isPopped && 
       <PopupStyled>
         { selectedFilter === 'all' || tags[selectedFilter].map(tag =>
-          <TagButtonStyled onClick={handleTagClick}>{tag}</TagButtonStyled>
+          <TagButtonStyled onClick={handleTagClick} key={tag}>{tag}</TagButtonStyled>
         )}
       </PopupStyled>
     }
@@ -46,7 +46,6 @@ const FilterWrapperStyled = styled.div`
   display: flex;
 `
 const PopupStyled = styled.div`
-  /* position: absolute; */
   display: flex;
   border-radius: 5px;
 
@@ -70,4 +69,5 @@ const TagButtonStyled = styled.button`
   :hover {
     background-color: hotpink;
   }
+
   `

@@ -2,7 +2,7 @@ import React from 'react'
 import Card from './Card'
 import Filter from '../Filter'
 
-export default function CardList({onBookmarkClick, pets, onTagClick, tags}) {
+export default function CardList({ onBookmarkClick, pets, onTagClick, tags}) {
   
   return (
     <>

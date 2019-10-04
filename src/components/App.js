@@ -26,13 +26,13 @@ export default function App() {
       <AppStyled>
         <WrapperStyled>
           <Route exact path="/" render={() => 
-            <CardList tags={allTags}  
+            <CardList tags={allTags} 
                       onTagClick={handleTagClick}
                       onBookmarkClick={handleBookmarkClick} 
                       pets={petsFiltered}/>}
             />
           <Route path="/favorites" render={() => 
-            <CardList cards={pets} 
+            <CardList 
                       tags={allTags} 
                       onSelectTag={setSelectedTag} 
                       onBookmarkClick={handleBookmarkClick} 
@@ -54,7 +54,7 @@ export default function App() {
 
   function handleBookmarkClick(pet) {
     const index = pets.indexOf(pet)
-    setPets([
+    setPetsFiltered ([
       ...pets.slice(0, index),
       { ...pet, isBookmarked: !pet.isBookmarked },
       ...pets.slice(index + 1),
