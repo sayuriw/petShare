@@ -9,7 +9,7 @@ import Tag from './Tag'
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  tags:PropTypes.array.isRequired,
+  tags:PropTypes.object.isRequired,
   isBookmarked: PropTypes.bool
 }
 Card.defaultProps = {
