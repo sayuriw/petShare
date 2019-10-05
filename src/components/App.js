@@ -64,7 +64,6 @@ export default function App() {
   function onFavoritesClick() {
     const favoritePets= petsFiltered.filter(pet => pet.isBookmarked)
     return favoritePets
-    
   }
 }
 
