@@ -54,6 +54,8 @@ const FilterStyled = styled.button`
   margin: 20px;
   font-size: 18px;
   border-radius: 3px;
+  color: white;
+  background-color: #6F6f6f;
   border: black 1px solid; 
 `
 const FilterWrapperStyled = styled.div`
@@ -79,8 +81,9 @@ const TagButtonStyled = styled.button`
   padding: 2px 20px;
   margin: 1px;
   border-radius: 3px;
+  background-color: #FFFFFF;
   border: black 1px solid; 
   :hover {
-    background-color: hotpink;
+    background: #8d7ef4;
   }
   `
