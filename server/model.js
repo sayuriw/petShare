@@ -4,7 +4,9 @@ const Card = mongoose.model('Card', {
   title: String,
   description: String,
   isBookmarked: Boolean,
-  tags: [String],
+  tags: Object,
+  email: String,
+  picture: String
 })
 
 module.exports = Card

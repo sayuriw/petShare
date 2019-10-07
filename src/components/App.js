@@ -1,17 +1,24 @@
 import React, {useState, useEffect} from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
-import  petsData from './cards/petsData'
+//import  petsData from './cards/petsData'
 import NavBar from './Navbar'
+import { getCards, patchCard } from './cards/services'
 import { BrowserRouter as Router, Route  } from 'react-router-dom'
 
 
 export default function App() {
 
-  const [pets, setPets] = useState(petsData)
+  
+
+  const [pets, setPets] = useState([])
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
+
+  useEffect(() => {
+    getCards().then(setPets)
+  }, [])
 
   useEffect(() => {
     handleTagClick(selectedFilter, selectedTag)
@@ -62,12 +69,14 @@ export default function App() {
   }
 
   function handleBookmarkClick(pet) {
-    const index = pets.indexOf(pet)
+    patchCard(pet._id, { isBookmarked: !pet.isBookmarked }).then(updatedPet => {
+      const index = pets.findIndex(pet => pet._id === updatedPet._id)
     setPets ([
       ...pets.slice(0, index),
       { ...pet, isBookmarked: !pet.isBookmarked },
       ...pets.slice(index + 1),
     ])
+  })
   }
 
   function onFavoritesClick() {
