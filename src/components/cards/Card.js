@@ -9,7 +9,7 @@ import Tag from './Tag'
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  tags:PropTypes.array.isRequired,
+  tags:PropTypes.object,
   isBookmarked: PropTypes.bool
 }
 Card.defaultProps = {
@@ -30,7 +30,7 @@ export default function Card({picture, alt, title, description, tags, isBookmark
   <CardStyled>
     <Img src={picture} alt={alt}/>   
     <TextAreaStyled>
-    {tags.map(tag => <Tag text={tag}/>)}
+    {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}
     <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
       <h1>{title}</h1>
       <p>{description}</p>
@@ -42,9 +42,8 @@ export default function Card({picture, alt, title, description, tags, isBookmark
 
 const CardStyled = styled.section`
   background: #FFFFFF;
+  margin-top: 30px;
   margin: 20px;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
   border-radius: 5px;
   box-shadow: 0 10px 10px #0002;
   `

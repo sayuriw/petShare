@@ -17,15 +17,18 @@ const NavLinkStyled = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: white;
-  background-color: #4730ED;
+  border-radius: 3px;
+  background-color: #6F6f6f;
+  &.active {
+    background: #8d7ef4;
+  }
 `
 const NavbarStyled = styled.nav`
   display: grid;
   grid-auto-flow: column;
-  gap: 2px;
+  gap: 1px;
   position: relative;
   z-index: 1;
 `
