@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
-//import  petsData from './cards/petsData'
 import NavBar from './Navbar'
 import { getCards, patchCard } from './cards/services'
 import { BrowserRouter as Router, Route  } from 'react-router-dom'
