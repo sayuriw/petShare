@@ -16,7 +16,7 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({picture, alt, title, description, tags, isBookmarked, onBookmarkClick}) {
+export default function Card({picture, alt, title, description, tags, email, isBookmarked, onBookmarkClick}) {
 
   
   
@@ -30,10 +30,13 @@ export default function Card({picture, alt, title, description, tags, isBookmark
   <CardStyled>
     <Img src={picture} alt={alt}/>   
     <TextAreaStyled>
-    {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}
-    <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
+    {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
       <h1>{title}</h1>
       <p>{description}</p>
+      <ButtonsAreaStyled>
+      <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
+      <ContactMeStyled href={"mailto:" + email}>Contact me</ContactMeStyled>
+      </ButtonsAreaStyled>
     </TextAreaStyled>
   </CardStyled>
   )
@@ -50,7 +53,12 @@ const CardStyled = styled.section`
 
 const TextAreaStyled = styled.div`
   margin: 10px;
+  margin-bottom: 0;
+`
+
+const ButtonsAreaStyled = styled.div`
   position: relative;
+  padding-bottom: 20px;
 `
 const BookmarkStyled = styled.div`
   position: absolute;
@@ -58,5 +66,9 @@ const BookmarkStyled = styled.div`
   width: 40px;
   height: 40px;
   right: 15px;
-  top: -5px;
+  top: -10px;
+`
+const ContactMeStyled = styled.a`
+  text-decoration: none;
+  padding-left: 20px;
 `
