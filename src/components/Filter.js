@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
-export default function Filter ({onTagClick, tags}) {
+export default function Filter ({activeTag, onTagClick, tags}) {
   const [isPopped, setIsPopped] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('all')
+  
 
   function togglePopup(tag) {
     if (selectedFilter === tag) {
@@ -22,7 +23,6 @@ export default function Filter ({onTagClick, tags}) {
 
   function handleFilterClick() {
     setIsPopped(!isPopped)
-    console.log(isPopped)
   }
   
 
@@ -39,8 +39,8 @@ export default function Filter ({onTagClick, tags}) {
     </FilterWrapperStyled>}
      {isPopped && 
       <PopupStyled>
-        { selectedFilter === 'all' || tags[selectedFilter].map(tag =>
-          <TagButtonStyled onClick={handleTagClick} key={tag}>{tag}</TagButtonStyled>
+        { selectedFilter === 'all' || tags[selectedFilter].map(tag => 
+        <TagButtonStyled active={activeTag === tag ? true : false} onClick={handleTagClick} key={tag}>{tag}</TagButtonStyled>
         )}
       </PopupStyled>
      }
@@ -78,12 +78,9 @@ const ButtonStyled = styled.button`
 const TagButtonStyled = styled.button`
   color: black;
   font-size: 18px;
-  padding: 2px 20px;
   margin: 1px;
   border-radius: 3px;
-  background-color: #FFFFFF;
+  background-color: ${({ active }) => (active ? '#8d7ef4' : '#FFFFFF')};
   border: black 1px solid; 
-  :hover {
-    background: #8d7ef4;
-  }
   `
+

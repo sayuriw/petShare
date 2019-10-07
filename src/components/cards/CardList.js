@@ -3,11 +3,11 @@ import Card from './Card'
 import Filter from '../Filter'
 import styled from 'styled-components/macro'
 
-export default function CardList({ onBookmarkClick, pets, onTagClick, tags}) {
+export default function CardList({ onBookmarkClick, pets, onTagClick, tags, activeTag}) {
   
   return (
     <WrapperStyled>
-      <Filter tags={tags} onTagClick={onTagClick} />
+      <Filter tags={tags} activeTag={activeTag}onTagClick={onTagClick} />
      {pets.map((pet, index) => (
       <Card
         key={index}

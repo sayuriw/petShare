@@ -12,7 +12,8 @@ export default [
       description: "My dog Johnny is looking for new friends to take him for a stroll in the park or just chill in the garden. He is very friendly and gets along with other dogs just fine.",
       tags: {
         type: 'Dog',
-        size: 'Large'
+        size: 'Large',
+        availability: 'Weekends'
       },
       isBookmarked: false
     },
@@ -23,7 +24,8 @@ export default [
       description: "My cat Balu is looking for humans to look after him mostly weekends when I'm away. He is a very sociable cat who enjoys to be petted, a bit of playtime or just to relax... .",
       tags: {
         type: 'Cat',
-        size: 'Small'
+        size: 'Small',
+        availability: 'Flexible'
       },
       isBookmarked: false
     },
@@ -34,7 +36,8 @@ export default [
       description: "Flocky is my little dog. He loves to go outside play in the park or just sniffle around. Unfortunetly I broke my leg and can't him out at the moment. Would be greate if somebody could take him for a walk every now and then ultil I'm fit again. just let me know if you are interested",
       tags: {
         type: 'Dog',
-        size: 'Small'
+        size: 'Small',
+        availability: 'Flexible'
       },
       isBookmarked: false
     },
@@ -45,18 +48,8 @@ export default [
       description: "Pimpo is my rabbit. He needs care while I'm on holiday. He is very easy to take care and lots of fun.",
       tags: {
         type: 'Rabbit',
-        size: 'Small'
-      },
-      isBookmarked: false
-    },
-    {
-      picture: rabbit, 
-      alt: "cute rabbit",
-      title:"Rabbit needs three weeks care",
-      description: "Pumpo is my rabbit. He needs care while I'm on holiday. He is very easy to take care and lots of fun.",
-      tags: {
-        type: 'Rabbit',
-        size: 'Large'
+        size: 'Small',
+        availability: 'Fixed dates'
       },
       isBookmarked: false
     },
@@ -67,7 +60,8 @@ export default [
       description: "Ted is a dog. He needs care while I'm on holiday. bem que se quis depois de tudo. He is very easy to take care and lots of fun.",
       tags: {
         type: 'Dog',
-        size: 'Large'
+        size: 'Large',
+        availability: 'Weekends'
       },
       isBookmarked: false
     }

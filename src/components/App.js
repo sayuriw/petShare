@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
 import  petsData from './cards/petsData'
@@ -10,7 +10,12 @@ export default function App() {
 
   const [pets, setPets] = useState(petsData)
   const [petsFiltered, setPetsFiltered] = useState(pets)
-  const [selectedTag, setSelectedTag] = useState('all')
+  const [selectedFilter, setSelectedFilter] = useState('all')
+  const [selectedTag, setSelectedTag] = useState('')
+
+  useEffect(() => {
+    handleTagClick(selectedFilter, selectedTag)
+  }, [pets])
 
   const allTags = {}
   pets.forEach(pet => {
@@ -28,12 +33,14 @@ export default function App() {
           <Route exact path="/" render={() => 
             <CardList tags={allTags} 
                       onTagClick={handleTagClick}
+                      activeTag={selectedTag}
                       onBookmarkClick={handleBookmarkClick} 
                       pets={petsFiltered}/>}
             />
           <Route path="/favorites" render={() => 
             <CardList 
                       tags={allTags} 
+                      activeTag={selectedTag}
                       onTagClick={handleTagClick} 
                       onBookmarkClick={handleBookmarkClick} 
                       pets={onFavoritesClick()}/>}/> 
@@ -44,6 +51,8 @@ export default function App() {
   )
 
   function handleTagClick(selectedFilter, clickedTag) {
+    setSelectedTag(clickedTag)
+    setSelectedFilter(selectedFilter)
     if (selectedFilter === 'all') {
       setPetsFiltered(pets)
     } else {
@@ -53,17 +62,17 @@ export default function App() {
   }
 
   function handleBookmarkClick(pet) {
-    const index = petsFiltered.indexOf(pet)
-    setPetsFiltered ([
-      ...petsFiltered.slice(0, index),
+    const index = pets.indexOf(pet)
+    setPets ([
+      ...pets.slice(0, index),
       { ...pet, isBookmarked: !pet.isBookmarked },
-      ...petsFiltered.slice(index + 1),
+      ...pets.slice(index + 1),
     ])
   }
 
   function onFavoritesClick() {
-    const favoritePets= petsFiltered.filter(pet => pet.isBookmarked)
-    return favoritePets
+    const petsFilteredBookmarked = petsFiltered.filter(pet => pet.isBookmarked)
+    return petsFilteredBookmarked
   }
 }
 
