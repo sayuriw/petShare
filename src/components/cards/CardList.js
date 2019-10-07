@@ -17,6 +17,7 @@ export default function CardList({ onBookmarkClick, pets, onTagClick, tags, acti
         onBookmarkClick={() => onBookmarkClick(pet)}
         isBookmarked={pet.isBookmarked}
         picture={pet.picture}
+        email={pet.email}
       />
     ))} 
   </WrapperStyled>

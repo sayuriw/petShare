@@ -15,7 +15,8 @@ export default [
         size: 'Large',
         availability: 'Weekends'
       },
-      isBookmarked: false
+      isBookmarked: false,
+      email: 'sayuri.zz@gmail.com'
     },
     {
       picture: balu, 
@@ -27,7 +28,8 @@ export default [
         size: 'Small',
         availability: 'Flexible'
       },
-      isBookmarked: false
+      isBookmarked: false,
+      email: 'sayuri.zz@gmail.com'
     },
     {
       picture: flocky, 
@@ -39,7 +41,8 @@ export default [
         size: 'Small',
         availability: 'Flexible'
       },
-      isBookmarked: false
+      isBookmarked: false,
+      email: 'sayuri.zz@gmail.com'
     },
     {
       picture: rabbit, 
@@ -51,7 +54,8 @@ export default [
         size: 'Small',
         availability: 'Fixed dates'
       },
-      isBookmarked: false
+      isBookmarked: false,
+      email: 'sayuri.zz@gmail.com'
     },
     {
       picture: blackWhite, 
@@ -63,6 +67,7 @@ export default [
         size: 'Large',
         availability: 'Weekends'
       },
-      isBookmarked: false
+      isBookmarked: false,
+      email: 'sayuri.zz@gmail.com'
     }
   ]
