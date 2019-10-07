@@ -8,6 +8,7 @@ export default function Navbar() {
     <NavbarStyled>
       <NavLinkStyled exact to="/">Home</NavLinkStyled>
       <NavLinkStyled to="/favorites">Favorites</NavLinkStyled>  
+      <NavLinkStyled to="/newCard">New card</NavLinkStyled>
     </NavbarStyled>
   )
 }

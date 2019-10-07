@@ -10,6 +10,10 @@ export function patchCard(id, data) {
   return fetchCards({ method: 'PATCH', id, data })
 }
 
+export function deleteCard(id) {
+  return fetchCards({ method: 'DELETE', id })
+}
+
 function fetchCards({ method = 'GET', id = '', data } = {}) {
   return fetch('/cards/' + id, {
     method,
