@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
+
+
 export default function CreateCard({ onSubmit }) {
+
+  const [isCreated, setIsCreated] = useState(false)
+
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
@@ -23,6 +29,7 @@ export default function CreateCard({ onSubmit }) {
         onSubmit(data)
         form.reset()
         form.title.focus()
+        setIsCreated(true)
       })
       .catch(err => {
         console.error(err)
@@ -46,6 +53,7 @@ export default function CreateCard({ onSubmit }) {
   }
 
   return (
+    isCreated ? <Redirect exact to="/"/> : 
     <FormStyled onSubmit={handleSubmit}>
       <p>Create a new petCard</p>
       <LabelStyled>
