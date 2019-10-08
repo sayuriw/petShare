@@ -5,6 +5,7 @@ import ReactSVG from 'react-svg'
 import petIcon from '../../data/paw-solid.svg'
 import PropTypes from 'prop-types'
 import Tag from './Tag'
+import deleteIcon from '../../data/trash-alt-solid.svg'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -16,13 +17,17 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({picture, alt, title, description, tags, email, isBookmarked, onBookmarkClick}) {
+export default function Card({picture, alt, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick}) {
 
   
   
   function handleBookmarkClick(event) {
     event.stopPropagation() 
     onBookmarkClick() 
+  }
+  function handleDeleteClick(event) {
+    event.stopPropagation() 
+    onDeleteClick() 
   }
 
 
@@ -31,6 +36,7 @@ export default function Card({picture, alt, title, description, tags, email, isB
     <Img src={picture} alt={alt}/>   
     <TextAreaStyled>
     {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
+      <DeleteStyled onClick={handleDeleteClick}><ReactSVG src={deleteIcon}/></DeleteStyled>
       <h1>{title}</h1>
       <p>{description}</p>
       <ButtonsAreaStyled>
@@ -54,6 +60,15 @@ const CardStyled = styled.section`
 const TextAreaStyled = styled.div`
   margin: 10px;
   margin-bottom: 0;
+  position: relative;
+`
+const DeleteStyled = styled.div`
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: -5px;
+  top: -10px;
+  color: #4730ED;
 `
 
 const ButtonsAreaStyled = styled.div`

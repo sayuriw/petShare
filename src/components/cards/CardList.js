@@ -3,7 +3,7 @@ import Card from './Card'
 import Filter from '../Filter'
 import styled from 'styled-components/macro'
 
-export default function CardList({ onBookmarkClick, pets, onTagClick, tags, activeTag}) {
+export default function CardList({ onBookmarkClick, onDeleteClick, pets, onTagClick, tags, activeTag}) {
   
   return (
     <WrapperStyled>
@@ -15,6 +15,7 @@ export default function CardList({ onBookmarkClick, pets, onTagClick, tags, acti
         title={pet.title}
         description={pet.description}
         onBookmarkClick={() => onBookmarkClick(pet)}
+        onDeleteClick={() => onDeleteClick(pet)}
         isBookmarked={pet.isBookmarked}
         picture={pet.picture}
         email={pet.email}
