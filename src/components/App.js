@@ -62,6 +62,7 @@ export default function App() {
 
   function createCard(cardData) {
     postCard(cardData).then(pet => {
+      console.log(pet)
       setPets([...pets, pet])
     })
   }

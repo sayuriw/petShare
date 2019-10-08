@@ -1,5 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import axios from 'axios'
+
+const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
+const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
 export default function CreateCard({onSubmit}) {
   
@@ -7,12 +11,38 @@ export default function CreateCard({onSubmit}) {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
-    const data = Object.fromEntries(formData)
-    onSubmit(data)
-    form.reset()
-    form.title.focus()
+
+    upload(formData.get('picture'))
+      .then(response => {
+        const data = Object.fromEntries(formData)
+        data.picture = response.data.url
+        onSubmit(data)
+        form.reset()
+        form.title.focus()
+      })
+      .catch(err => {
+        console.error(err)
+        alert(err)
+      })
+
   }
-  
+
+  function upload(file) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`
+
+    const formData = new FormData()
+
+    formData.append('file', file)
+    formData.append('upload_preset', PRESET)
+
+    return axios
+      .post(url, formData, {
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+      })
+  }
+
   return (
     
     <FormStyled onSubmit={handleSubmit}>
