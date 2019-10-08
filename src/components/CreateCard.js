@@ -5,8 +5,7 @@ import axios from 'axios'
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
-export default function CreateCard({onSubmit}) {
-  
+export default function CreateCard({ onSubmit }) {
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
@@ -16,6 +15,11 @@ export default function CreateCard({onSubmit}) {
       .then(response => {
         const data = Object.fromEntries(formData)
         data.picture = response.data.url
+        data.tags = {
+          availability: data.availability,
+          size: data.size,
+          type: data.type
+        }
         onSubmit(data)
         form.reset()
         form.title.focus()
@@ -24,7 +28,6 @@ export default function CreateCard({onSubmit}) {
         console.error(err)
         alert(err)
       })
-
   }
 
   function upload(file) {
@@ -35,61 +38,59 @@ export default function CreateCard({onSubmit}) {
     formData.append('file', file)
     formData.append('upload_preset', PRESET)
 
-    return axios
-      .post(url, formData, {
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-      })
+    return axios.post(url, formData, {
+      headers: {
+        'Content-type': 'multipart/form-data'
+      }
+    })
   }
 
   return (
-    
     <FormStyled onSubmit={handleSubmit}>
-    <p>Create a new petCard</p>
+      <p>Create a new petCard</p>
+      <LabelStyled>
+        Title
+        <input name="title" />
+      </LabelStyled>
+      <LabelStyled>
+        Description
+        <textarea name="description" rows="4" cols="30" />
+      </LabelStyled>
+      <LabelStyled>
+        Picture
+        <input name="picture" type="file" />
+      </LabelStyled>
+      <LabelStyled>
+        Email
+        <input name="email" type="email" />
+      </LabelStyled>
+      <TagsWrapper>
         <LabelStyled>
-          Title
-          <input name="title" />
+          Type
+          <SelectStyled name="type">
+            <OptionStyled value="Dog">Dog</OptionStyled>
+            <OptionStyled value="Cat">Cat</OptionStyled>
+            <OptionStyled value="Rabbit">Rabbit</OptionStyled>
+          </SelectStyled>
         </LabelStyled>
         <LabelStyled>
-          Description
-          <textarea name="description" rows="4" cols="30"/>
+          Size
+          <select name="size">
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+          </select>
         </LabelStyled>
         <LabelStyled>
-          Picture
-          <input name="picture" type="file"/>
+          Availability
+          <SelectStyled name="availability">
+            <option value="Flexible">Flexible</option>
+            <option value="Weekends">Weekends</option>
+            <option value="FixedDates">Fixed Dates</option>
+          </SelectStyled>
         </LabelStyled>
-        <LabelStyled>
-          Email
-          <input name="email" type="email"/>
-        </LabelStyled>
-        <TagsWrapper>
-          <LabelStyled>
-            Type
-            <SelectStyled name="type">
-              <OptionStyled value="Dog">Dog</OptionStyled>
-              <OptionStyled value="Cat">Cat</OptionStyled>
-              <OptionStyled value="Rabbit">Rabbit</OptionStyled>
-            </SelectStyled>
-          </LabelStyled>
-          <LabelStyled>
-            Size
-            <select name="size">
-              <option value="Small">Small</option>
-              <option value="Medium">Medium</option>
-              <option value="Large">Large</option>
-            </select>
-          </LabelStyled>
-          <LabelStyled>
-            Availability
-            <SelectStyled name="availability">
-              <option value="Flexible">Flexible</option>
-              <option value="Weekends">Weekends</option>
-              <option value="FixedDates">Fixed Dates</option>
-            </SelectStyled>
-          </LabelStyled>
-        </TagsWrapper>
-        <ButtonStyled>Create card</ButtonStyled>
+      </TagsWrapper>
+      <ButtonStyled>Create card</ButtonStyled>
     </FormStyled>
   )
 }
@@ -111,7 +112,6 @@ const TagsWrapper = styled.section`
 `
 const SelectStyled = styled.select`
   display: grid;
-
 `
 const OptionStyled = styled.option`
   display: grid;
@@ -122,5 +122,5 @@ const ButtonStyled = styled.button`
   font-size: 18px;
   border-radius: 3px;
   color: white;
-  background-color: #6F6f6f;
+  background-color: #6f6f6f;
 `
