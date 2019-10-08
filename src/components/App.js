@@ -3,7 +3,7 @@ import CardList from './cards/CardList'
 import styled from 'styled-components'
 import NavBar from './Navbar'
 import CreateCard from './CreateCard'
-import { getCards, patchCard, postCard } from './cards/services'
+import { getCards, patchCard, postCard, deleteCard } from './cards/services'
 import { BrowserRouter as Router, Route  } from 'react-router-dom'
 
 
@@ -42,6 +42,7 @@ export default function App() {
                       onTagClick={handleTagClick}
                       activeTag={selectedTag}
                       onBookmarkClick={handleBookmarkClick} 
+                      onDeleteClick={handleDeleteClick}
                       pets={petsFiltered}/>}
             />
           <Route path="/favorites" render={() => 
@@ -49,7 +50,8 @@ export default function App() {
                       tags={allTags} 
                       activeTag={selectedTag}
                       onTagClick={handleTagClick} 
-                      onBookmarkClick={handleBookmarkClick} 
+                      onBookmarkClick={handleBookmarkClick}
+                      onDeleteClick={handleDeleteClick} 
                       pets={onFavoritesClick()}/>}
             /> 
           <Route path="/newCard" render={() => <CreateCard onSubmit={createCard}/>}
@@ -63,7 +65,7 @@ export default function App() {
   function createCard(cardData) {
     postCard(cardData).then(pet => {
       console.log(pet)
-      setPets([...pets, pet])
+      setPets([pet, ...pets])
     })
   }
 
@@ -76,6 +78,16 @@ export default function App() {
       const newPetsFiltered = pets.filter(pet => pet.tags[selectedFilter] === clickedTag)
       setPetsFiltered(newPetsFiltered)
     }
+  }
+
+  function handleDeleteClick(pet) {
+    deleteCard(pet._id).then(deletedPet => {
+      const index = pets.findIndex(pet => pet._id === deletedPet._id)
+    setPets ([
+        ...pets.slice(0, index),
+        ...pets.slice(index + 1)
+      ])
+    })
   }
 
   function handleBookmarkClick(pet) {

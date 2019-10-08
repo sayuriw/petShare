@@ -16,9 +16,9 @@ export default function CreateCard({ onSubmit }) {
         const data = Object.fromEntries(formData)
         data.picture = response.data.url
         data.tags = {
-          availability: data.availability,
+          type: data.type,
           size: data.size,
-          type: data.type
+          availability: data.availability
         }
         onSubmit(data)
         form.reset()
