@@ -81,8 +81,8 @@ export default function App() {
   }
 
   function handleDeleteClick(pet) {
-    deleteCard(pet._id).then(updatedPet => {
-      const index = pets.findIndex(pet => pet._id === updatedPet._id)
+    deleteCard(pet._id).then(deletedPet => {
+      const index = pets.findIndex(pet => pet._id === deletedPet._id)
     setPets ([
         ...pets.slice(0, index),
         ...pets.slice(index + 1)
