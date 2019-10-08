@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react'
 import CardList from './cards/CardList'
 import styled from 'styled-components'
 import NavBar from './Navbar'
-import { getCards, patchCard } from './cards/services'
+import CreateCard from './CreateCard'
+import { getCards, patchCard, postCard } from './cards/services'
 import { BrowserRouter as Router, Route  } from 'react-router-dom'
 
 
@@ -49,12 +50,22 @@ export default function App() {
                       activeTag={selectedTag}
                       onTagClick={handleTagClick} 
                       onBookmarkClick={handleBookmarkClick} 
-                      pets={onFavoritesClick()}/>}/> 
+                      pets={onFavoritesClick()}/>}
+            /> 
+          <Route path="/newCard" render={() => <CreateCard onSubmit={createCard}/>}
+            />
         </WrapperStyled>
         <NavBar/>
       </AppStyled>
     </Router>
   )
+
+  function createCard(cardData) {
+    postCard(cardData).then(pet => {
+      console.log(pet)
+      setPets([...pets, pet])
+    })
+  }
 
   function handleTagClick(selectedFilter, clickedTag) {
     setSelectedTag(clickedTag)

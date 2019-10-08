@@ -8,5 +8,4 @@ const Card = mongoose.model('Card', {
   email: String,
   picture: String
 })
-
 module.exports = Card

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import Img from './Img'
 import ReactSVG from 'react-svg'
-import petIcon from '../data/paw-solid.svg'
+import petIcon from '../../data/paw-solid.svg'
 import PropTypes from 'prop-types'
 import Tag from './Tag'
 
