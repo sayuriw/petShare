@@ -6,19 +6,22 @@ import petIcon from '../../data/paw-solid.svg'
 import PropTypes from 'prop-types'
 import Tag from './Tag'
 import deleteIcon from '../../data/trash-alt-solid.svg'
-//import defaultDog from '../../data/defaultDog.jpeg'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   tags:PropTypes.object,
-  isBookmarked: PropTypes.bool
+  isBookmarked: PropTypes.bool,
+  picture: PropTypes.string,
+  email: PropTypes.string,
+  onBookmarkClick: PropTypes.func,
+  onDeleteClick: PropTypes.func
 }
 Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({picture, alt, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick}) {
+export default function Card({picture, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick}) {
 
   
   
@@ -34,7 +37,7 @@ export default function Card({picture, alt, title, description, tags, email, isB
 
   return (
   <CardStyled>
-    <Img src={picture? picture : petIcon} alt={alt}/>   
+    <Img src={picture ? picture : petIcon}/>   
     <TextAreaStyled>
     {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
       <DeleteStyled onClick={handleDeleteClick}><ReactSVG src={deleteIcon}/></DeleteStyled>
