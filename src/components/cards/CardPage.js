@@ -2,11 +2,12 @@ import React from 'react'
 import Card from './Card'
 import Filter from '../Filter'
 import styled from 'styled-components/macro'
+import Page from '../../common/Page'
 
-export default function CardList({ onBookmarkClick, onDeleteClick, pets, onTagClick, tags, activeTag}) {
+export default function CardPage({ title, onBookmarkClick, onDeleteClick, pets, onTagClick, tags, activeTag}) {
   
   return (
-    <WrapperStyled>
+    <Page title={title}>
       <Filter tags={tags} activeTag={activeTag}onTagClick={onTagClick} />
      {pets.map((pet, index) => (
       <Card
@@ -21,7 +22,7 @@ export default function CardList({ onBookmarkClick, onDeleteClick, pets, onTagCl
         email={pet.email}
       />
     ))} 
-  </WrapperStyled>
+  </Page>
 )
 }
 

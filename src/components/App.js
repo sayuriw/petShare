@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import CardList from './cards/CardList'
+import CardPage from './cards/CardPage'
 import styled from 'styled-components'
 import NavBar from './Navbar'
-import CreateCard from './CreateCard'
+import CreateCardPage from './CreateCardPage'
 import { getCards, patchCard, postCard, deleteCard } from './cards/services'
-import { BrowserRouter as Router, Route  } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'
 
 
 export default function App() {
@@ -42,9 +42,10 @@ export default function App() {
     return (
     <Router>
       <AppStyled>
-        <WrapperStyled>
+        <Switch>
           <Route exact path="/" render={() => 
-            <CardList tags={allTags} 
+            <CardPage title="PetShare"
+                      tags={allTags} 
                       onTagClick={handleTagClick}
                       activeTag={selectedTag}
                       onBookmarkClick={handleBookmarkClick} 
@@ -52,7 +53,7 @@ export default function App() {
                       pets={petsFiltered}/>}
             />
           <Route path="/favorites" render={() => 
-            <CardList 
+            <CardPage Title={"Favorites"}
                       tags={allTags} 
                       activeTag={selectedTag}
                       onTagClick={handleTagClick} 
@@ -60,9 +61,11 @@ export default function App() {
                       onDeleteClick={handleDeleteClick} 
                       pets={onFavoritesClick()}/>}
             /> 
-          <Route path="/newCard" render={() => <CreateCard onSubmit={createCard}/>}
+          <Route path="/newCard" render={() => 
+            <CreateCardPage title="Create a new PetCard" 
+                            onSubmit={createCard}/>}
             />
-        </WrapperStyled>
+        </Switch>
         <NavBar/>
       </AppStyled>
     </Router>
@@ -105,6 +108,7 @@ export default function App() {
     ])
   })
   }
+  
 
   function onFavoritesClick() {
     const petsFilteredBookmarked = petsFiltered.filter(pet => pet.isBookmarked)

@@ -4,15 +4,17 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
+import Page from '../common/Page'
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
-CreateCard.propTypes = {
-  onSubmit: PropTypes.func
+CreateCardPage.propTypes = {
+  onSubmit: PropTypes.func,
+  title: PropTypes.string
 }
 
-export default function CreateCard({ onSubmit }) {
+export default function CreateCardPage({ title, onSubmit }) {
 
   const [isCreated, setIsCreated] = useState(false)
 
@@ -63,8 +65,7 @@ export default function CreateCard({ onSubmit }) {
 
   return (
     isCreated ? <Redirect exact to="/"/> : 
-    <>
-      <HeaderStyled>Add a new pet</HeaderStyled>
+    <Page title={title}>
       <FormStyled onSubmit={handleSubmit}>
         <LabelStyled>
           Title
@@ -112,7 +113,7 @@ export default function CreateCard({ onSubmit }) {
         </TagsWrapper>
         <ButtonStyled>Create card</ButtonStyled>
       </FormStyled>
-    </>
+    </Page>
   )
 }
 const HeaderStyled = styled.p`
