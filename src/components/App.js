@@ -17,8 +17,16 @@ export default function App() {
   const [selectedTag, setSelectedTag] = useState('')
 
   useEffect(() => {
-    getCards().then(setPets)
-  }, [])
+    getCards(pets)
+    .then(
+      (pets) => {pets.sort((a,b) => {
+      let da = new Date(b.createdDate).getTime()
+      let db = new Date(a.createdDate).getTime()
+      return da < db ? -1 : da > db ? 1 : 0})
+      setPets(pets)
+      })
+    }, [])
+  
 
   useEffect(() => {
     handleTagClick(selectedFilter, selectedTag)
@@ -64,7 +72,7 @@ export default function App() {
 
   function createCard(cardData) {
     postCard(cardData).then(pet => {
-      console.log(pet)
+      console.log(cardData)
       setPets([pet, ...pets])
     })
   }

@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
+import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
-
+CreateCard.propTypes = {
+  onSubmit: PropTypes.func
+}
 
 export default function CreateCard({ onSubmit }) {
 
@@ -16,24 +20,24 @@ export default function CreateCard({ onSubmit }) {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
-
-    upload(formData.get('picture'))
+    const data = Object.fromEntries(formData)
+      data.tags = {
+        type: data.type,
+        size: data.size,
+        availability: data.availability
+      }
+      data.picture === ''
+        ? onSubmit(data)
+        : upload(formData.get('picture'))
       .then(response => {
-        const data = Object.fromEntries(formData)
         data.picture = response.data.url
-        data.tags = {
-          type: data.type,
-          size: data.size,
-          availability: data.availability
-        }
-        onSubmit(data)
-        form.reset()
-        form.title.focus()
-        setIsCreated(true)
+          onSubmit(data)
+          form.reset()
+          form.title.focus()
+          setIsCreated(true)
       })
       .catch(err => {
         console.error(err)
-        alert(err)
       })
   }
 
@@ -54,59 +58,72 @@ export default function CreateCard({ onSubmit }) {
 
   return (
     isCreated ? <Redirect exact to="/"/> : 
-    <FormStyled onSubmit={handleSubmit}>
-      <p>Create a new petCard</p>
-      <LabelStyled>
-        Title
-        <input name="title" />
-      </LabelStyled>
-      <LabelStyled>
-        Description
-        <textarea name="description" rows="4" cols="30" />
-      </LabelStyled>
-      <LabelStyled>
-        Picture
-        <input name="picture" type="file" />
-      </LabelStyled>
-      <LabelStyled>
-        Email
-        <input name="email" type="email" />
-      </LabelStyled>
-      <TagsWrapper>
+    <>
+      <HeaderStyled>Add a new pet</HeaderStyled>
+      <FormStyled onSubmit={handleSubmit}>
         <LabelStyled>
-          Type
-          <SelectStyled name="type">
-            <OptionStyled value="Dog">Dog</OptionStyled>
-            <OptionStyled value="Cat">Cat</OptionStyled>
-            <OptionStyled value="Rabbit">Rabbit</OptionStyled>
-          </SelectStyled>
+          Title
+          <input name="title" />
         </LabelStyled>
         <LabelStyled>
-          Size
-          <select name="size">
-            <option value="Small">Small</option>
-            <option value="Medium">Medium</option>
-            <option value="Large">Large</option>
-          </select>
+          Description
+          <textarea name="description" rows="4" cols="30" />
         </LabelStyled>
         <LabelStyled>
-          Availability
-          <SelectStyled name="availability">
-            <option value="Flexible">Flexible</option>
-            <option value="Weekends">Weekends</option>
-            <option value="FixedDates">Fixed Dates</option>
-          </SelectStyled>
+          <section>
+          Picture<ImageAddStyled/>
+          </section>
+          <input name="picture" type="file" />
         </LabelStyled>
-      </TagsWrapper>
-      <ButtonStyled>Create card</ButtonStyled>
-    </FormStyled>
+        <LabelStyled>
+          Email
+          <input name="email" type="email" />
+        </LabelStyled>
+        <TagsWrapper>
+          <LabelStyled>
+            Type
+            <SelectStyled name="type">
+              <OptionStyled value="Dog">Dog</OptionStyled>
+              <OptionStyled value="Cat">Cat</OptionStyled>
+              <OptionStyled value="Rabbit">Rabbit</OptionStyled>
+            </SelectStyled>
+          </LabelStyled>
+          <LabelStyled>
+            Size
+            <select name="size">
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+            </select>
+          </LabelStyled>
+          <LabelStyled>
+            Availability
+            <SelectStyled name="availability">
+              <option value="Flexible">Flexible</option>
+              <option value="Weekends">Weekends</option>
+              <option value="FixedDates">Fixed Dates</option>
+            </SelectStyled>
+          </LabelStyled>
+        </TagsWrapper>
+        <ButtonStyled>Create card</ButtonStyled>
+      </FormStyled>
+    </>
   )
 }
+const HeaderStyled = styled.p`
+ text-align: center;
+ background-color: #6f6f6f;
+ margin: 0;
+ padding: 20px;
+ color: white;
+ font-size: 1.3em;
+`
 
 const FormStyled = styled.form`
   display: grid;
   gap: 20px;
   padding: 20px;
+
 `
 const LabelStyled = styled.label`
   display: grid;
@@ -131,4 +148,10 @@ const ButtonStyled = styled.button`
   border-radius: 3px;
   color: white;
   background-color: #6f6f6f;
+`
+const ImageAddStyled = styled(ImageAdd)`
+  height:25px;
+  width: 25px;
+  margin-left: 5px;
+
 `
