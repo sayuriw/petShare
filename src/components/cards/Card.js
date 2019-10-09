@@ -52,11 +52,8 @@ export default function Card({picture, title, description, tags, email, isBookma
   )
 }
 
-
 const CardStyled = styled.section`
   background: #FFFFFF;
-  margin-top: 30px;
-  margin: 20px;
   border-radius: 5px;
   box-shadow: 0 10px 10px #0002;
   `

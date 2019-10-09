@@ -39,38 +39,24 @@ export default function App() {
     })
   })
 
-    return (
+  const HomePage = withCardPage('PetShare')
+  const FavoritesPage = withCardPage('Favorites', 'isBookmarked')
+
+  return (
     <Router>
       <AppStyled>
         <Switch>
-          <Route exact path="/" render={() => 
-            <CardPage title="PetShare"
-                      tags={allTags} 
-                      onTagClick={handleTagClick}
-                      activeTag={selectedTag}
-                      onBookmarkClick={handleBookmarkClick} 
-                      onDeleteClick={handleDeleteClick}
-                      pets={petsFiltered}/>}
-            />
-          <Route path="/favorites" render={() => 
-            <CardPage Title={"Favorites"}
-                      tags={allTags} 
-                      activeTag={selectedTag}
-                      onTagClick={handleTagClick} 
-                      onBookmarkClick={handleBookmarkClick}
-                      onDeleteClick={handleDeleteClick} 
-                      pets={onFavoritesClick()}/>}
-            /> 
+          <Route exact path="/" component={HomePage} />
+          <Route path="/favorites" component={FavoritesPage} />
           <Route path="/newCard" render={() => 
-            <CreateCardPage title="Create a new PetCard" 
-                            onSubmit={createCard}/>}
-            />
+            <CreateCardPage title="Create a new PetCard" onSubmit={createCard}/>}
+          />
         </Switch>
         <NavBar/>
       </AppStyled>
     </Router>
   )
-
+  
   function createCard(cardData) {
     postCard(cardData).then(pet => {
       setPets([pet, ...pets])
@@ -105,14 +91,22 @@ export default function App() {
       ...pets.slice(0, index),
       { ...pet, isBookmarked: !pet.isBookmarked },
       ...pets.slice(index + 1),
-    ])
-  })
+      ])
+    })
   }
   
+  function withCardPage(title, filterProp) {
+    return () => {
+      const petsFilteredByprop = filterProp ? petsFiltered.filter(pet => pet[filterProp]) : petsFiltered
+      return <CardPage title={title}
+                       tags={allTags} 
+                       onTagClick={handleTagClick}
+                       activeTag={selectedTag}
+                       onBookmarkClick={handleBookmarkClick} 
+                       onDeleteClick={handleDeleteClick}
+                       pets={petsFilteredByprop}/>
 
-  function onFavoritesClick() {
-    const petsFilteredBookmarked = petsFiltered.filter(pet => pet.isBookmarked)
-    return petsFilteredBookmarked
+    }
   }
 }
 
@@ -126,7 +120,7 @@ const AppStyled = styled.div`
   bottom: 0;
   height: 100%;
   `
-const WrapperStyled = styled.div`
-  overflow-y: scroll;
+// const WrapperStyled = styled.div`
+//   overflow-y: scroll;
   
-`
+// `

@@ -1,5 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
+
+Page.propTypes = {
+  title: PropTypes.string.isRequired,
+}
 
 export default function Page({ title, children }) {
   return (
@@ -20,6 +25,6 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #444;
+  background: #6f6f6f;;
   color: white;
 `

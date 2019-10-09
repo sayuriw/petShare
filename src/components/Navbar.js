@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { NavLink } from 'react-router-dom'
-
+import { DocumentAdd } from 'styled-icons/typicons/DocumentAdd'
+import { Paw } from 'styled-icons/fa-solid/Paw'
+import { Home } from 'styled-icons/fa-solid/Home'
 export default function Navbar() {
   
   return (
     <NavbarStyled>
-      <NavLinkStyled exact to="/">Home</NavLinkStyled>
-      <NavLinkStyled to="/favorites">Favorites</NavLinkStyled>  
-      <NavLinkStyled to="/newCard">New card</NavLinkStyled>
+      <NavLinkStyled exact to="/"><HomeStyled/></NavLinkStyled>
+      <NavLinkStyled to="/favorites"><PawStyled/></NavLinkStyled>  
+      <NavLinkStyled to="/newCard"><DocumentAddStyled/></NavLinkStyled>
     </NavbarStyled>
   )
 }
@@ -33,3 +35,17 @@ const NavbarStyled = styled.nav`
   position: relative;
   z-index: 1;
 `
+
+const DocumentAddStyled = styled(DocumentAdd)`
+  height:35px;
+  width: 35px;
+`
+const PawStyled = styled(Paw)`
+  height:35px;
+  width: 35px;
+`
+const HomeStyled = styled(Home)`
+  height:35px;
+  width: 35px;
+`
+

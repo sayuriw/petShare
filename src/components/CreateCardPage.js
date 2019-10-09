@@ -116,18 +116,10 @@ export default function CreateCardPage({ title, onSubmit }) {
     </Page>
   )
 }
-const HeaderStyled = styled.p`
- text-align: center;
- background-color: #6f6f6f;
- margin: 0;
- padding: 20px;
- color: white;
- font-size: 1.3em;
-`
 
 const FormStyled = styled.form`
   display: grid;
-  gap: 20px;
+  gap: 25px;
   padding: 20px;
 
 `
