@@ -9,8 +9,6 @@ import { BrowserRouter as Router, Route  } from 'react-router-dom'
 
 export default function App() {
 
-  
-
   const [pets, setPets] = useState([])
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
@@ -20,9 +18,9 @@ export default function App() {
     getCards(pets)
     .then(
       (pets) => {pets.sort((a,b) => {
-      let da = new Date(b.createdDate).getTime()
-      let db = new Date(a.createdDate).getTime()
-      return da < db ? -1 : da > db ? 1 : 0})
+      const dateA = new Date(b.createdDate).getTime()
+      const dateB = new Date(a.createdDate).getTime()
+      return dateA < dateB ? -1 : dateA > dateB ? 1 : 0})
       setPets(pets)
       })
     }, [])
@@ -72,7 +70,6 @@ export default function App() {
 
   function createCard(cardData) {
     postCard(cardData).then(pet => {
-      console.log(cardData)
       setPets([pet, ...pets])
     })
   }
