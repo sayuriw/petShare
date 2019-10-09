@@ -6,6 +6,7 @@ import petIcon from '../../data/paw-solid.svg'
 import PropTypes from 'prop-types'
 import Tag from './Tag'
 import deleteIcon from '../../data/trash-alt-solid.svg'
+//import defaultDog from '../../data/defaultDog.jpeg'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -33,7 +34,7 @@ export default function Card({picture, alt, title, description, tags, email, isB
 
   return (
   <CardStyled>
-    <Img src={picture} alt={alt}/>   
+    <Img src={picture? picture : petIcon} alt={alt}/>   
     <TextAreaStyled>
     {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
       <DeleteStyled onClick={handleDeleteClick}><ReactSVG src={deleteIcon}/></DeleteStyled>
@@ -75,6 +76,7 @@ const ButtonsAreaStyled = styled.div`
   position: relative;
   padding-bottom: 20px;
 `
+
 const BookmarkStyled = styled.div`
   position: absolute;
   color: ${({ active }) => (active ? 'hotpink' : '#4730ED')};
