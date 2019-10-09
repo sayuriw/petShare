@@ -26,9 +26,13 @@ export default function CreateCard({ onSubmit }) {
         size: data.size,
         availability: data.availability
       }
-      data.picture === ''
-        ? onSubmit(data)
-        : upload(formData.get('picture'))
+      if (data.picture === '') {
+        onSubmit(data)
+        form.reset()
+        form.title.focus()
+        setIsCreated(true)
+      } else {
+        upload(formData.get('picture'))
       .then(response => {
         data.picture = response.data.url
           onSubmit(data)
@@ -39,6 +43,7 @@ export default function CreateCard({ onSubmit }) {
       .catch(err => {
         console.error(err)
       })
+    }
   }
 
   function upload(file) {
@@ -153,5 +158,4 @@ const ImageAddStyled = styled(ImageAdd)`
   height:25px;
   width: 25px;
   margin-left: 5px;
-
 `
