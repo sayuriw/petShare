@@ -10,7 +10,7 @@ Page.propTypes = {
 export default function Page({ title, children }) {
   return (
     <PageStyled>
-      <Header>{title}</Header>
+      <Header><ImgStyled src={title} alt={title}/></Header>  
       {children}
     </PageStyled>
   )
@@ -18,14 +18,17 @@ export default function Page({ title, children }) {
 
 const PageStyled = styled.main`
   display: grid;
-  grid-template-rows: 48px auto;
+  grid-template-rows: 70px auto;
   align-content: flex-start;
   overflow: auto;
 `
 const Header = styled.header`
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: #6f6f6f;;
+  /* align-items: center; */
+  /* background: #6f6f6f; */
   color: white;
+`
+const ImgStyled = styled.img`
+  height: 70px;
 `

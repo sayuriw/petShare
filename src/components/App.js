@@ -51,6 +51,8 @@ export default function App() {
           <Route path="/newCard" render={() => 
             <CreateCardPage title="Create a new PetCard" onSubmit={createCard}/>}
           />
+          
+        
         </Switch>
         <NavBar/>
       </AppStyled>
@@ -96,6 +98,10 @@ export default function App() {
       ])
     })
   }
+  function handleEditClick(pet) {
+    
+  }
+
   
   function withCardPage(title, filterProp) {
     return () => {
@@ -106,6 +112,7 @@ export default function App() {
                        activeTag={selectedTag}
                        onBookmarkClick={handleBookmarkClick} 
                        onDeleteClick={handleDeleteClick}
+                       onEditClick={handleEditClick}
                        pets={petsFilteredByProp}/>
 
     }
@@ -122,3 +129,6 @@ const AppStyled = styled.div`
   bottom: 0;
   height: 100%;
   `
+const SectionStyled = styled.section`
+  background-color: deeppink;
+`

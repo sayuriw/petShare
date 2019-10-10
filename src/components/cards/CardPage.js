@@ -4,6 +4,7 @@ import Filter from '../Filter'
 import Page from '../../common/Page'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
+import logo from '../../data/petshare.png'
 
 CardPage.propTypes = {
   title: PropTypes.string.isRequired,
@@ -16,10 +17,10 @@ CardPage.propTypes = {
 }
   
 
-export default function CardPage({ title, onBookmarkClick, onDeleteClick, pets, onTagClick, tags, activeTag}) {
+export default function CardPage({ title, onBookmarkClick, onDeleteClick, onEditClick, pets, onTagClick, tags, activeTag}) {
   
   return (
-    <Page title={title}>
+    <Page title={logo}>
       <Scroller>
         <Filter tags={tags} activeTag={activeTag} onTagClick={onTagClick} />
       {pets.map((pet, index) => (
@@ -30,6 +31,7 @@ export default function CardPage({ title, onBookmarkClick, onDeleteClick, pets, 
           description={pet.description}
           onBookmarkClick={() => onBookmarkClick(pet)}
           onDeleteClick={() => onDeleteClick(pet)}
+          onEditClick={() => onEditClick(pet)}
           isBookmarked={pet.isBookmarked}
           picture={pet.picture}
           email={pet.email}
