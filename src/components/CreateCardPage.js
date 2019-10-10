@@ -10,8 +10,8 @@ const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
 CreateCardPage.propTypes = {
-  onSubmit: PropTypes.func,
-  title: PropTypes.string
+  onSubmit: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default function CreateCardPage({ title, onSubmit }) {

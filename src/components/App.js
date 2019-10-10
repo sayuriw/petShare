@@ -75,6 +75,7 @@ export default function App() {
   }
 
   function handleDeleteClick(pet) {
+    if (window.confirm('Are you sure you wish to delete this item?')) {
     deleteCard(pet._id).then(deletedPet => {
       const index = pets.findIndex(pet => pet._id === deletedPet._id)
     setPets ([
@@ -82,6 +83,7 @@ export default function App() {
         ...pets.slice(index + 1)
       ])
     })
+   }
   }
 
   function handleBookmarkClick(pet) {
@@ -97,14 +99,14 @@ export default function App() {
   
   function withCardPage(title, filterProp) {
     return () => {
-      const petsFilteredByprop = filterProp ? petsFiltered.filter(pet => pet[filterProp]) : petsFiltered
+      const petsFilteredByProp = filterProp ? petsFiltered.filter(pet => pet[filterProp]) : petsFiltered
       return <CardPage title={title}
                        tags={allTags} 
                        onTagClick={handleTagClick}
                        activeTag={selectedTag}
                        onBookmarkClick={handleBookmarkClick} 
                        onDeleteClick={handleDeleteClick}
-                       pets={petsFilteredByprop}/>
+                       pets={petsFilteredByProp}/>
 
     }
   }
@@ -120,7 +122,3 @@ const AppStyled = styled.div`
   bottom: 0;
   height: 100%;
   `
-// const WrapperStyled = styled.div`
-//   overflow-y: scroll;
-  
-// `

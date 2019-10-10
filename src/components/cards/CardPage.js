@@ -7,10 +7,10 @@ import styled from 'styled-components/macro'
 
 CardPage.propTypes = {
   title: PropTypes.string.isRequired,
-  onBookMarkClick: PropTypes.func,
+  onBookmarkClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
   pets: PropTypes.array,
-  onTagsClick:PropTypes.func,
+  onTagClick:PropTypes.func,
   tags:PropTypes.object,
   activeTag: PropTypes.string,
 }
@@ -21,7 +21,7 @@ export default function CardPage({ title, onBookmarkClick, onDeleteClick, pets, 
   return (
     <Page title={title}>
       <Scroller>
-        <Filter tags={tags} activeTag={activeTag}onTagClick={onTagClick} />
+        <Filter tags={tags} activeTag={activeTag} onTagClick={onTagClick} />
       {pets.map((pet, index) => (
         <Card
           key={index}
@@ -40,9 +40,9 @@ export default function CardPage({ title, onBookmarkClick, onDeleteClick, pets, 
   )
 }
 const Scroller = styled.div`
-display: grid;
-gap: 20px;
-overflow-y: auto;
-scroll-behavior: smooth;
-padding: 20px 10px;
+  display: grid;
+  gap: 20px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 20px 10px;
 `

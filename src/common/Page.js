@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 Page.propTypes = {
   title: PropTypes.string.isRequired,
+  children: PropTypes.node
 }
 
 export default function Page({ title, children }) {
