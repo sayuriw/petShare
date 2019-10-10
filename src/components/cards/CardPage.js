@@ -18,14 +18,14 @@ CardPage.propTypes = {
   
 
 export default function CardPage({ title, onBookmarkClick, onDeleteClick, onEditClick, pets, onTagClick, tags, activeTag}) {
-  
+    console.log(pets)
   return (
     <Page title={logo}>
       <Scroller>
         <Filter tags={tags} activeTag={activeTag} onTagClick={onTagClick} />
-      {pets.map((pet, index) => (
+      {pets.map((pet) => (
         <Card
-          key={index}
+          key={pet._id}
           tags={pet.tags}
           title={pet.title}
           description={pet.description}
@@ -36,6 +36,7 @@ export default function CardPage({ title, onBookmarkClick, onDeleteClick, onEdit
           picture={pet.picture}
           email={pet.email}
         />
+        
       ))}
       </Scroller> 
    </Page>

@@ -4,18 +4,65 @@ import Img from '../components/cards/Img'
 import Page from '../common/Page'
 import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
 import logo from '../data/petshare.png'
+// import axios from 'axios'
 
-
+// const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
+// const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
 export default function EditCardPage({editCardData, onSubmit}) {
 
-  const [petDataTitle, setPetDataTitle] = useState(editCardData.title)
-  const [petDataDescription, setPetDataDescription] = useState(editCardData.description)
-  const [petDataEmail, setPetDataEmail] = useState(editCardData.email)
+  const [title, setTitle] = useState(editCardData.title)
+  const [description, setDescription] = useState(editCardData.description)
+  const [email, setEmail] = useState(editCardData.email)
+
   function handleSubmit(event) {
     event.preventDefault()
-    
+    console.log(editCardData)
+    const newEditCardData = {
+      ...editCardData,
+          title, description, email
+    }
+    console.log(editCardData)
+    onSubmit(editCardData._id, newEditCardData)
   }
+  
+//   function handleSubmit(event) {
+//     event.preventDefault()
+//     const form = event.target
+//     const formData = new FormData(form)
+//     const data = Object.fromEntries(formData)
+//     const newEditCardData = {
+//       ...editCardData,
+//           title, description, email
+//     }
+      
+//     if (data.picture === '') {
+//     onSubmit(editCardData.id, newEditCardData)
+//   } else {
+//     upload(formData.get('picture'))
+//   .then(response => {
+//     newEditCardData.picture = response.data.url
+//     onSubmit(editCardData.id, newEditCardData)
+//   })
+//   .catch(err => {
+//     console.error(err)
+//   })
+//  }
+// }
+// function upload(file) {
+//   const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`
+
+//   const formData = new FormData()
+
+//   formData.append('file', file)
+//   formData.append('upload_preset', PRESET)
+
+//   return axios.post(url, formData, {
+//     headers: {
+//       'Content-type': 'multipart/form-data'
+//     }
+//   })
+// }
 
   return (
     <Page title={logo}>
@@ -23,11 +70,11 @@ export default function EditCardPage({editCardData, onSubmit}) {
       <FormStyled onSubmit={handleSubmit}>
           <LabelStyled>
             Title
-            <input name="title" value={petDataTitle} onChange={event => setPetDataTitle(event.target.value)} autoFocus />
+            <input name="title" value={title} onChange={event => setTitle(event.target.value)} autoFocus />
           </LabelStyled>
           <LabelStyled>
             Description
-            <textarea name="description" value={petDataDescription} onChange={event => setPetDataDescription(event.target.value)}rows="4" cols="30" />
+            <textarea name="description" value={description} onChange={event => setDescription(event.target.value)}rows="4" cols="30" />
           </LabelStyled>
           <LabelStyled>
             <section>
@@ -37,7 +84,7 @@ export default function EditCardPage({editCardData, onSubmit}) {
           </LabelStyled>
           <LabelStyled>
             Email
-            <input name="email" type="email" value={petDataEmail} onChange={event => setPetDataEmail(event.target.value)} />
+            <input name="email" type="email" value={email} onChange={event => setEmail(event.target.value)} />
           </LabelStyled>
           <ButtonStyled>Edit card</ButtonStyled>
         </FormStyled>

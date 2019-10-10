@@ -23,7 +23,7 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({_id, picture, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick, onEditClick}) {
+export default function Card({_id, picture, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick }) {
 
   
   
@@ -42,7 +42,7 @@ export default function Card({_id, picture, title, description, tags, email, isB
     <TextAreaStyled>
     {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
       <DeleteStyled onClick={handleDeleteClick}><ReactSVG src={deleteIcon}/></DeleteStyled>
-      <Link to={{ pathname: "/edit", editCardData: { title, description, email, picture, tags, id: _id }}}><EditSymbol/></Link>
+      <Link to={{ pathname: "/edit", editCardData: { title, description, email, picture, tags, _id }}}><EditSymbol/></Link>
       <h1>{title}</h1>
       <p>{description}</p>
       <ButtonsAreaStyled>

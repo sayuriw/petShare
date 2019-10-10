@@ -101,10 +101,17 @@ export default function App() {
       ])
     })
   }
-  function handleEditClick() {
-    
+  function handleEditClick(id, editData) {
+    patchCard(id, editData)
+    .then(editPet => {
+      const index = pets.findIndex(pet => pet._id === editPet.id)
+      setPets([
+        ...pets.slice(0, index),
+        editPet,
+        ...pets.slice(index + 1)
+      ])
+    })
   }
-
   
   function withCardPage(title, filterProp) {
     return () => {
