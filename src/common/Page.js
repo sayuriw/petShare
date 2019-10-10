@@ -24,8 +24,8 @@ const PageStyled = styled.main`
 `
 const Header = styled.header`
   display: flex;
-  justify-content: center;
-  /* align-items: center; */
+  justify-content: flex-start;
+  align-items: center; 
   /* background: #6f6f6f; */
   color: white;
 `

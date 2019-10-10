@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import Tag from './Tag'
 import { Edit } from 'styled-icons/typicons/Edit'
 import deleteIcon from '../../data/trash-alt-solid.svg'
+import { Link } from 'react-router-dom'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -22,7 +23,7 @@ Card.defaultProps = {
   isBookmarked: false
 }
  
-export default function Card({picture, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick, onEditClick}) {
+export default function Card({_id, picture, title, description, tags, email, isBookmarked, onBookmarkClick, onDeleteClick, onEditClick}) {
 
   
   
@@ -34,11 +35,6 @@ export default function Card({picture, title, description, tags, email, isBookma
     event.stopPropagation() 
     onDeleteClick() 
   }
-  function handleEditClick(event) {
-    event.stopPropagation() 
-    onEditClick() 
-  }
-
 
   return (
   <CardStyled>
@@ -46,7 +42,7 @@ export default function Card({picture, title, description, tags, email, isBookma
     <TextAreaStyled>
     {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
       <DeleteStyled onClick={handleDeleteClick}><ReactSVG src={deleteIcon}/></DeleteStyled>
-      <EditStyled onClick={handleEditClick}><EditSymbol/></EditStyled>
+      <Link to={{ pathname: "/edit", editCardData: { title, description, email, picture, tags, id: _id }}}><EditSymbol/></Link>
       <h1>{title}</h1>
       <p>{description}</p>
       <ButtonsAreaStyled>
@@ -70,15 +66,6 @@ const TextAreaStyled = styled.div`
   position: relative;
 `
 
-const EditStyled = styled.div`
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  right: 35px;
-  top: -10px;
-  color: #83b0ea;
-
-`
 const DeleteStyled = styled.div`
   position: absolute;
   width: 30px;
