@@ -49,9 +49,9 @@ export default function Filter ({activeTag, onTagClick, tags}) {
   )
 }
 const FilterStyled = styled.button`
-  padding-top: 5px;
-  padding-bottom: 25px;
-  margin: 20px;
+  padding: 5px;
+  margin-top: 20px;
+  margin: 10px;
   font-size: 18px;
   border-radius: 3px;
   color: white;
@@ -60,7 +60,6 @@ const FilterStyled = styled.button`
 `
 const FilterWrapperStyled = styled.div`
   display: flex;
-  margin: 10px 0 5px 20px;
 `
 const PopupStyled = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import React from 'react'
-import FavoritesButton from './FavoritesButton'
+import FavoritesButton from '../FavoritesButton'
 import { action } from '@storybook/addon-actions'
 
 
