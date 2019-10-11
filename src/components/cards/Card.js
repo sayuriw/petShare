@@ -18,7 +18,8 @@ Card.propTypes = {
   picture: PropTypes.string,
   email: PropTypes.string,
   onBookmarkClick: PropTypes.func,
-  onDeleteClick: PropTypes.func
+  onDeleteClick: PropTypes.func,
+  
 }
 Card.defaultProps = {
   isBookmarked: false
@@ -28,19 +29,6 @@ export default function Card({id, picture, title, description, tags, email, isBo
   
   const [isPopped, setIsPopped] = useState(false)
   
-  function handleBookmarkClick(event) {
-    event.stopPropagation() 
-    onBookmarkClick() 
-  }
-  function handleDeleteClick(event) {
-    event.stopPropagation() 
-    setIsPopped(false)
-    onDeleteClick() 
-  }
-function handleMenuClick() {
-    setIsPopped(!isPopped)
-}
-
   return (
   <CardStyled>
     <Img src={picture ? picture : petIcon}/>
@@ -60,6 +48,21 @@ function handleMenuClick() {
     </TextAreaStyled>
   </CardStyled>
   )
+
+  function handleBookmarkClick(event) {
+    event.stopPropagation() 
+    onBookmarkClick() 
+  }
+
+  function handleDeleteClick(event) {
+    event.stopPropagation() 
+    setIsPopped(false)
+    onDeleteClick() 
+  }
+
+  function handleMenuClick() {
+    setIsPopped(!isPopped)
+  }
 }
 
 const CardStyled = styled.section`
@@ -69,10 +72,10 @@ const CardStyled = styled.section`
   position: relative;
   `
 const MenuStyled = styled(Menu)`
-position: absolute;
-height:35px;
-width: 35px;
-right: 10px;
+  position: absolute;
+  height:35px;
+  width: 35px;
+  right: 10px;
 `
 const MenuWrapperStyled = styled.div`
   display: flex;
