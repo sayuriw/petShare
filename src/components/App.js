@@ -104,7 +104,7 @@ export default function App() {
   function handleEditClick(id, editData) {
     patchCard(id, editData)
     .then(editPet => {
-      const index = pets.findIndex(pet => pet._id === editPet.id)
+      const index = pets.findIndex(pet => pet._id === editPet._id)
       setPets([
         ...pets.slice(0, index),
         editPet,
@@ -139,6 +139,3 @@ const AppStyled = styled.div`
   bottom: 0;
   height: 100%;
   `
-const SectionStyled = styled.section`
-  background-color: deeppink;
-`
