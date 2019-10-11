@@ -12,7 +12,7 @@ export default function Tag({ text }) {
 }
 
 const TagStyled = styled.div`
-  background-color: #8d7ef4;
+  background-color: #83b0ea;
   color: white;
   font-size: 18px;
   display: inline-block;

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import CardPage from './cards/CardPage'
 import styled from 'styled-components'
 import NavBar from './Navbar'
+import EditCardPage from './EditCardPage'
 import CreateCardPage from './CreateCardPage'
 import { getCards, patchCard, postCard, deleteCard } from './cards/services'
 import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'
@@ -51,6 +52,10 @@ export default function App() {
           <Route path="/newCard" render={() => 
             <CreateCardPage title="Create a new PetCard" onSubmit={createCard}/>}
           />
+          <Route path="/edit" render={(props) => {
+            return <EditCardPage onSubmit={handleEditClick} editCardData={props.location.editCardData}/>}}
+          />
+        
         </Switch>
         <NavBar/>
       </AppStyled>
@@ -96,6 +101,17 @@ export default function App() {
       ])
     })
   }
+  function handleEditClick(id, editData) {
+    patchCard(id, editData)
+    .then(editPet => {
+      const index = pets.findIndex(pet => pet._id === editPet._id)
+      setPets([
+        ...pets.slice(0, index),
+        editPet,
+        ...pets.slice(index + 1)
+      ])
+    })
+  }
   
   function withCardPage(title, filterProp) {
     return () => {
@@ -106,6 +122,7 @@ export default function App() {
                        activeTag={selectedTag}
                        onBookmarkClick={handleBookmarkClick} 
                        onDeleteClick={handleDeleteClick}
+                       onEditClick={handleEditClick}
                        pets={petsFilteredByProp}/>
 
     }

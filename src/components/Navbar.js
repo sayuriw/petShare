@@ -25,7 +25,7 @@ const NavLinkStyled = styled(NavLink)`
   border-radius: 3px;
   background-color: #6F6f6f;
   &.active {
-    background: #8d7ef4;
+    background: #83b0ea;
   }
 `
 const NavbarStyled = styled.nav`
