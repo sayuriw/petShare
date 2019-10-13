@@ -23,6 +23,7 @@ const cors = require('cors')
 const db = require('./config/keys').mongoURI
 const passport = require('passport')
 const users = require('./routes/users')
+const cards = require('./routes/cards')
 
 const app = express()
 
@@ -47,7 +48,8 @@ app.use(passport.initialize())
 require('./config/passport')(passport)
 
 // Routes
-app.use("/users", users);
+app.use("/users", users)
+app.use('/cards', cards)
 
 const port = 5000
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

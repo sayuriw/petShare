@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { DocumentAdd } from 'styled-icons/typicons/DocumentAdd'
 import { Paw } from 'styled-icons/fa-solid/Paw'
 import { Home } from 'styled-icons/fa-solid/Home'
+import { User } from 'styled-icons/boxicons-solid/User'
 export default function Navbar() {
   
   return (
@@ -11,6 +12,7 @@ export default function Navbar() {
       <NavLinkStyled exact to="/"><HomeStyled/></NavLinkStyled>
       <NavLinkStyled to="/favorites"><PawStyled/></NavLinkStyled>  
       <NavLinkStyled to="/newCard"><DocumentAddStyled/></NavLinkStyled>
+      <NavLinkStyled to="/register"><UserStyled/></NavLinkStyled>   
     </NavbarStyled>
   )
 }
@@ -48,4 +50,7 @@ const HomeStyled = styled(Home)`
   height:35px;
   width: 35px;
 `
-
+const UserStyled = styled(User)`
+  height:35px;
+  width: 35px;
+`

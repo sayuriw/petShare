@@ -6,6 +6,8 @@ import EditCardPage from './EditCardPage'
 import CreateCardPage from './CreateCardPage'
 import { getCards, patchCard, postCard, deleteCard } from './cards/services'
 import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'
+import LoginPage from '../components/auth/LoginPage'
+import Register from '../components/auth/Register'
 
 
 export default function App() {
@@ -44,22 +46,23 @@ export default function App() {
   const FavoritesPage = withCardPage('Favorites', 'isBookmarked')
 
   return (
-    <Router>
-      <AppStyled>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/favorites" component={FavoritesPage} />
-          <Route path="/newCard" render={() => 
-            <CreateCardPage title="Create a new PetCard" onSubmit={createCard}/>}
-          />
-          <Route path="/edit" render={(props) => {
-            return <EditCardPage onSubmit={handleEditClick} editCardData={props.location.editCardData}/>}}
-          />
-        
-        </Switch>
-        <NavBar/>
-      </AppStyled>
-    </Router>
+      <Router>
+        <AppStyled>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/favorites" component={FavoritesPage} />
+            <Route path="/newCard" render={() => 
+              <CreateCardPage title="Create a new PetCard" onSubmit={createCard}/>}
+            />
+            <Route path="/edit" render={(props) => {
+              return <EditCardPage onSubmit={handleEditClick} editCardData={props.location.editCardData}/>}}
+            />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={LoginPage} />
+          </Switch>
+          <NavBar/>
+        </AppStyled>
+      </Router>
   )
   
   function createCard(cardData) {
