@@ -28,11 +28,9 @@ export default function Register({ title }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log(newUser)
     axios
       .post('/users/register', newUser)
       .then(_res => {
-        console.log(_res)
         dispatch(GET_ERRORS({}))
         redirectToLoginPage()
       })
