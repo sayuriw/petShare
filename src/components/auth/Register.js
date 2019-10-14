@@ -3,11 +3,14 @@ import styled from 'styled-components/macro'
 import Page from '../../common/Page'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { CHANGE_SIGN_UP_FORM, CHANGE_LOGIN_FORM, GET_ERRORS } from '../../actions/actions'
-import axios from "axios"
+import {
+  CHANGE_SIGN_UP_FORM,
+  CHANGE_LOGIN_FORM,
+  GET_ERRORS
+} from '../../actions/actions'
+import axios from 'axios'
 
-
-export default function Register({title}) {
+export default function Register({ title }) {
   const dispatch = useDispatch()
   const history = useHistory()
   const newUser = useSelector(state => state.newUser)
@@ -15,18 +18,21 @@ export default function Register({title}) {
   const errors = useSelector(state => state.authenticationError)
 
   function handleChange(event) {
-    dispatch(CHANGE_SIGN_UP_FORM({
-      ...newUser,
-      [event.target.name]: event.target.value
-    }))
+    dispatch(
+      CHANGE_SIGN_UP_FORM({
+        ...newUser,
+        [event.target.name]: event.target.value
+      })
+    )
   }
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log("test")
+    console.log(newUser)
     axios
       .post('/users/register', newUser)
       .then(_res => {
+        console.log(_res)
         dispatch(GET_ERRORS({}))
         redirectToLoginPage()
       })
@@ -34,40 +40,66 @@ export default function Register({title}) {
   }
 
   function redirectToLoginPage() {
-    dispatch(CHANGE_LOGIN_FORM({
-      ...loginData,
-      email: newUser.email
-    }))
+    dispatch(
+      CHANGE_LOGIN_FORM({
+        ...loginData,
+        email: newUser.email
+      })
+    )
     history.push('/')
   }
 
   return (
-
     <Page title={title}>
-      <p>Already have an Account? 
+      <p>
+        Already have an Account?
         <Link to="/login">Login</Link>
       </p>
-      <FormStyled onSubmit={ event => handleSubmit(event)}>
+      <FormStyled onSubmit={event => handleSubmit(event)}>
         <LabelStyled>
           Name
-          <input name="name" type="text" placeholder="Full Name" value={newUser.name} onChange={event => handleChange(event)}/>
+          <input
+            name="name"
+            type="text"
+            placeholder="Full Name"
+            value={newUser.name}
+            onChange={event => handleChange(event)}
+          />
           <span>{errors.name}</span>
         </LabelStyled>
         <LabelStyled>
           Email
-          <input name="email" type="text" placeholder="Email" value={newUser.email} onChange={event => handleChange(event)}/>
+          <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            value={newUser.email}
+            onChange={event => handleChange(event)}
+          />
           <span>{errors.email}</span>
         </LabelStyled>
         <LabelStyled>
           Password
-          <input name="password" type="password" placeholder="Password" value={newUser.password} onChange={event => handleChange(event)}/>
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={newUser.password}
+            onChange={event => handleChange(event)}
+          />
           <span>{errors.email}</span>
         </LabelStyled>
         <LabelStyled>
           Password
-          <input name="repeatPassword" type="password" placeholder="Repeat Password" value={newUser.repeatPassword} onChange={event => handleChange(event)}/>
+          <input
+            name="repeatPassword"
+            type="password"
+            placeholder="Repeat Password"
+            value={newUser.repeatPassword}
+            onChange={event => handleChange(event)}
+          />
           <span>{errors.email}</span>
-        </LabelStyled> 
+        </LabelStyled>
         <ButtonStyled>Register</ButtonStyled>
       </FormStyled>
     </Page>
@@ -80,7 +112,6 @@ const FormStyled = styled.form`
   padding: 20px;
   justify-content: center;
   margin-top: 50px;
-
 `
 const LabelStyled = styled.label`
   display: grid;
@@ -94,6 +125,3 @@ const ButtonStyled = styled.button`
   color: white;
   background-color: #6f6f6f;
 `
-
-
-
