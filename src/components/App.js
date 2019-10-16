@@ -1,13 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import CardPage from './cards/CardPage'
 import styled from 'styled-components'
-import NavBar from './Navbar'
+import NavBarLoggedIn from './NavbarLoggedIn'
 import EditCardPage from './EditCardPage'
 import CreateCardPage from './CreateCardPage'
 import { getCards, patchCard, postCard, deleteCard } from './cards/services'
 import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'
 import LoginPage from '../components/auth/LoginPage'
 import Register from '../components/auth/Register'
+import { useSelector, useDispatch } from 'react-redux'
+import jwt_decode from 'jwt-decode'
+import setAuthToken from '../utils/setAuthToken'
+import { SET_CURRENT_USER } from '../actions/actions'
+import Logout from '../components/auth/LogoutPage'
 
 
 export default function App() {
@@ -45,8 +50,26 @@ export default function App() {
   const HomePage = withCardPage('PetShare')
   const FavoritesPage = withCardPage('Favorites', 'isBookmarked')
 
-  return (
-      <Router>
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated)
+
+  if (localStorage.jwt) {
+    const token = localStorage.jwt
+    const decoded = jwt_decode(token)
+    const currentTime = Date.now() / 1000
+    setAuthToken(token)
+
+  if (decoded.exp > currentTime) {
+    dispatch(SET_CURRENT_USER(decoded))
+  } else {
+    dispatch(SET_CURRENT_USER({}))
+  }
+}
+
+function renderDependingOnAuth() {
+  console.log(isAuthenticated)
+  if (isAuthenticated) {
+    return (
         <AppStyled>
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -57,13 +80,52 @@ export default function App() {
             <Route path="/edit" render={(props) => {
               return <EditCardPage onSubmit={handleEditClick} editCardData={props.location.editCardData}/>}}
             />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/logout" component={Logout} />
+            {/* <Route exact path="/login" component={LoginPage} /> */}
           </Switch>
-          <NavBar/>
-        </AppStyled>
-      </Router>
+          <NavBarLoggedIn/>
+        </AppStyled> 
+    )
+  } else {
+    return (
+      <Switch>
+        <Route exact path="/" render={() => <LoginPage />} />
+        <Route path="/register" render={() => <Register />} />
+      </Switch>
+    )
+  }
+}
+  return (
+    <Router>
+      <AppStyled>
+        {renderDependingOnAuth()}
+      </AppStyled>
+    </Router>
   )
+
+
+
+  
+
+  // return (
+  //     <Router>
+  //       <AppStyled>
+  //         <Switch>
+  //           <Route exact path="/" component={HomePage} />
+  //           <Route path="/favorites" component={FavoritesPage} />
+  //           <Route path="/newCard" render={() => 
+  //             <CreateCardPage title="Create a new PetCard" onSubmit={createCard}/>}
+  //           />
+  //           <Route path="/edit" render={(props) => {
+  //             return <EditCardPage onSubmit={handleEditClick} editCardData={props.location.editCardData}/>}}
+  //           />
+  //           <Route exact path="/register" component={Register} />
+  //           <Route exact path="/login" component={LoginPage} />
+  //         </Switch>
+  //         <NavBar/>
+  //       </AppStyled>
+  //     </Router>
+  // )
   
   function createCard(cardData) {
     postCard(cardData).then(pet => {
@@ -132,6 +194,7 @@ export default function App() {
   }
 }
 
+
 const AppStyled = styled.div`
   display: grid;
   grid-template-rows: auto 48px;
@@ -142,3 +205,50 @@ const AppStyled = styled.div`
   bottom: 0;
   height: 100%;
   `
+
+// const dispatch = useDispatch()
+// const isAuthenticated = useSelector(state => state.authentication.isAuthenticated)
+
+// if (localStorage.jwt) {
+//   const token = localStorage.jwt
+//   const decoded = jwt_decode(token)
+//   const currentTime = Date.now() / 1000
+//   setAuthToken(token)
+
+//   if (decoded.exp > currentTime) {
+//     dispatch(SET_CURRENT_USER(decoded))
+//   } else {
+//     dispatch(SET_CURRENT_USER({}))
+//   }
+// }
+
+// function renderDependingOnAuth() {
+//   if (isAuthenticated) {
+//     return (
+//       <Switch>
+//         <Route exact path="/" render={() => <Dashboard />} />
+//         <Route path="/settings" render={() => <Settings />} />
+//         <Route path="/editor" render={() => <LawnoteEditor />} />
+//         <Route path="/search" render={() => <Search />} />
+//       </Switch>
+//     )
+//   } else {
+//     return (
+//       <Switch>
+//         <Route exact path="/" render={() => <Login />} />
+//         <Route path="/signup" render={() => <SignUp />} />
+//       </Switch>
+//     )
+//   }
+// }
+
+// return (
+//   <Router>
+//     <div className="App">
+//       {renderDependingOnAuth()}
+//     </div>
+//   </Router>
+// )
+// }
+
+// export default App;

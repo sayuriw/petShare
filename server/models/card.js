@@ -8,6 +8,7 @@ const cardSchema = new mongoose.Schema({
   email: String,
   picture: String,
   createdDate: Date,
+ 
 })
 
 cardSchema.pre('save', function(next) {

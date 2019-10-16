@@ -5,14 +5,14 @@ import { DocumentAdd } from 'styled-icons/typicons/DocumentAdd'
 import { Paw } from 'styled-icons/fa-solid/Paw'
 import { Home } from 'styled-icons/fa-solid/Home'
 import { User } from 'styled-icons/boxicons-solid/User'
-export default function Navbar() {
+export default function NavbarLoggedIn() {
   
   return (
     <NavbarStyled>
       <NavLinkStyled exact to="/"><HomeStyled/></NavLinkStyled>
       <NavLinkStyled to="/favorites"><PawStyled/></NavLinkStyled>  
       <NavLinkStyled to="/newCard"><DocumentAddStyled/></NavLinkStyled>
-      <NavLinkStyled to="/register"><UserStyled/></NavLinkStyled>   
+      <NavLinkStyled to="/logout"><p>logout</p></NavLinkStyled>   
     </NavbarStyled>
   )
 }
