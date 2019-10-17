@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import EditCardPage from './EditCardPage'
+//import EditCardPage from './EditCardPage'
 import CardsListPage from './CardsListPage'
 import styled from 'styled-components'
 import NavBar from './Navbar'
@@ -37,13 +37,13 @@ export default function App() {
             />
             <Route
               path="/newCard"
-              render={() => <CreateCardPage onSubmit={createCard} />}
+              render={() => <CreateCardPage onSubmit={createCard} editCardData={{}} />}
             />
             <Route
               path="/edit"
               render={props => {
                 return (
-                  <EditCardPage
+                  <CreateCardPage
                     onSubmit={handleEditClick}
                     editCardData={props.location.editCardData}
                   />

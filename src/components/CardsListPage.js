@@ -14,15 +14,8 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   const [selectedTag, setSelectedTag] = useState('')
 
   useEffect(() => {
-    getCards(pets).then(pets => {
-      pets.sort((a, b) => {
-        const dateA = new Date(b.createdDate).getTime()
-        const dateB = new Date(a.createdDate).getTime()
-        return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
-      })
-      setPets(showOnlyBookmarks ? pets.filter(pet => pet.isBookmarked) : pets)
-    })
-  }, [pets])
+    filterBookmark()
+  }, [showOnlyBookmarks])
 
   useEffect(() => {
     handleTagClick(selectedFilter, selectedTag)
@@ -65,6 +58,17 @@ export default function CardsListPage({ showOnlyBookmarks }) {
     </Page>
   )
 
+  function filterBookmark() {
+    getCards(pets).then(pets => {
+      pets.sort((a, b) => {
+        const dateA = new Date(b.createdDate).getTime()
+        const dateB = new Date(a.createdDate).getTime()
+        return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
+      })
+      setPets(showOnlyBookmarks ? pets.filter(pet => pet.isBookmarked) : pets)
+    })
+  }
+
   function handleTagClick(selectedFilter, clickedTag) {
     setSelectedTag(clickedTag)
     setSelectedFilter(selectedFilter)
@@ -95,6 +99,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
         { ...pet, isBookmarked: !pet.isBookmarked },
         ...pets.slice(index + 1)
       ])
+      filterBookmark()
     })
   }
 
