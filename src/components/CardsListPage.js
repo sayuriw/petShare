@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import {
-  getCards,
-  patchCard,
-  postCard,
-  deleteCard
-} from '../components/cards/services'
+import { getCards, patchCard, deleteCard} from '../components/cards/services'
 import Card from '../components/cards/Card'
 import Filter from '../components/Filter'
 import Page from '../common/Page'
