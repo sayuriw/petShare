@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import Page from '../../common/Page'
 import { useSelector, useDispatch } from 'react-redux'
+import logo from '../../data/petshare.png'
 import {
   CHANGE_LOGIN_FORM,
   SET_CURRENT_USER,
@@ -12,6 +13,7 @@ import axios from 'axios'
 import { Home } from 'styled-icons/fa-solid/Home'
 import setAuthToken from '../../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
+
 
 export default function LoginPage({ title }) {
   const dispatch = useDispatch()
@@ -42,62 +44,80 @@ export default function LoginPage({ title }) {
   }
 
   return (
-    <Page title={title}>
-      <LinkStyled to="/">
-        <HomeStyled />
-      </LinkStyled>
-      <LoginFormStyled onSubmit={event => handleSubmit(event)}>
-        <LabelStyled>
-          Email
-          <input
-            name="email"
-            type="text"
-            placeholder="Email"
-            value={loginData.email}
-            onChange={event => handleChange(event)}
-          />
-          <span>
-            {errors.email}
-            {errors.emailnotfound}
-          </span>
-        </LabelStyled>
-        <LabelStyled>
-          Password
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={loginData.password}
-            onChange={event => handleChange(event)}
-          />
-          <span>
-            {errors.password}
-            {errors.passwordincorrect}
-          </span>
-        </LabelStyled>
-        <ButtonStyled>Login</ButtonStyled>
-      </LoginFormStyled>
-      <p>
-        Not registered yet?
-        <LinkStyled to="/register" onClick={() => dispatch(GET_ERRORS({}))}>
-          Register
-        </LinkStyled>
-      </p>
+    <Page title={logo}>
+      <BoxStyled>
+        <LoginFormStyled onSubmit={event => handleSubmit(event)}>
+          <LabelStyled>
+            Email
+            <InputStyled
+              name="email"
+              type="text"
+              value={loginData.email}
+              onChange={event => handleChange(event)}
+            />
+            <span>
+              {errors.email}
+              {errors.emailnotfound}
+            </span>
+          </LabelStyled>
+          <LabelStyled>
+            Password
+            <InputStyled
+              name="password"
+              type="password"
+              value={loginData.password}
+              onChange={event => handleChange(event)}
+            />
+            <span>
+              {errors.password}
+              {errors.passwordincorrect}
+            </span>
+          </LabelStyled>
+          <ButtonStyled>Login</ButtonStyled>
+        </LoginFormStyled>
+        <p>
+          Not registered yet?
+          <LinkStyled to="/register" onClick={() => dispatch(GET_ERRORS({}))}>
+            Register
+          </LinkStyled>
+        </p>
+      </BoxStyled>
     </Page>
   )
 }
+const BoxStyled = styled.section`
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+  background-color: white;
+  padding: 20px;
+
+`
 
 const LoginFormStyled = styled.form`
+
   display: grid;
   gap: 25px;
-  padding: 20px;
+  padding-top: 0;
+  padding: 0px;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 10px;
 `
 const LabelStyled = styled.label`
-  display: grid;
-  gap: 10px;
+ 
+ 
 `
+const InputStyled = styled.input`
+  width: 100%;
+  font-size: 1rem;
+  :focus {
+    border: deeppink solid 1px;
+  }
+`
+
 const ButtonStyled = styled.button`
   padding: 10px;
   margin: 20px;
@@ -112,4 +132,6 @@ const HomeStyled = styled(Home)`
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
+  color: var(--blue);
+  padding-left: 5px;
 `

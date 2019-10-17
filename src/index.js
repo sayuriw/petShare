@@ -7,13 +7,10 @@ import { createStore } from 'redux'
 import rootReducer from '../src/reducers/rootReducer'
 import { Provider } from 'react-redux'
 import axios from 'axios'
+import store from './store'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
 
 ReactDOM.render(
 <Provider store={store}>

@@ -12,8 +12,8 @@ export default function Tag({ text }) {
 }
 
 const TagStyled = styled.div`
-  background-color: #83b0ea;
-  color: white;
+  background-color: var(--blue);
+  color: var(--white);
   font-size: 18px;
   display: inline-block;
   border-radius: 5px;

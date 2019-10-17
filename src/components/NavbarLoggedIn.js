@@ -5,6 +5,7 @@ import { DocumentAdd } from 'styled-icons/typicons/DocumentAdd'
 import { Paw } from 'styled-icons/fa-solid/Paw'
 import { Home } from 'styled-icons/fa-solid/Home'
 import { User } from 'styled-icons/boxicons-solid/User'
+import { LogOut } from 'styled-icons/boxicons-regular/LogOut'
 export default function NavbarLoggedIn() {
   
   return (
@@ -12,7 +13,7 @@ export default function NavbarLoggedIn() {
       <NavLinkStyled exact to="/"><HomeStyled/></NavLinkStyled>
       <NavLinkStyled to="/favorites"><PawStyled/></NavLinkStyled>  
       <NavLinkStyled to="/newCard"><DocumentAddStyled/></NavLinkStyled>
-      <NavLinkStyled to="/logout"><p>logout</p></NavLinkStyled>   
+      <NavLinkStyled to="/logout"><LogoutStyled/></NavLinkStyled>   
     </NavbarStyled>
   )
 }
@@ -51,6 +52,10 @@ const HomeStyled = styled(Home)`
   width: 35px;
 `
 const UserStyled = styled(User)`
+  height:35px;
+  width: 35px;
+`
+const LogoutStyled = styled(LogOut)`
   height:35px;
   width: 35px;
 `

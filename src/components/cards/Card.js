@@ -66,7 +66,7 @@ export default function Card({id, picture, title, description, tags, email, isBo
 }
 
 const CardStyled = styled.section`
-  background: #FFFFFF;
+  background: var(--white);
   border-radius: 5px;
   box-shadow: 0 10px 10px #0002;
   position: relative;
@@ -107,7 +107,7 @@ const ButtonsAreaStyled = styled.div`
 `
 const BookmarkStyled = styled.div`
   position: absolute;
-  color: ${({ active }) => (active ? '#e6e04a' : '#83b0ea')};
+  color: ${({ active }) => (active ? 'var(--highlight)' : 'var(--blue)')};
   width: 40px;
   height: 40px;
   right: 15px;
@@ -116,7 +116,7 @@ const BookmarkStyled = styled.div`
 const ContactMeStyled = styled.a`
   text-decoration: none;
   padding-left: 20px;
-  color: #83b0ea;
+  color: var(--blue);
 `
 
 
