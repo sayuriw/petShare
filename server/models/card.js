@@ -9,7 +9,7 @@ const cardSchema = new mongoose.Schema({
   email: String,
   picture: String,
   createdDate: Date,
-  user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
+  user: {type: mongoose.Schema.Types.ObjectId} 
 })
 
 cardSchema.pre('save', function(next) {
