@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components/macro'
 export default createGlobalStyle`
 
 :root {
-    --background: #EFEFEF;
+    --background-grey: #EFEFEF;
     --blue:#83b0ea;
     --grey:#6F6f6f;
     --highlight:#e6e04a;
@@ -16,7 +16,7 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
-    background: #EFEFEF;
+    background: var(--background-grey);
     font-family: Helvetica;
     font-size: 17px;
   }

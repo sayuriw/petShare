@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
+import Filter from '../components/Filter'
 
 Page.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node
 }
 
-export default function Page({ title, children }) {
+export default function Page({ title, children, tags, activeTag, onTagClick }) {
   return (
     <PageStyled>
-      <Header><ImgStyled src={title} alt={title}/></Header>  
+      <Header><ImgStyled src={title} alt={title}/></Header>
+      <Filter tags={tags} activeTag={activeTag} onTagClick={onTagClick}/>  
       {children}
     </PageStyled>
   )
