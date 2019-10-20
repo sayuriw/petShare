@@ -54,8 +54,8 @@ const FilterStyled = styled.button`
   margin: 10px;
   font-size: 18px;
   border-radius: 3px;
-  color: white;
-  background-color: #6F6f6f;
+  color: var(--white);
+  background-color: var(--grey);
   border: black 1px solid; 
 `
 const FilterWrapperStyled = styled.div`
@@ -79,7 +79,7 @@ const TagButtonStyled = styled.button`
   font-size: 18px;
   margin: 1px;
   border-radius: 3px;
-  background-color: ${({ active }) => (active ? '#8d7ef4' : '#FFFFFF')};
+  background-color: ${({ active }) => (active ? '#8d7ef4' : 'var(--white')};
   border: black 1px solid; 
   `
 

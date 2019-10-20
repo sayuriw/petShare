@@ -24,9 +24,9 @@ const NavLinkStyled = styled(NavLink)`
   font-size: 1.3em;
   color: white;
   border-radius: 3px;
-  background-color: #6F6f6f;
+  background-color: var(--grey);
   &.active {
-    background: #83b0ea;
+    background: var(--blue);
   }
 `
 const NavbarStyled = styled.nav`

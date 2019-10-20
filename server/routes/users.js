@@ -197,7 +197,6 @@ router.get('/logout', (req, res, next) => {
 //Verifizierung
 
 router.get('/verify', (req, res, next) => {
-  console.log('cade??',req)
   const { query } = req
   const { token } = query
 

@@ -88,7 +88,7 @@ export default function LoginPage() {
             Register
           </LinkStyled>
         </p>
-        <ButtonStyled onclick={event => logout(event)}>Logout</ButtonStyled>
+        <ButtonStyled onClick={event => logout(event)}>Logout</ButtonStyled>
       </BoxStyled>
     </Page>
   )
@@ -138,8 +138,9 @@ const LabelStyled = styled.label`
 const InputStyled = styled.input`
   width: 100%;
   font-size: 1rem;
+  border: var(--grey) solid 1px;
   :focus {
-    border: deeppink solid 1px;
+    border: var(--blue) solid 1px;
   }
 `
 
@@ -149,7 +150,7 @@ const ButtonStyled = styled.button`
   font-size: 18px;
   border-radius: 3px;
   color: white;
-  background-color: #6f6f6f;
+  background-color: var(--grey);
 `
 const HomeStyled = styled(Home)`
   height: 35px;
@@ -157,6 +158,6 @@ const HomeStyled = styled(Home)`
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
-  color: #83b0ea;
+  color: var(--blue);
   padding-left: 5px;
 `

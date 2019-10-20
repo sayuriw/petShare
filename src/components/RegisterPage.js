@@ -118,8 +118,9 @@ const LabelStyled = styled.label`
 const InputStyled = styled.input`
   width: 100%;
   font-size: 1rem;
+  border: var(--grey) solid 1px;
   :focus {
-    border: deeppink solid 1px;
+    border: var(--blue) solid 1px;
   }
 `
 
@@ -129,7 +130,7 @@ const ButtonStyled = styled.button`
   font-size: 18px;
   border-radius: 3px;
   color: white;
-  background-color: #6f6f6f;
+  background-color: var(--grey);
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
