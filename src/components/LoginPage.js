@@ -8,22 +8,20 @@ import { fetchUserLogin, setToStorage, getFromStorage } from '../utils/userServi
 
 export default function LoginPage() {
 
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState(getFromStorage('user'))
   const [loginError, setLoginError] = useState('')
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [isCreated, setIsCreated] = useState(false)
   
   useEffect(() => {
-    console.log('TEST')
-    const obj = getFromStorage('user')
-    //console.log('token', obj)
-      fetch('/users/verify?token=' + token)
+    const userObj = getFromStorage('user')
+    const obj = userObj.token
+      fetch('/users/verify?token=' + token.token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
             setToken(obj)
-            console.log(token)
           } else {
             setLoginError()
           }
@@ -45,7 +43,7 @@ export default function LoginPage() {
       console.log('json', json) ////console log if login successfull
       if (json.success) {
         setToStorage('user', { token: json.token})
-        // setToStorage('userId', { userId: json.userId})
+        setToStorage('userId', { userId: json.userId})
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')

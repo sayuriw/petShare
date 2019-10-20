@@ -60,3 +60,14 @@ export function setToStorage(key, obj) {
     console.error(err)
   }
 }
+// verifying user
+
+function fetchVerifyUser({ method = 'GET', id = '', data } = {}) {
+  return fetch('/users/signup' + id, {
+    method,
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json'
+    }
+  }).then(res => res.json())
+}

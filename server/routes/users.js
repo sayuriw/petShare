@@ -153,7 +153,7 @@ router.post('/login', (req, res, next) => {
         return res.send({
           success: true,
           message: 'Signed in',
-          // userId: userSession.userId,
+          userId: userSession.userId,
           token: doc._id
         })
       })
@@ -194,40 +194,40 @@ router.get('/logout', (req, res, next) => {
   )
 })
 
-// Verifizierung
+//Verifizierung
 
-// router.get('/verify', (req, res, next) => {
-//   console.log('cade??',req)
-//   const { query } = req
-//   const { token } = query
+router.get('/verify', (req, res, next) => {
+  console.log('cade??',req)
+  const { query } = req
+  const { token } = query
 
-//   UserSession.find(
-//     {
-//       _id: token,
-//       isDeleted: false
-//     },
-//     (err, sessions) => {
-//       if (err) {
-//         console.log(err)
-//         return res.send({
-//           success: false,
-//           message: 'Err'
-//         })
-//       }
-//       if (sessions.length !== 1) {
-//         return res.send({
-//           success: false,
-//           message: 'Error: Invalid session'
-//         })
-//       } else {
-//         return res.send({
-//           success: true,
-//           message: 'Good'
-//         })
-//       }
-//     }
-//   )
-// })
+  UserSession.find(
+    {
+      _id: token,
+      isDeleted: false
+    },
+    (err, sessions) => {
+      if (err) {
+        console.log(err)
+        return res.send({
+          success: false,
+          message: 'Err'
+        })
+      }
+      if (sessions.length !== 1) {
+        return res.send({
+          success: false,
+          message: 'Error: Invalid session'
+        })
+      } else {
+        return res.send({
+          success: true,
+          message: 'Good'
+        })
+      }
+    }
+  )
+})
 
 module.exports = router
 
