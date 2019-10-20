@@ -1,10 +1,13 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 //import EditCardPage from './EditCardPage'
 import CardsListPage from './CardsListPage'
+import RegisterPage from './RegisterPage'
 import styled from 'styled-components'
 import NavBar from './Navbar'
 import CreateCardPage from './CreateCardPage'
-import { patchCard, postCard } from '../components/cards/services'
+import LoginPage from './LoginPage'
+import { patchCard, postCard } from '../utils/cardServices'
+import { getFromStorage } from '../utils/userServices'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 export const PetsContext = React.createContext([[], () => {}])
@@ -20,14 +23,16 @@ function PetsProvider({ children }) {
 }
 
 export default function App() {
+  
   const [pets, setPets] = useContext(PetsContext)
+  
 
   return (
     <PetsProvider>
       <Router>
         <AppStyled>
           <Switch>
-            <Route exact path="/" render={() => <CardsListPage />} />
+            <Route exact path="/home" render={() => <CardsListPage />} />
             <Route
               exact
               path="/favorites"
@@ -47,9 +52,17 @@ export default function App() {
                     onSubmit={handleEditClick}
                     editCardData={props.location.editCardData}
                   />
-                )
-              }}
-            />
+                  )
+                }}
+                />
+            <Route
+                  exact path="/"
+                  render={() => <LoginPage />}
+                  />
+            <Route
+                  path="/register"
+                  render={() => <RegisterPage />}
+                  />
           </Switch>
           <NavBar />
         </AppStyled>

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Card = require('./model')
+const Card = require('../models/Card')
 
 router.get('/', (req, res) => {
   Card.find()

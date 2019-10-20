@@ -8,9 +8,10 @@ export default function Navbar() {
   
   return (
     <NavbarStyled>
-      <NavLinkStyled exact to="/"><HomeStyled/></NavLinkStyled>
+      <NavLinkStyled to="/home"><HomeStyled/></NavLinkStyled>
       <NavLinkStyled to="/favorites"><PawStyled/></NavLinkStyled>  
       <NavLinkStyled to="/newCard"><DocumentAddStyled/></NavLinkStyled>
+      <NavLinkStyled exact to="/">login</NavLinkStyled>
     </NavbarStyled>
   )
 }
