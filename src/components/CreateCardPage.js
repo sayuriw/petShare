@@ -69,8 +69,8 @@ function upload(event) {
 }
 
   return (
-    isCreated ? <Redirect exact to="/" /> :
-    <Page title={logo}>
+    isCreated ? <Redirect exact to="/home" /> :
+    <Page title={logo} showFilter={false}>
       <Img src={picture ? picture : petIcon }/>
       <FormStyled onSubmit={handleSubmit}>
           <LabelStyled>
@@ -138,7 +138,7 @@ const ButtonStyled = styled.button`
   font-size: 18px;
   border-radius: 3px;
   color: white;
-  background-color: #6f6f6f;
+  background-color: var(--grey);
 `
 const ImageAddStyled = styled(ImageAdd)`
   height:25px;

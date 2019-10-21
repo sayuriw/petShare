@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import { FilterList } from 'styled-icons/material/FilterList'
 
-export default function Filter ({activeTag, onTagClick, tags}) {
+export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   const [isPopped, setIsPopped] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('all')
-  
 
   function togglePopup(tag) {
     if (selectedFilter === tag) {
@@ -24,11 +24,13 @@ export default function Filter ({activeTag, onTagClick, tags}) {
   function handleFilterClick() {
     setIsPopped(!isPopped)
   }
+
+  
   
 
   return (
     <>
-    <FilterStyled onClick={handleFilterClick}>Filters</FilterStyled>
+    <FilterStyled active={isActive} onClick={handleFilterClick}><FilterIconStyled/></FilterStyled>
      {isPopped && <FilterWrapperStyled> 
       <ButtonStyled onClick={event => {
         setIsPopped(false)
@@ -55,8 +57,9 @@ const FilterStyled = styled.button`
   font-size: 18px;
   border-radius: 3px;
   color: white;
-  background-color: #6F6f6f;
-  border: black 1px solid; 
+  outline: none;
+  border: none;
+  
 `
 const FilterWrapperStyled = styled.div`
   display: flex;
@@ -82,4 +85,11 @@ const TagButtonStyled = styled.button`
   background-color: ${({ active }) => (active ? '#8d7ef4' : '#FFFFFF')};
   border: black 1px solid; 
   `
+
+const FilterIconStyled = styled(FilterList)`
+  height:35px;
+  width: 35px;
+  color: var(--grey);
+  background-color: var(--background-grey);
+`
 

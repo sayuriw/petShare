@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { getCards, patchCard, deleteCard} from '../components/cards/services'
+import { getCards, patchCard, deleteCard } from '../utils/cardServices'
 import Card from '../components/cards/Card'
-import Filter from '../components/Filter'
 import Page from '../common/Page'
-import logo from '../data/petshare.png'
+import logo from '../data/petShareLogo.png'
 import { PetsContext } from './App'
+import { getFromStorage, patchUser, setToStorage } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
+   const sessionUser = getFromStorage('userId')
+   const sessionUserId = sessionUser.userId
+   
+
   const [pets, setPets] = useContext(PetsContext)
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
+  const [currentUser, setCurrentUser] = useState(sessionUserId)
 
   useEffect(() => {
     filterBookmark()
@@ -31,14 +36,12 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   })
 
   return (
-    <Page title={logo}>
+    <Page
+      title={logo}
+      tags={allTags}
+      activeTag={selectedTag}
+      onTagClick={handleTagClick}>
       <Scroller>
-        <Filter
-          tags={allTags}
-          activeTag={selectedTag}
-          onTagClick={handleTagClick}
-        />
-
         {petsFiltered.map(pet => (
           <Card
             key={pet._id}
@@ -57,6 +60,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
       </Scroller>
     </Page>
   )
+
 
   function filterBookmark() {
     getCards(pets).then(pets => {
@@ -92,7 +96,10 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   }
 
   function handleBookmarkClick(pet) {
-    patchCard(pet._id, { isBookmarked: !pet.isBookmarked }).then(updatedPet => {
+    console.log(currentUser)
+    patchCard(pet._id, { isBookmarked: !pet.isBookmarked })
+    patchUser(currentUser, {isBookmarked:[pet._id] })
+    .then(updatedPet => {
       const index = pets.findIndex(pet => pet._id === updatedPet._id)
       setPets([
         ...pets.slice(0, index),
