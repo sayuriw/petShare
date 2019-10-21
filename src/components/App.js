@@ -23,9 +23,26 @@ function PetsProvider({ children }) {
 }
 
 export default function App() {
-  
   const [pets, setPets] = useContext(PetsContext)
-  
+  //const [isActive, setIsActive] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [loginError, setLoginError] = useState('')
+
+  useEffect(_ => console.log(isLoggedIn), [isLoggedIn])
+  useEffect(() => {
+    const userObj = getFromStorage('user')
+    if (userObj && userObj['token']) {
+      fetch('/users/verify?token=' + userObj.token)
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            setIsLoggedIn(true)
+          } else {
+            setLoginError()
+          }
+        })
+    }
+  }, [])
 
   return (
     <PetsProvider>
@@ -42,7 +59,9 @@ export default function App() {
             />
             <Route
               path="/newCard"
-              render={() => <CreateCardPage onSubmit={createCard} editCardData={{}} />}
+              render={() => (
+                <CreateCardPage onSubmit={createCard} editCardData={{}} />
+              )}
             />
             <Route
               path="/edit"
@@ -52,17 +71,21 @@ export default function App() {
                     onSubmit={handleEditClick}
                     editCardData={props.location.editCardData}
                   />
-                  )
-                }}
+                )
+              }}
+            />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <LoginPage
+                  loginError={loginError}
+                  setIsLoggedIn={setIsLoggedIn}
+                  setLoginError={setLoginError}
                 />
-            <Route
-                  exact path="/"
-                  render={() => <LoginPage />}
-                  />
-            <Route
-                  path="/register"
-                  render={() => <RegisterPage />}
-                  />
+              )}
+            />
+            <Route path="/register" render={() => <RegisterPage />} />
           </Switch>
           <NavBar />
         </AppStyled>
@@ -94,4 +117,3 @@ const AppStyled = styled.div`
   bottom: 0;
   height: 100%;
 `
-

@@ -40,7 +40,7 @@ export default function Register({ title }) {
 
   return (
     isCreated ? <Redirect exact to="/home" /> :
-    <Page title={logo}>
+    <Page title={logo} showFilter={false}>
       <BoxStyled>
         <p>
           Already have an Account?

@@ -1,64 +1,69 @@
-import React, { useState, useEffect }from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { Link, Redirect } from 'react-router-dom'
 import Page from '../common/Page'
 import logo from '../data/petshare.png'
 import { Home } from 'styled-icons/fa-solid/Home'
-import { fetchUserLogin, setToStorage, getFromStorage } from '../utils/userServices'
+import {
+  fetchUserLogin,
+  setToStorage,
+  getFromStorage
+} from '../utils/userServices'
 
-export default function LoginPage() {
-
-  const [token, setToken] = useState(getFromStorage('user'))
-  const [loginError, setLoginError] = useState('')
+export default function LoginPage({
+  setIsLoggedIn,
+  loginError,
+  setLoginError
+}) {
+  //const [token, setToken] = useState(getFromStorage('user'))
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [isCreated, setIsCreated] = useState(false)
-  
-  useEffect(() => {
+
+  /* useEffect(() => {
     const userObj = getFromStorage('user')
-    const obj = userObj.token
-      fetch('/users/verify?token=' + token.token)
+    if (userObj && userObj['token']) {
+      fetch('/users/verify?token=' + userObj.token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
-            setToken(obj)
+            setIsLoggedIn(true)
           } else {
             setLoginError()
           }
         })
-      
-  }, [])
+    }
+  }, []) */
 
   function handleSubmit(event) {
     event.preventDefault()
-    
 
     const LoginData = {
       email: loginEmail,
       password: loginPassword
     }
-    
 
     fetchUserLogin(LoginData).then(json => {
       console.log('json', json) ////console log if login successfull
       if (json.success) {
-        setToStorage('user', { token: json.token})
-        setToStorage('userId', { userId: json.userId})
+        setToStorage('user', { token: json.token })
+        setToStorage('userId', { userId: json.userId })
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')
-        setToken(json.token)
+        //setToken(json.token)
         setIsCreated(true)
+        setIsLoggedIn(true)
       } else {
         setLoginError(json.message)
       }
-    }) 
-        
-    }
-    
-  return (
-    isCreated ? <Redirect to="/home" /> :
-    <Page title={logo}>
+    })
+  }
+
+  return isCreated ? (
+    <Redirect to="/home" />
+  ) : (
+    <Page title={logo} showFilter={false}>
       <BoxStyled>
         <ErrorMessageStyled>{loginError}</ErrorMessageStyled>
         <LoginFormStyled onSubmit={event => handleSubmit(event)}>
@@ -67,7 +72,7 @@ export default function LoginPage() {
             <InputStyled
               name="email"
               type="text"
-              value={loginEmail} 
+              value={loginEmail}
               onChange={onTextboxChangeLoginEmail}
             />
           </LabelStyled>
@@ -84,11 +89,9 @@ export default function LoginPage() {
         </LoginFormStyled>
         <p>
           Not registered yet?
-          <LinkStyled to="/register" >
-            Register
-          </LinkStyled>
+          <LinkStyled to="/register">Register</LinkStyled>
         </p>
-        <ButtonStyled onClick={event => logout(event)}>Logout</ButtonStyled>
+        {/* <ButtonStyled onClick={event => logout(event)}>Logout</ButtonStyled> */}
       </BoxStyled>
     </Page>
   )
@@ -99,15 +102,15 @@ export default function LoginPage() {
   function onTextboxChangeLoginPassword(event) {
     setLoginPassword(event.target.value)
   }
-  function logout() {
-      console.log('test')
-      fetch('users/logout?token=' + token)
-        .then(res => res.json())
-        .then(json => {
-          console.log('json', json) //console log if logout successfull
-            setToken('')
-          }) 
-        }
+  /* function logout() {
+    console.log('test')
+    fetch('users/logout?token=' + token)
+      .then(res => res.json())
+      .then(json => {
+        console.log('json', json) //console log if logout successfull
+        setToken('')
+      })
+  } */
 }
 
 const ErrorMessageStyled = styled.p`
@@ -131,10 +134,7 @@ const LoginFormStyled = styled.form`
   justify-content: center;
   margin-top: 10px;
 `
-const LabelStyled = styled.label`
- 
- 
-`
+const LabelStyled = styled.label``
 const InputStyled = styled.input`
   width: 100%;
   font-size: 1rem;

@@ -9,14 +9,14 @@ import { PetsContext } from './App'
 //import { getFromStorage, patchUser, setToStorage } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
-  // const sessionUser = getFromStorage('user')
-  // const sessionUserId = sessionUser.userId
+   //const sessionUser = getFromStorage('user')
+   //const sessionUserId = sessionUser.userId
 
   const [pets, setPets] = useContext(PetsContext)
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
-  // const [currentUser, setCurrentUser] = useState(sessionUserId)
+  //const [currentUser, setCurrentUser] = useState(sessionUserId)
 
   useEffect(() => {
     filterBookmark()
@@ -60,6 +60,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
       </Scroller>
     </Page>
   )
+
 
   function filterBookmark() {
     getCards(pets).then(pets => {

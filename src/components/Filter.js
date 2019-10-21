@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
-export default function Filter ({activeTag, onTagClick, tags}) {
+export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   const [isPopped, setIsPopped] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('all')
-  
+  //const [isActive, setIsActive] = useState(false)
 
   function togglePopup(tag) {
     if (selectedFilter === tag) {
@@ -24,11 +24,13 @@ export default function Filter ({activeTag, onTagClick, tags}) {
   function handleFilterClick() {
     setIsPopped(!isPopped)
   }
+
+  
   
 
   return (
     <>
-    <FilterStyled onClick={handleFilterClick}>Filters</FilterStyled>
+    <FilterStyled active={isActive} onClick={handleFilterClick}>Filters</FilterStyled>
      {isPopped && <FilterWrapperStyled> 
       <ButtonStyled onClick={event => {
         setIsPopped(false)

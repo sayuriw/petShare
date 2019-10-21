@@ -70,7 +70,7 @@ function upload(event) {
 
   return (
     isCreated ? <Redirect exact to="/home" /> :
-    <Page title={logo}>
+    <Page title={logo} showFilter={false}>
       <Img src={picture ? picture : petIcon }/>
       <FormStyled onSubmit={handleSubmit}>
           <LabelStyled>

@@ -8,11 +8,17 @@ Page.propTypes = {
   children: PropTypes.node
 }
 
-export default function Page({ title, children, tags, activeTag, onTagClick }) {
+export default function Page({ title, children, tags, activeTag, onTagClick, showFilter=true }) {
   return (
     <PageStyled>
-      <Header><ImgStyled src={title} alt={title}/></Header>
-      <Filter tags={tags} activeTag={activeTag} onTagClick={onTagClick}/>  
+      <Header>
+        <ImgStyled src={title} alt={title}/>
+        {
+          showFilter
+            && <Filter tags={tags} activeTag={activeTag} onTagClick={onTagClick}/>
+        }
+      </Header>
+        
       {children}
     </PageStyled>
   )
