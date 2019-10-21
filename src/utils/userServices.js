@@ -7,7 +7,7 @@ export function postUser(data) {
   return fetchUsers({ method: 'POST', data })
 }
 
-export function patchUser(id, data) {
+export function patchRegisterUser(id, data) {
   return fetchUsers({ method: 'PATCH', id, data })
 }
 
@@ -62,4 +62,18 @@ export function setToStorage(key, obj) {
 }
 // verifying user
 
+// editUser
+function fetchUser({ method = 'GET', id = '', data } = {}) {
+  return fetch('/users/' + id, {
+    method,
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+  }).then(res => res.json())
+}
+
+export function patchUser(id, data) {
+  return fetchUser({ method: 'PATCH', id, data })
+}
 

@@ -5,17 +5,18 @@ import Card from '../components/cards/Card'
 import Page from '../common/Page'
 import logo from '../data/petShareLogo.png'
 import { PetsContext } from './App'
-//import { getFromStorage, patchUser, setToStorage } from '../utils/userServices'
+import { getFromStorage, patchUser, setToStorage } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
-   //const sessionUser = getFromStorage('user')
-   //const sessionUserId = sessionUser.userId
+   const sessionUser = getFromStorage('userId')
+   const sessionUserId = sessionUser.userId
+   
 
   const [pets, setPets] = useContext(PetsContext)
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
-  //const [currentUser, setCurrentUser] = useState(sessionUserId)
+  const [currentUser, setCurrentUser] = useState(sessionUserId)
 
   useEffect(() => {
     filterBookmark()
@@ -95,7 +96,10 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   }
 
   function handleBookmarkClick(pet) {
-    patchCard(pet._id, { isBookmarked: !pet.isBookmarked }).then(updatedPet => {
+    console.log(currentUser)
+    patchCard(pet._id, { isBookmarked: !pet.isBookmarked })
+    patchUser(currentUser, {isBookmarked:[pet._id] })
+    .then(updatedPet => {
       const index = pets.findIndex(pet => pet._id === updatedPet._id)
       setPets([
         ...pets.slice(0, index),

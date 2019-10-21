@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import { Link, Redirect } from 'react-router-dom'
 import logo from '../data/petshare.png'
-import { postUser } from '../utils/userServices'
+import { postUser, setToStorage } from '../utils/userServices'
 
 export default function Register({ setIsLoggedIn }) {
   
@@ -27,6 +27,8 @@ export default function Register({ setIsLoggedIn }) {
       
       if (json.success) {
         setError(json.message)
+        setToStorage('user', { token: json.token })
+        setToStorage('userId', { userId: json.userId })
         setEmail('')
         setPassword('')
         setName('')

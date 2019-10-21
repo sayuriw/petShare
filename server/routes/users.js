@@ -226,6 +226,10 @@ router.get('/verify', (req, res, next) => {
   )
 })
 
+router.get('/:id', (req, res) => {
+  User.find({ id: req.params.id })
+    .then(cards => res.json(cards))
+    .catch(err => res.json(err))
+})
+
 module.exports = router
-
-
