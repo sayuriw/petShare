@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   isBookmarked: {type: Boolean, default: false}
 })
 
-userSchema.methods.generateHash = function(password) {
+userSchema.statics.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
 

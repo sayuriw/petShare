@@ -5,13 +5,14 @@ const UserSession = require('../models/Session')
 //user sign up
 
 router.post('/signup', (req, res, next) => {
-  const { body } = req
+  
   const {
     password,
     repeatedPassword,
     name
-  } = body
-  let { email } = body
+  } = req.body
+  let { email } = req.body
+
 
   if (!name) {
     res.send({
@@ -70,24 +71,21 @@ router.post('/signup', (req, res, next) => {
       }
 
       // save new user
-      const newUser = new User()
 
-      newUser.email = email
-      newUser.password = newUser.generateHash(password)
-      newUser.name = name
-      newUser.save((err, user) => {
-        if (err) {
-          return res.send({
-            success: false,
-            message: 'Error (Server Error).'
-          })
-        } else {
-          return res.send({
-            success: true,
-            message: 'You are now registered'
-          })
-        }
-      })
+      User.create(
+        {
+        email,
+        password: User.generateHash(password),
+        name
+
+        }).then(() => res.send({
+          success: true,
+          message: 'You are now registered'
+        }))
+        .catch(() => res.send({
+          success: false,
+          message: 'Error (Server Error).'
+        }))
     }
   )
 })
@@ -95,9 +93,9 @@ router.post('/signup', (req, res, next) => {
 //user login
 
 router.post('/login', (req, res, next) => {
-  const { body } = req
-  const { password } = body
-  let { email } = body
+  
+  const { password } = req.body
+  let { email } = req.body
 
   if (!email) {
     return res.send({

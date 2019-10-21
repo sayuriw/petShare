@@ -25,7 +25,6 @@ export default function Logout({isLoggedIn, setIsLoggedIn}) {
     fetch('users/logout?token=' + token.token)
       .then(res => res.json())
       .then(json => {
-        console.log('json', json) //console log if logout successfull
         setToStorage('user')
         setToken('')
         setIsLoggedIn(false)

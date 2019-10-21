@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getCards, patchCard, deleteCard } from '../utils/cardServices'
 import Card from '../components/cards/Card'
 import Page from '../common/Page'
-import logo from '../data/petshare.png'
+import logo from '../data/petShareLogo.png'
 import { PetsContext } from './App'
 //import { getFromStorage, patchUser, setToStorage } from '../utils/userServices'
 

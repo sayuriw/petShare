@@ -5,35 +5,36 @@ import { Link, Redirect } from 'react-router-dom'
 import logo from '../data/petshare.png'
 import { postUser } from '../utils/userServices'
 
-export default function Register() {
+export default function Register({ setIsLoggedIn }) {
   
-  const [registerError, setRegisterError] = useState('')
-  const [registerEmail, setRegisterEmail] = useState('')
-  const [registerPassword, setRegisterPassword] = useState('')
-  const [registerName, setRegisterName] = useState('')
-  const [registerRepeatPassword, setRegisterRepeatPassword] = useState('')
+  const [error, setError] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
   const [isCreated, setIsCreated] = useState(false)
 
   function handleSubmit(event) {
     event.preventDefault()
     
     const registerData = {
-      email: registerEmail,
-      password: registerPassword,
-      repeatedPassword: registerRepeatPassword,
-      name: registerName
+      email: email,
+      password: password,
+      repeatedPassword: repeatPassword,
+      name: name
     }  
     postUser(registerData).then(json => {
       
       if (json.success) {
-        setRegisterError(json.message)
-        setRegisterEmail('')
-        setRegisterPassword('')
-        setRegisterName('')
-        setRegisterRepeatPassword('')
+        setError(json.message)
+        setEmail('')
+        setPassword('')
+        setName('')
+        setRepeatPassword('')
         setIsCreated(true)
+        setIsLoggedIn(true)
       } else {
-        setRegisterError(json.message)
+        setError(json.message)
       }
     })
   }
@@ -46,44 +47,44 @@ export default function Register() {
           Already have an Account?
           <LinkStyled exact to="/">Login</LinkStyled>
         </p>
-        <ErrorMessageStyled>{registerError}</ErrorMessageStyled>
+        <ErrorMessageStyled>{error}</ErrorMessageStyled>
         <FormStyled onSubmit={event => handleSubmit(event)}>
-          <LabelStyled>
+          <label>
             Name
             <InputStyled
               name="name"
               type="text"
-              value={registerName}
-              onChange={event => setRegisterName(event.target.value)}
+              value={name}
+              onChange={event => setName(event.target.value)}
             />
-          </LabelStyled>
-          <LabelStyled>
+          </label>
+          <label>
             Email
             <InputStyled
               name="email"
               type="text"
-              value={registerEmail}
-              onChange={event => setRegisterEmail(event.target.value)}
+              value={email}
+              onChange={event => setEmail(event.target.value)}
             />
-          </LabelStyled>
-          <LabelStyled>
+          </label>
+          <label>
             Password
             <InputStyled
               name="password"
               type="password"
-              value={registerPassword}
-              onChange={event => setRegisterPassword(event.target.value)}
+              value={password}
+              onChange={event => setPassword(event.target.value)}
             />
-          </LabelStyled>
-          <LabelStyled>
+          </label>
+          <label>
             Password
             <InputStyled
               name="repeatPassword"
               type="password"
-              value={registerRepeatPassword}
-              onChange={event => setRegisterRepeatPassword(event.target.value)}
+              value={repeatPassword}
+              onChange={event => setRepeatPassword(event.target.value)}
             />
-          </LabelStyled>
+          </label>
           <ButtonStyled>Register</ButtonStyled>
         </FormStyled>
       </BoxStyled>
@@ -112,9 +113,7 @@ const FormStyled = styled.form`
 const ErrorMessageStyled = styled.p`
   color: red;
 `
-const LabelStyled = styled.label`
 
-`
 const InputStyled = styled.input`
   width: 100%;
   font-size: 1rem;

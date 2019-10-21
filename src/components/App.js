@@ -96,7 +96,7 @@ export default function App() {
                 />
               )}
             />
-            <Route path="/register" render={() => <RegisterPage />} />
+            <Route path="/register" render={() => <RegisterPage setIsLoggedIn={setIsLoggedIn} />} />
           </Switch>
       )
     }

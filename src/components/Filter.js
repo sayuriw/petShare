@@ -5,7 +5,6 @@ import { FilterList } from 'styled-icons/material/FilterList'
 export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   const [isPopped, setIsPopped] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('all')
-  //const [isActive, setIsActive] = useState(false)
 
   function togglePopup(tag) {
     if (selectedFilter === tag) {
@@ -58,8 +57,9 @@ const FilterStyled = styled.button`
   font-size: 18px;
   border-radius: 3px;
   color: white;
-  background-color: #6F6f6f;
-  border: black 1px solid; 
+  outline: none;
+  border: none;
+  
 `
 const FilterWrapperStyled = styled.div`
   display: flex;
@@ -90,6 +90,6 @@ const FilterIconStyled = styled(FilterList)`
   height:35px;
   width: 35px;
   color: var(--grey);
-  background-color: var(--white);
+  background-color: var(--background-grey);
 `
 
