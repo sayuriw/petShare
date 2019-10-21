@@ -4,14 +4,16 @@ import { NavLink } from 'react-router-dom'
 import { DocumentAdd } from 'styled-icons/typicons/DocumentAdd'
 import { Paw } from 'styled-icons/fa-solid/Paw'
 import { Home } from 'styled-icons/fa-solid/Home'
-export default function Navbar() {
+import { LogOut } from 'styled-icons/boxicons-regular/LogOut'
+
+export default function NavbarLoggedIn() {
   
   return (
     <NavbarStyled>
-      <NavLinkStyled to="/home"><HomeStyled/></NavLinkStyled>
+      <NavLinkStyled exact to="/home"><HomeStyled/></NavLinkStyled>
       <NavLinkStyled to="/favorites"><PawStyled/></NavLinkStyled>  
       <NavLinkStyled to="/newCard"><DocumentAddStyled/></NavLinkStyled>
-      <NavLinkStyled exact to="/">login</NavLinkStyled>
+      <NavLinkStyled to="/logout"><LogoutStyled/></NavLinkStyled> 
     </NavbarStyled>
   )
 }
@@ -46,6 +48,10 @@ const PawStyled = styled(Paw)`
   width: 35px;
 `
 const HomeStyled = styled(Home)`
+  height:35px;
+  width: 35px;
+`
+const LogoutStyled = styled(LogOut)`
   height:35px;
   width: 35px;
 `

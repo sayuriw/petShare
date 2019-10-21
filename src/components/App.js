@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
-//import EditCardPage from './EditCardPage'
 import CardsListPage from './CardsListPage'
+import { Redirect } from 'react-router-dom'
 import RegisterPage from './RegisterPage'
+import LogoutPage from './LogoutPage'
 import styled from 'styled-components'
-import NavBar from './Navbar'
+import NavBarLoggedIn from './NavbarLoggedIn'
 import CreateCardPage from './CreateCardPage'
 import LoginPage from './LoginPage'
 import { patchCard, postCard } from '../utils/cardServices'
@@ -24,11 +25,10 @@ function PetsProvider({ children }) {
 
 export default function App() {
   const [pets, setPets] = useContext(PetsContext)
-  //const [isActive, setIsActive] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loginError, setLoginError] = useState('')
 
-  useEffect(_ => console.log(isLoggedIn), [isLoggedIn])
+  useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
   useEffect(() => {
     const userObj = getFromStorage('user')
     if (userObj && userObj['token']) {
@@ -36,6 +36,7 @@ export default function App() {
         .then(res => res.json())
         .then(json => {
           if (json.success) {
+            setLoginError('')
             setIsLoggedIn(true)
           } else {
             setLoginError()
@@ -44,10 +45,11 @@ export default function App() {
     }
   }, [])
 
-  return (
-    <PetsProvider>
-      <Router>
-        <AppStyled>
+  function renderDependingOnAuth() {
+    console.log(pets)
+    if (isLoggedIn) {
+      return (
+      <AppStyled>
           <Switch>
             <Route exact path="/home" render={() => <CardsListPage />} />
             <Route
@@ -71,10 +73,19 @@ export default function App() {
                     onSubmit={handleEditClick}
                     editCardData={props.location.editCardData}
                   />
-                )
-              }}
-            />
-            <Route
+                  )
+                }}
+              />
+            <Route path="/logout" render={() => ( <LogoutPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>)} />
+            </Switch>
+          <NavBarLoggedIn/>
+        </AppStyled>
+      )
+    } else {
+      return (
+        <Switch>
+          <Route exact path="/logout" render={() => <Redirect to="/" />} />
+          <Route
               exact
               path="/"
               render={() => (
@@ -87,11 +98,19 @@ export default function App() {
             />
             <Route path="/register" render={() => <RegisterPage />} />
           </Switch>
-          <NavBar />
+      )
+    }
+  }
+    return (
+     <PetsProvider>
+      <Router>
+        <AppStyled>
+          {renderDependingOnAuth()}
         </AppStyled>
       </Router>
     </PetsProvider>
-  )
+    )
+  
 
   function handleEditClick(id, editData) {
     patchCard(id, editData).then(editPet => {

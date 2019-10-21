@@ -1,39 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { Link, Redirect } from 'react-router-dom'
 import Page from '../common/Page'
 import logo from '../data/petshare.png'
-import { Home } from 'styled-icons/fa-solid/Home'
-import {
-  fetchUserLogin,
-  setToStorage,
-  getFromStorage
-} from '../utils/userServices'
+import { fetchUserLogin, setToStorage } from '../utils/userServices'
 
 export default function LoginPage({
   setIsLoggedIn,
   loginError,
   setLoginError
 }) {
-  //const [token, setToken] = useState(getFromStorage('user'))
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [isCreated, setIsCreated] = useState(false)
-
-  /* useEffect(() => {
-    const userObj = getFromStorage('user')
-    if (userObj && userObj['token']) {
-      fetch('/users/verify?token=' + userObj.token)
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            setIsLoggedIn(true)
-          } else {
-            setLoginError()
-          }
-        })
-    }
-  }, []) */
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -51,7 +30,6 @@ export default function LoginPage({
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')
-        //setToken(json.token)
         setIsCreated(true)
         setIsLoggedIn(true)
       } else {
@@ -65,7 +43,7 @@ export default function LoginPage({
   ) : (
     <Page title={logo} showFilter={false}>
       <BoxStyled>
-        <ErrorMessageStyled>{loginError}</ErrorMessageStyled>
+        <ErrorMessageStyled>{loginError !== 'Signed in' && loginError}</ErrorMessageStyled>
         <LoginFormStyled onSubmit={event => handleSubmit(event)}>
           <LabelStyled>
             Email
@@ -91,7 +69,6 @@ export default function LoginPage({
           Not registered yet?
           <LinkStyled to="/register">Register</LinkStyled>
         </p>
-        {/* <ButtonStyled onClick={event => logout(event)}>Logout</ButtonStyled> */}
       </BoxStyled>
     </Page>
   )
@@ -102,15 +79,6 @@ export default function LoginPage({
   function onTextboxChangeLoginPassword(event) {
     setLoginPassword(event.target.value)
   }
-  /* function logout() {
-    console.log('test')
-    fetch('users/logout?token=' + token)
-      .then(res => res.json())
-      .then(json => {
-        console.log('json', json) //console log if logout successfull
-        setToken('')
-      })
-  } */
 }
 
 const ErrorMessageStyled = styled.p`
@@ -151,10 +119,6 @@ const ButtonStyled = styled.button`
   border-radius: 3px;
   color: white;
   background-color: var(--grey);
-`
-const HomeStyled = styled(Home)`
-  height: 35px;
-  width: 35px;
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;

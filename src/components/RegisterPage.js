@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import { Link, Redirect } from 'react-router-dom'
 import logo from '../data/petshare.png'
 import { postUser } from '../utils/userServices'
 
-export default function Register({ title }) {
+export default function Register() {
   
   const [registerError, setRegisterError] = useState('')
   const [registerEmail, setRegisterEmail] = useState('')

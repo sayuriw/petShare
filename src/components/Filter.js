@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import { FilterList } from 'styled-icons/material/FilterList'
 
 export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   const [isPopped, setIsPopped] = useState(false)
@@ -30,7 +31,7 @@ export default function Filter ({activeTag, onTagClick, tags, isActive}) {
 
   return (
     <>
-    <FilterStyled active={isActive} onClick={handleFilterClick}>Filters</FilterStyled>
+    <FilterStyled active={isActive} onClick={handleFilterClick}><FilterIconStyled/></FilterStyled>
      {isPopped && <FilterWrapperStyled> 
       <ButtonStyled onClick={event => {
         setIsPopped(false)
@@ -84,4 +85,11 @@ const TagButtonStyled = styled.button`
   background-color: ${({ active }) => (active ? '#8d7ef4' : '#FFFFFF')};
   border: black 1px solid; 
   `
+
+const FilterIconStyled = styled(FilterList)`
+  height:35px;
+  width: 35px;
+  color: var(--grey);
+  background-color: var(--white);
+`
 
