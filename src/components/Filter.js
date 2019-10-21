@@ -30,7 +30,7 @@ export default function Filter ({activeTag, onTagClick, tags, isActive}) {
 
   return (
     <>
-    <FilterStyled active={isActive} onClick={handleFilterClick}><FilterIconStyled/></FilterStyled>
+    <FilterStyled active={isActive} onClick={handleFilterClick}>Filter<FilterIconStyled/></FilterStyled>
      {isPopped && <FilterWrapperStyled> 
       <ButtonStyled onClick={event => {
         setIsPopped(false)
@@ -51,15 +51,15 @@ export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   )
 }
 const FilterStyled = styled.button`
-  padding: 5px;
+   padding: px;
   margin-top: 20px;
   margin: 10px;
   font-size: 18px;
-  border-radius: 3px;
-  color: white;
+  border-radius: 15px;
+  color: var(--grey);
   outline: none;
   border: none;
-  
+   
 `
 const FilterWrapperStyled = styled.div`
   display: flex;
@@ -87,8 +87,10 @@ const TagButtonStyled = styled.button`
   `
 
 const FilterIconStyled = styled(FilterList)`
-  height:35px;
-  width: 35px;
+  height:30px;
+  width: 30px;
+  border-radius: 5px;
+  margin-left: 2px;
   color: var(--grey);
   background-color: var(--background-grey);
 `

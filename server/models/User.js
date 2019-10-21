@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   isBookmarked: { type: String }
 })
 
+userSchema.pre('save', function(next) {
+  next()
+})
+
 userSchema.statics.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }

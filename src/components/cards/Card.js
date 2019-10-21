@@ -9,6 +9,7 @@ import { Edit } from 'styled-icons/typicons/Edit'
 import { DeleteForever } from 'styled-icons/material/DeleteForever'
 import { Link } from 'react-router-dom'
 import { Menu } from 'styled-icons/boxicons-regular/Menu'
+import { Heart } from 'styled-icons/icomoon/Heart'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -50,12 +51,12 @@ function handleMenuClick() {
         <LinkStyled to={{ pathname: "/edit", editCardData: { title, description, email, picture, tags, id }}}><EditSymbol/></LinkStyled>
     </MenuWrapperStyled>} 
     <TextAreaStyled>
-    {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}  
-      <h1>{title}</h1>
+      <h3>{title}</h3>
       <p>{description}</p>
+      {Object.values(tags).map(tag => <Tag text={tag} key={tag}/>)}
       <ButtonsAreaStyled>
-      <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><ReactSVG src={petIcon}/></BookmarkStyled> 
-      <ContactMeStyled href={"mailto:" + email}>Contact me</ContactMeStyled>
+      <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}><HeartStyled/></BookmarkStyled> 
+      <ContactMeStyled href={"mailto:" + email}>CONTACT</ContactMeStyled>
       </ButtonsAreaStyled>
     </TextAreaStyled>
   </CardStyled>
@@ -100,20 +101,28 @@ const TextAreaStyled = styled.div`
 `
 const ButtonsAreaStyled = styled.div`
   position: relative;
-  padding-bottom: 20px;
+  padding: 20px 0;
+  margin-top: 10px;
 `
 const BookmarkStyled = styled.div`
   position: absolute;
   color: ${({ active }) => (active ? 'var(--highlight)' : 'var(--blue)')};
-  width: 40px;
-  height: 40px;
-  right: 15px;
-  top: -10px;
+  width: 35px;
+  height: 35px;
+  right: 9px;
+  top: 7px;
+`
+
+const HeartStyled = styled(Heart)`
+  
 `
 const ContactMeStyled = styled.a`
   text-decoration: none;
-  padding-left: 20px;
-  color: var(--blue);
+  background-image: linear-gradient(45deg,#014499,#008ace);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--white);
 `
 
 

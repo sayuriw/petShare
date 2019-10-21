@@ -4,9 +4,9 @@ export default createGlobalStyle`
 
 :root {
     --background-grey: #EFEFEF;
-    --blue:#83b0ea;
+    --blue:#014499;
     --grey:#6F6f6f;
-    --highlight:#e6e04a;
+    --highlight:#d81159;
     --white:#FFFFFF
 }
 
@@ -17,7 +17,8 @@ export default createGlobalStyle`
   body {
     margin: 0;
     background: var(--background-grey);
-    font-family: Helvetica;
+    font-family: 'Quicksand', sans-serif, Helvetica;
+    color: #4F4F4F;
     font-size: 17px;
   }
 `

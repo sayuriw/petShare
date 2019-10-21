@@ -228,8 +228,10 @@ router.get('/verify', (req, res, next) => {
 
 router.get('/:id', (req, res) => {
   User.find({ id: req.params.id })
-    .then(cards => res.json(cards))
+    .then(user => res.json(user))
     .catch(err => res.json(err))
 })
+
+
 
 module.exports = router
