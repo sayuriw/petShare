@@ -51,12 +51,13 @@ export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   )
 }
 const FilterStyled = styled.button`
-   padding: px;
+  padding: 3px 8px;
   margin-top: 20px;
   margin: 10px;
   font-size: 18px;
   border-radius: 15px;
   color: var(--grey);
+  background-color: var(--background-grey);
   outline: none;
   border: none;
    

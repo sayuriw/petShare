@@ -5,7 +5,7 @@ import Card from '../components/cards/Card'
 import Page from '../common/Page'
 import logo from '../data/petShareLogo.png'
 import { PetsContext } from './App'
-import { getFromStorage, patchUser, setToStorage } from '../utils/userServices'
+import { getFromStorage, patchRegisterUser, setToStorage, updateUser } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
    const sessionUser = getFromStorage('userId')
@@ -98,7 +98,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   function handleBookmarkClick(pet) {
     console.log(currentUser)
     patchCard(pet._id, { isBookmarked: !pet.isBookmarked })
-    patchUser(currentUser, {isBookmarked:[pet._id] })
+    updateUser(currentUser, {isBookmarked:[pet._id] })
     .then(updatedPet => {
       const index = pets.findIndex(pet => pet._id === updatedPet._id)
       setPets([

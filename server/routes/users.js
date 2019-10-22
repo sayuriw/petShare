@@ -226,10 +226,28 @@ router.get('/verify', (req, res, next) => {
   )
 })
 
-router.get('/:id', (req, res) => {
-  User.find({ id: req.params.id })
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
+router.patch('/users/:id', (req, res, next) => {
+  User.findAndUpdate(
+    { _id: req.params.id },
+    { $set: {
+        isBookmarked: req.userId
+      }
+    },
+    null,
+    (err, sessions) => {
+      if (err) {
+        console.log(err)
+        return res.send({
+          success: false,
+          message: 'Server Error'
+        })
+      }
+      return res.send({
+        success: true,
+        message: 'User updated'
+      })
+    }
+  )  
 })
 
 

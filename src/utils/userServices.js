@@ -16,7 +16,7 @@ export function deleteUser(id) {
 }
 
 function fetchUsers({ method = 'GET', id = '', data } = {}) {
-  return fetch('/users/signup' + id, {
+  return fetch('/users/signup/' + id, {
     method,
     body: JSON.stringify(data),
     headers: {
@@ -63,17 +63,15 @@ export function setToStorage(key, obj) {
 // verifying user
 
 // editUser
-function fetchUser({ method = 'GET', id = '', data } = {}) {
-  return fetch('/users/' + id, {
-    method,
+
+export function updateUser(id, data) {
+  fetch('users/' + id,{
+    method: 'PATCH',
     body: JSON.stringify(data),
     headers: {
       'content-type': 'application/json',
     },
-  }).then(res => res.json())
+  })
+    .then(res => res.json())
+    
 }
-
-export function patchUser(id, data) {
-  return fetchUser({ method: 'PATCH', id, data })
-}
-
