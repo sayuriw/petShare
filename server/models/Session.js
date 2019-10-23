@@ -5,6 +5,8 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  bookmarkedCards: Array,
+  
   timestamp: {
     type: Date,
     default: Date.now(),

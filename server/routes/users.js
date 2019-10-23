@@ -5,14 +5,8 @@ const UserSession = require('../models/Session')
 //user sign up
 
 router.post('/signup', (req, res, next) => {
-  
-  const {
-    password,
-    repeatedPassword,
-    name
-  } = req.body
+  const { password, repeatedPassword, name } = req.body
   let { email } = req.body
-
 
   if (!name) {
     res.send({
@@ -20,7 +14,7 @@ router.post('/signup', (req, res, next) => {
       message: 'Name field can not be blank.'
     })
   }
-  
+
   if (!email) {
     res.send({
       success: false,
@@ -72,20 +66,23 @@ router.post('/signup', (req, res, next) => {
 
       // save new user
 
-      User.create(
-        {
+      User.create({
         email,
         password: User.generateHash(password),
         name
-
-        }).then(() => res.send({
-          success: true,
-          message: 'You are now registered'
-        }))
-        .catch(() => res.send({
-          success: false,
-          message: 'Error (Server Error).'
-        }))
+      })
+        .then(() =>
+          res.send({
+            success: true,
+            message: 'You are now registered'
+          })
+        )
+        .catch(() =>
+          res.send({
+            success: false,
+            message: 'Error (Server Error).'
+          })
+        )
     }
   )
 })
@@ -93,7 +90,6 @@ router.post('/signup', (req, res, next) => {
 //user login
 
 router.post('/login', (req, res, next) => {
-  
   const { password } = req.body
   let { email } = req.body
 
@@ -112,7 +108,7 @@ router.post('/login', (req, res, next) => {
   }
 
   email = email.toLowerCase()
-  
+
   User.find(
     {
       email: email
@@ -140,6 +136,7 @@ router.post('/login', (req, res, next) => {
       } //  currect user
       const userSession = new UserSession()
       userSession.userId = user._id
+      userSession.bookmarkedCards = user.bookmarkedCards
       userSession.save((err, doc) => {
         if (err) {
           console.log(err)
@@ -152,6 +149,7 @@ router.post('/login', (req, res, next) => {
           success: true,
           message: 'Signed in',
           userId: userSession.userId,
+          bookmarkedCards: user.bookmarkedCards,
           token: doc._id
         })
       })
@@ -226,30 +224,55 @@ router.get('/verify', (req, res, next) => {
   )
 })
 
-router.patch('/users/:id', (req, res, next) => {
-  User.findAndUpdate(
-    { _id: req.params.id },
-    { $set: {
-        isBookmarked: req.userId
-      }
-    },
-    null,
-    (err, sessions) => {
-      if (err) {
-        console.log(err)
-        return res.send({
-          success: false,
-          message: 'Server Error'
-        })
-      }
-      return res.send({
-        success: true,
-        message: 'User updated'
-      })
+router.patch('/:id', async (req, res, next) => {
+  const { petId } = req.body
+  const userId = req.params.id
+
+  const userModel = await User.findById(userId)
+  if (userModel) {
+    let bookmarkedCards = userModel.bookmarkedCards
+
+    if (!bookmarkedCards.includes(petId)) {
+      bookmarkedCards = [...bookmarkedCards, petId]
+    } else {
+      const petIndex = bookmarkedCards.findIndex(
+        bookmarkedCard => bookmarkedCard === petId
+      )
+
+      bookmarkedCards = [
+        ...bookmarkedCards.slice(0, petIndex),
+        ...bookmarkedCards.slice(petIndex + 1)
+      ]
     }
-  )  
+
+    userModel.bookmarkedCards = bookmarkedCards
+    const savedUser = await userModel.save()
+    return res.json(savedUser)
+
+    /* User.findByIdAndUpdate(
+      userId,
+      { bookmarkedCards },
+      { new: true },
+      (err, newUser) => {
+        if (err) {
+          console.log(err)
+          return res.json({
+            success: false,
+            message: 'Server Error'
+          })
+        }
+        return res.json(newUser)
+      }
+    ) */
+  } else {
+    return res.send({ success: false })
+  }
 })
 
-
+router.get('/:id', (req, res) => {
+  User.find({ id: req.params.id })
+    .then(user => res.json(user))
+    .catch(err => res.json(err))
+})
 
 module.exports = router

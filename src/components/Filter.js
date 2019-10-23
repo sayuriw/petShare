@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { FilterList } from 'styled-icons/material/FilterList'
 
-export default function Filter ({activeTag, onTagClick, tags, isActive}) {
+export default function Filter ({activeTag, onTagClick, tags}) { 
   const [isPopped, setIsPopped] = useState(false)
+  const [tagIsPopped, setTagIsPopped] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('all')
+  
 
   function togglePopup(tag) {
     if (selectedFilter === tag) {
-      setIsPopped(!isPopped)
+      setTagIsPopped(!tagIsPopped)
+      
     }
     else {
       setSelectedFilter(tag)
@@ -17,6 +20,8 @@ export default function Filter ({activeTag, onTagClick, tags, isActive}) {
   }
   function handleTagClick(event) {
     event.stopPropagation()
+    setTagIsPopped(!tagIsPopped)
+    setIsPopped(!isPopped)
     const clickedTag = event.currentTarget.textContent
     onTagClick(selectedFilter, clickedTag )
   }
@@ -25,33 +30,31 @@ export default function Filter ({activeTag, onTagClick, tags, isActive}) {
     setIsPopped(!isPopped)
   }
 
-  
-  
-
   return (
     <>
-    <FilterStyled active={isActive} onClick={handleFilterClick}>Filter<FilterIconStyled/></FilterStyled>
-     {isPopped && <FilterWrapperStyled> 
-      <ButtonStyled onClick={event => {
+    <FilterStyled  onClick={handleFilterClick}>Filter<FilterIconStyled/></FilterStyled>
+      <FilterWrapperStyled className="Navigation" isPopped={isPopped}> 
+      <SelectorStyled onClick={event => {
         setIsPopped(false)
+        setTagIsPopped(false)
         setSelectedFilter(event.currentTarget.textContent)
         onTagClick('all')
-      }}>all</ButtonStyled>
-      { Object.keys(tags).map(tag => <ButtonStyled onClick={() => togglePopup(tag)}key={tag}>{tag}</ButtonStyled>) }
-    </FilterWrapperStyled>}
-     {isPopped && 
-      <PopupStyled>
+      }}>all</SelectorStyled>
+      { Object.keys(tags).map(tag => <SelectorStyled onClick={() => togglePopup(tag)}key={tag}>{tag}</SelectorStyled>) }
+    </FilterWrapperStyled>
+      <TagWrapperStyled className="Navigation" isPopped={tagIsPopped}>
         { selectedFilter === 'all' || tags[selectedFilter].map(tag => 
-        <TagButtonStyled active={activeTag === tag ? true : false} onClick={handleTagClick} key={tag}>{tag}</TagButtonStyled>
+        <PStyled active={activeTag === tag ? true : false} onClick={handleTagClick} key={tag}>{tag}</PStyled>
         )}
-      </PopupStyled>
-     }
-    
+      </TagWrapperStyled>
     </>
   )
 }
 const FilterStyled = styled.button`
-  padding: 3px 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 10px;
   margin-top: 20px;
   margin: 10px;
   font-size: 18px;
@@ -59,34 +62,52 @@ const FilterStyled = styled.button`
   color: var(--grey);
   background-color: var(--background-grey);
   outline: none;
-  border: none;
-   
+  border: none; 
 `
 const FilterWrapperStyled = styled.div`
   display: flex;
+  flex-direction: column;
+  background: white;
+  right: ${({ isPopped }) => (isPopped ? '-5px' : '-300px')};
+  height: 48vh;
+  text-align: left;
+  padding: 5px 25px 5px 5px;
+  position: fixed;
+  top: 65px;
+  margin: 5px;
+  transition: right 0.3s ease-in-out;
+  z-index: 100;
 `
-const PopupStyled = styled.div`
+const TagWrapperStyled = styled.div`
   display: flex;
-  margin-left: 20px;  
-  `
-
-const ButtonStyled = styled.button`
-  color: black;
-  font-size: 18px;
-  padding: 2px 10px;
-  margin-top: 5px;
-  border: none;
-
+  flex-direction: column;
+  background: var(--white);
+  right: ${({ isPopped }) => (isPopped ? '116px' : '-300px')};
+  height: 30vh;
+  text-align: left;
+  padding: 5px 25px 5px 5px;
+  position: fixed;
+  top: 60px;
+  margin: 10px;
+  transition: right 0.3s ease-in-out;
+  z-index: 99;
 `
-const TagButtonStyled = styled.button`
-  color: black;
-  font-size: 18px;
-  margin: 1px;
-  border-radius: 3px;
-  background-color: ${({ active }) => (active ? '#8d7ef4' : '#FFFFFF')};
-  border: black 1px solid; 
-  `
-
+const SelectorStyled = styled.p`
+  font-size: 1.2rem;
+  padding: 2px;
+  color: #686469;
+  text-decoration: none;
+  transition: color 0.3s linear;
+  background-color: #FFFFFF
+`
+const PStyled = styled.p`
+  font-size: 1.2rem;
+  padding: 0px;
+  color: #686469;
+  text-decoration: none;
+  transition: color 0.3s linear;
+  background-color: #FFFFFF
+`
 const FilterIconStyled = styled(FilterList)`
   height:30px;
   width: 30px;
@@ -94,5 +115,6 @@ const FilterIconStyled = styled(FilterList)`
   margin-left: 2px;
   color: var(--grey);
   background-color: var(--background-grey);
-`
+` 
+  
 

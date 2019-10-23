@@ -15,7 +15,6 @@ export const PetsContext = React.createContext([[], () => {}])
 
 function PetsProvider({ children }) {
   const [pets, setPets] = useState([])
-
   return (
     <PetsContext.Provider value={[pets, setPets]}>
       {children}
@@ -31,7 +30,7 @@ export default function App() {
   useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
   useEffect(() => {
     const userObj = getFromStorage('user')
-    if (userObj && userObj['token']) {
+     if (userObj && userObj['token']) {
       fetch('/users/verify?token=' + userObj.token)
         .then(res => res.json())
         .then(json => {

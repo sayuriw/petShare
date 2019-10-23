@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   isDeleted: { type: Boolean, default: false },
-  isBookmarked: { type: String }
+  bookmarkedCards: { type: Array },
+    
 })
 
 userSchema.pre('save', function(next) {

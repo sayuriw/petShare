@@ -1,7 +1,7 @@
 //REGISTER SERVICES
-export function getUser(id, data) {
-  return fetchUsers({method: 'GET', id, data})
-}
+// export function getUser(id, data) {
+//   return fetchUsers({ method: 'GET', id, data })
+// }
 
 export function postUser(data) {
   return fetchUsers({ method: 'POST', data })
@@ -65,13 +65,22 @@ export function setToStorage(key, obj) {
 // editUser
 
 export function updateUser(id, data) {
-  fetch('users/' + id,{
+  return fetch('users/' + id, {
     method: 'PATCH',
     body: JSON.stringify(data),
     headers: {
-      'content-type': 'application/json',
-    },
-  })
-    .then(res => res.json())
-    
+      'content-type': 'application/json'
+    }
+  }).then(res => res.json())
+}
+
+export function getUser (id, data) {
+  return fetch('users/' + id, {
+    method: 'GET',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json'
+    }
+  }).then(res => res.json())
+
 }

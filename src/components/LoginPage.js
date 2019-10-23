@@ -26,6 +26,7 @@ export default function LoginPage({
       if (json.success) {
         setToStorage('user', { token: json.token })
         setToStorage('userId', { userId: json.userId })
+        setToStorage('BookmarkedCards', { bookmarks: json.bookmarkedCards})
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')
