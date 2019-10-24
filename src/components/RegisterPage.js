@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import { Link, Redirect } from 'react-router-dom'
 import logo from '../data/petshareSpaced.png'
 import { postUser, setToStorage } from '../utils/userServices'
+import { UsersContext } from '../providers'
 
 export default function Register({ setIsLoggedIn }) {
   
+  const [user, setUser] = useContext(UsersContext)
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,8 +28,10 @@ export default function Register({ setIsLoggedIn }) {
     postUser(registerData).then(json => {
       
       if (json.success) {
+        console.log(json)
         setError(json.message)
         setToStorage('user', { token: json.token, userId: json.userId })
+        setUser({_id: json.userId, bookmarkedCards: json.bookmarkedCards})
         setEmail('')
         setPassword('')
         setName('')

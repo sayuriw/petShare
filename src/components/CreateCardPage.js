@@ -129,9 +129,7 @@ const Wrapper = styled.div`
   margin: 15px;
   background-color: var(--white);
 `
-
-const ImgStyled = styled.img`
-  
+const ImgStyled = styled.img` 
   height: 40vh;
   width: 100%;
   border-top-left-radius: 6px;
@@ -140,8 +138,7 @@ const ImgStyled = styled.img`
 const FormStyled = styled.form`
   display: grid;
   gap: 25px;
-  padding-top: 0;
-  padding: 0px;
+  padding: 0;
   justify-content: center;
   margin-top: 10px;
 `
@@ -167,12 +164,6 @@ const TextAreaStyled = styled.textarea`
 `
 
 const ButtonStyled = styled.button`
-  /* padding: 7px;
-  margin: 20px;
-  font-size: 18px;
-  border-radius: 6px;
-  color: white;
-  background-color: var(--blue); */
   text-decoration: none;
   background-image: linear-gradient(45deg,#014499,#008ace);
   padding: 8px 10px;

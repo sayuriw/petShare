@@ -26,7 +26,7 @@ export default function LoginPage({
 
     fetchUserLogin(LoginData).then(json => {
       if (json.success) {
-        console.log(json)
+        console.log('lll',json)
         setToStorage('user', { token: json.token, userId: json.userId })
         //setToStorage('BookmarkedCards', { bookmarks: json.bookmarkedCards})
         setLoginError(json.message)

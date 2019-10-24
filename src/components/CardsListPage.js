@@ -62,7 +62,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   )
 
   function filterBookmark() {
-    console.log(user)
+    console.log('user',user)
     getCards(pets).then(pets => {
       const pets2 = 
       pets.map(pet => ({

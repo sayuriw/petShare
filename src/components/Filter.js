@@ -67,11 +67,12 @@ const FilterStyled = styled.button`
 const FilterWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
-  background: white;
+  background-color:var(--white);
   right: ${({ isPopped }) => (isPopped ? '-5px' : '-300px')};
-  height: 48vh;
+  height: 38vh;
   text-align: left;
   padding: 5px 25px 5px 5px;
+  border-radius: 5px;
   position: fixed;
   top: 65px;
   margin: 5px;
@@ -86,6 +87,7 @@ const TagWrapperStyled = styled.div`
   height: 30vh;
   text-align: left;
   padding: 5px 25px 5px 5px;
+  border-radius: 5px;
   position: fixed;
   top: 60px;
   margin: 10px;

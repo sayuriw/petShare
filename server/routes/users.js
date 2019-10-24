@@ -65,16 +65,19 @@ router.post('/signup', (req, res, next) => {
       }
 
       // save new user
-
-      User.create({
+    
+        User.create({
         email,
         password: User.generateHash(password),
-        name
+        name,
       })
         .then(() =>
           res.send({
             success: true,
-            message: 'You are now registered'
+            message: 'You are now registered',
+            // userId: User._id,
+            // bookmarkedCards: User.bookmarkedCards
+            
           })
         )
         .catch(() =>
