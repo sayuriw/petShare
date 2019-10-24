@@ -27,8 +27,7 @@ export default function Register({ setIsLoggedIn }) {
       
       if (json.success) {
         setError(json.message)
-        setToStorage('user', { token: json.token })
-        setToStorage('userId', { userId: json.userId })
+        setToStorage('user', { token: json.token, userId: json.userId })
         setEmail('')
         setPassword('')
         setName('')

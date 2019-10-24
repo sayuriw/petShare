@@ -8,7 +8,7 @@ import { PetsContext, UsersContext } from '../providers'
 import { getFromStorage, updateUser } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
-  const sessionUser = getFromStorage('userId')
+  const sessionUser = getFromStorage('user')
   const sessionUserId = sessionUser.userId
 
   const [pets, setPets] = useContext(PetsContext)
@@ -62,6 +62,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   )
 
   function filterBookmark() {
+    console.log(user)
     getCards(pets).then(pets => {
       const pets2 = 
       pets.map(pet => ({

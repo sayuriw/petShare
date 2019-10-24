@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { Link, Redirect } from 'react-router-dom'
 import Page from '../common/Page'
 import logo from '../data/petshareSpaced.png'
 import { fetchUserLogin, setToStorage } from '../utils/userServices'
+import { UsersContext } from '../providers'
 
 export default function LoginPage({
   setIsLoggedIn,
   loginError,
   setLoginError
 }) {
+  const [user, setUser] = useContext(UsersContext)
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [isCreated, setIsCreated] = useState(false)
@@ -24,13 +26,14 @@ export default function LoginPage({
 
     fetchUserLogin(LoginData).then(json => {
       if (json.success) {
-        setToStorage('user', { token: json.token })
-        setToStorage('userId', { userId: json.userId })
-        setToStorage('BookmarkedCards', { bookmarks: json.bookmarkedCards})
+        console.log(json)
+        setToStorage('user', { token: json.token, userId: json.userId })
+        //setToStorage('BookmarkedCards', { bookmarks: json.bookmarkedCards})
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')
         setIsCreated(true)
+        setUser({_id: json.userId, bookmarkedCards: json.bookmarkedCards})
         setIsLoggedIn(true)
       } else {
         setLoginError(json.message)
@@ -44,7 +47,7 @@ export default function LoginPage({
     <Page title={logo} showFilter={false}>
       <BoxStyled>
         <ErrorMessageStyled>{loginError !== 'Signed in' && loginError}</ErrorMessageStyled>
-        <LoginFormStyled onSubmit={event => handleSubmit(event)}>
+        <LoginFormStyled onSubmit={handleSubmit}>
           <label>
             Email
             <InputStyled

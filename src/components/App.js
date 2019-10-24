@@ -20,28 +20,46 @@ export default function App() {
   const [loginError, setLoginError] = useState('')
 
 
-  const sessionUser = getFromStorage('userId')
-  const sessionUserId = sessionUser.userId
-
-  useEffect(() => {
-    getCurrentUser(sessionUserId).then(newUser => {
-    setUser(newUser)
-  })}, [])
-  
+  // const sessionUser = getFromStorage('userId')
+  // const sessionUserId = sessionUser.userId
 
   useEffect(() => {
     const user = getFromStorage('user')
+    if (user && user['token']) {
       fetch('/users/verify?token=' + user.token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
             setLoginError('')
+            console.log(user)
+            getCurrentUser(user.userId).then(newUser => {
+              console.log(newUser)
+            setUser(newUser)
             setIsLoggedIn(true)
+          })
           } else {
             setLoginError()
           }
         })
+    }
   }, [])
+
+  // useEffect(() => {
+  //   getCurrentUser(sessionUserId).then(newUser => {
+  //   setUser(newUser)
+  // })}, [])
+  //   const user = getFromStorage('user')
+  //     fetch('/users/verify?token=' + user.token)
+  //       .then(res => res.json())
+  //       .then(json => {
+  //         if (json.success) {
+  //           setLoginError('')
+  //           setIsLoggedIn(true)
+  //         } else {
+  //           setLoginError()
+  //         }
+  //       })
+  // }, [])
 
   useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
 
