@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const cardSchema = new mongoose.Schema({
   title: String,
   description: String,
-  isBookmarked: Boolean,
   tags: Object,
   email: String,
   picture: String,

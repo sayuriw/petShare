@@ -8,36 +8,35 @@ import NavBarLoggedIn from './NavbarLoggedIn'
 import CreateCardPage from './CreateCardPage'
 import LoginPage from './LoginPage'
 import { patchCard, postCard } from '../utils/cardServices'
-import { getFromStorage } from '../utils/userServices'
+import { getFromStorage, getCurrentUser } from '../utils/userServices'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { PetsContext, UsersContext } from '../providers'
 
-export const PetsContext = React.createContext([[], () => {}])
-
-function PetsProvider({ children }) {
-  const [pets, setPets] = useState([])
-
-  return (
-    <PetsContext.Provider value={[pets, setPets]}>
-      {children}
-    </PetsContext.Provider>
-  )
-}
 
 export default function App() {
   const [pets, setPets] = useContext(PetsContext)
+  const [user, setUser] = useContext(UsersContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loginError, setLoginError] = useState('')
 
-  useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
+
+  // const sessionUser = getFromStorage('userId')
+  // const sessionUserId = sessionUser.userId
+
   useEffect(() => {
-    const userObj = getFromStorage('user')
-    if (userObj && userObj['token']) {
-      fetch('/users/verify?token=' + userObj.token)
+    const user = getFromStorage('user')
+    if (user && user['token']) {
+      fetch('/users/verify?token=' + user.token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
             setLoginError('')
+            console.log(user)
+            getCurrentUser(user.userId).then(newUser => {
+              console.log(newUser)
+            setUser(newUser)
             setIsLoggedIn(true)
+          })
           } else {
             setLoginError()
           }
@@ -45,8 +44,26 @@ export default function App() {
     }
   }, [])
 
+  // useEffect(() => {
+  //   getCurrentUser(sessionUserId).then(newUser => {
+  //   setUser(newUser)
+  // })}, [])
+  //   const user = getFromStorage('user')
+  //     fetch('/users/verify?token=' + user.token)
+  //       .then(res => res.json())
+  //       .then(json => {
+  //         if (json.success) {
+  //           setLoginError('')
+  //           setIsLoggedIn(true)
+  //         } else {
+  //           setLoginError()
+  //         }
+  //       })
+  // }, [])
+
+  useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
+
   function renderDependingOnAuth() {
-    console.log(pets)
     if (isLoggedIn) {
       return (
       <AppStyled>
@@ -102,17 +119,16 @@ export default function App() {
     }
   }
     return (
-     <PetsProvider>
       <Router>
         <AppStyled>
           {renderDependingOnAuth()}
         </AppStyled>
       </Router>
-    </PetsProvider>
     )
   
 
   function handleEditClick(id, editData) {
+    console.log('handleEditClicked')
     patchCard(id, editData).then(editPet => {
       const index = pets.findIndex(pet => pet._id === editPet._id)
       setPets([...pets.slice(0, index), editPet, ...pets.slice(index + 1)])

@@ -1,22 +1,19 @@
 //REGISTER SERVICES
-export function getUser(id, data) {
-  return fetchUsers({method: 'GET', id, data})
-}
 
 export function postUser(data) {
-  return fetchUsers({ method: 'POST', data })
+  return fetchLoginUsers({ method: 'POST', data })
 }
 
 export function patchRegisterUser(id, data) {
-  return fetchUsers({ method: 'PATCH', id, data })
+  return fetchLoginUsers({ method: 'PATCH', id, data })
 }
 
 export function deleteUser(id) {
-  return fetchUsers({ method: 'DELETE', id })
+  return fetchLoginUsers({ method: 'DELETE', id })
 }
 
-function fetchUsers({ method = 'GET', id = '', data } = {}) {
-  return fetch('/users/signup' + id, {
+function fetchLoginUsers({ method = 'GET', id = '', data } = {}) {
+  return fetch('/users/signup/' + id, {
     method,
     body: JSON.stringify(data),
     headers: {
@@ -60,20 +57,26 @@ export function setToStorage(key, obj) {
     console.error(err)
   }
 }
-// verifying user
+
 
 // editUser
-function fetchUser({ method = 'GET', id = '', data } = {}) {
-  return fetch('/users/' + id, {
-    method,
+
+export function updateUser(id, data) {
+  return fetch('users/' + id, {
+    method: 'PATCH',
     body: JSON.stringify(data),
     headers: {
-      'content-type': 'application/json',
-    },
+      'content-type': 'application/json'
+    }
   }).then(res => res.json())
 }
 
-export function patchUser(id, data) {
-  return fetchUser({ method: 'PATCH', id, data })
+export function getCurrentUser (id, data) {
+  return fetch('users/' + id, {
+    method: 'GET',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json'
+    }
+  }).then(res => res.json())
 }
-

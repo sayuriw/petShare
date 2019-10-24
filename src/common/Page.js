@@ -32,12 +32,12 @@ const PageStyled = styled.main`
 `
 const Header = styled.header`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center; 
-  /* background: #6f6f6f; */
   color: white;
-  background-image: linear-gradient(45deg,#022f8a,#84a3e0)
+  background-image: linear-gradient(45deg,#014499,#00CBFF)
 `
 const ImgStyled = styled.img`
-  height: 50px;
+  height: 40px;
+  margin-left: 15px;
 `

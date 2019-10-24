@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import Page from '../common/Page'
 import logo from '../data/petshare.png'
 import { getFromStorage, setToStorage } from '../utils/userServices'
+import logout from '../data/logout1.png'
 
 export default function Logout({isLoggedIn, setIsLoggedIn}) {
   const [token, setToken] = useState(getFromStorage('user'))
@@ -11,7 +12,7 @@ export default function Logout({isLoggedIn, setIsLoggedIn}) {
   return !isLoggedIn ? (
     <Redirect to="/" />
   ) : (
-    <Page title={logo} showFilter={false}>
+    <Page title={logout} showFilter={false}>
       <BoxStyled>
         <p>Are you sure you want to logout?</p>
         <ButtonStyled onClick={event => handlelogout(event)}>
@@ -37,17 +38,19 @@ const BoxStyled = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 100px;
   background-color: white;
-  padding: 20px;
+  font-size: 1.2rem;
+  padding: 40px;
 `
 
 const ButtonStyled = styled.button`
-  padding: 10px;
-  margin: 20px;
-  font-size: 18px;
-  border-radius: 3px;
-  color: white;
-  background-color: var(--grey);
+  text-decoration: none;
+  background-image: linear-gradient(45deg,#014499,#008ace);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--white);
+
 `
 

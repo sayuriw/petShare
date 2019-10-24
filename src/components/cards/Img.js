@@ -6,7 +6,7 @@ const Img = styled.img`
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   box-shadow: 0 10px 10px #0002;
-  background-color: gray;
+  background-color: lightgrey;
   position: relative;
 `
 

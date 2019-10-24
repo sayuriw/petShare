@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import { Link, Redirect } from 'react-router-dom'
-import logo from '../data/petshare.png'
+import logo from '../data/petshareSpaced.png'
 import { postUser, setToStorage } from '../utils/userServices'
+import { UsersContext } from '../providers'
 
 export default function Register({ setIsLoggedIn }) {
   
+  const [user, setUser] = useContext(UsersContext)
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,9 +28,10 @@ export default function Register({ setIsLoggedIn }) {
     postUser(registerData).then(json => {
       
       if (json.success) {
+        console.log(json)
         setError(json.message)
-        setToStorage('user', { token: json.token })
-        setToStorage('userId', { userId: json.userId })
+        setToStorage('user', { token: json.token, userId: json.userId })
+        setUser({_id: json.userId, bookmarkedCards: json.bookmarkedCards})
         setEmail('')
         setPassword('')
         setName('')
@@ -79,7 +82,7 @@ export default function Register({ setIsLoggedIn }) {
             />
           </label>
           <label>
-            Password
+            Repeat Password
             <InputStyled
               name="repeatPassword"
               type="password"
@@ -117,24 +120,26 @@ const ErrorMessageStyled = styled.p`
 `
 
 const InputStyled = styled.input`
-  width: 100%;
+  width: 90%;
   font-size: 1rem;
   border: var(--grey) solid 1px;
   :focus {
-    border: var(--blue) solid 1px;
+    border: var(--blue) solid 2px;
   }
 `
 
 const ButtonStyled = styled.button`
-  padding: 10px;
-  margin: 20px;
-  font-size: 18px;
-  border-radius: 3px;
-  color: white;
-  background-color: var(--grey);
+  text-decoration: none;
+  background-image: linear-gradient(45deg,#014499,#008ace);
+  padding: 8px 10px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--white);
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
+  font-weight: 700;
   color: var(--blue);
   padding-left: 5px;
 `

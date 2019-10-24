@@ -12,11 +12,11 @@ export default function Tag({ text }) {
 }
 
 const TagStyled = styled.div`
-  background-color: var(--blue);
-  color: white;
-  font-size: 18px;
+  background-color: var(--background-grey);
+  color: var(--grey);
+  font-size: 16px;
   display: inline-block;
-  border-radius: 5px;
+  border-radius: 10px;
   text-align: justify;
   margin-right: 10px;
   padding: 2px 10px;

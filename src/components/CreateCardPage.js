@@ -7,6 +7,7 @@ import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
 import logo from '../data/petshare.png'
 import axios from 'axios'
 import petIcon from '../data/paw-solid.svg'
+import createCard from '../data/CreateCard.png'
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
@@ -70,75 +71,105 @@ function upload(event) {
 
   return (
     isCreated ? <Redirect exact to="/home" /> :
-    <Page title={logo} showFilter={false}>
-      <Img src={picture ? picture : petIcon }/>
-      <FormStyled onSubmit={handleSubmit}>
-          <LabelStyled>
-            Title
-            <input name="title" value={title} onChange={event => setTitle(event.target.value)} autoFocus />
-          </LabelStyled>
-          <LabelStyled>
-            Description
-            <textarea name="description" value={description} onChange={event => setDescription(event.target.value)}rows="4" cols="30" />
-          </LabelStyled>
-          <LabelStyled>
-            <section>
-            Picture<ImageAddStyled/>
-            </section>
-            <input name="picture" type="file" onChange={upload} />
-          </LabelStyled>
-          <LabelStyled>
-            Email
-            <input name="email" type="email" value={email} onChange={event => setEmail(event.target.value)} />
-          </LabelStyled>
-          <TagsWrapper>
-          <LabelStyled>
-            Type
-            <SelectStyled name="type" onChange={event => setTags({...tags, type: event.target.value})}>
-              <OptionStyled value="Dog"selected={"Dog" === tags.type}>Dog</OptionStyled>
-              <OptionStyled value="Cat"selected={"Cat" === tags.type}>Cat</OptionStyled>
-              <OptionStyled value="Rabbit"selected={"Rabbit" === tags.type}>Rabbit</OptionStyled>
-            </SelectStyled>
-          </LabelStyled>
-          <LabelStyled>
-            Size
-            <select name="size" onChange={event => setTags({...tags, size: event.target.value})}>
-              <option value="Small" selected={"Small" === tags.size}>Small</option>
-              <option value="Medium" selected={"Medium" === tags.size}>Medium</option>
-              <option value="Large" selected={"Large" === tags.size}>Large</option>
-            </select>
-          </LabelStyled>
-          <LabelStyled>
-            Availability
-            <SelectStyled name="availability" onChange={event => setTags({...tags, availability: event.target.value})}>
-              <option value="Flexible" selected={"Flexible" === tags.availability}>Flexible</option>
-              <option value="Weekends" selected={"Weekends" === tags.availability}>Weekends</option>
-              <option value="FixedDates" selected={"FixedDates" === tags.availability}>Fixed Dates</option>
-            </SelectStyled>
-          </LabelStyled>
-        </TagsWrapper>
-          <ButtonStyled>send</ButtonStyled>
-        </FormStyled>
+    <Page title={createCard} showFilter={false}>
+      <Wrapper>
+        <ImgStyled src={picture ? picture : petIcon }/>
+        <FormStyled onSubmit={handleSubmit}>
+            <LabelStyled>
+              Title
+              <InputStyled name="title" value={title} onChange={event => setTitle(event.target.value)} autoFocus />
+            </LabelStyled>
+            <LabelStyled>
+              Description
+              <TextAreaStyled name="description" value={description} onChange={event => setDescription(event.target.value)}rows="4" cols="30" />
+            </LabelStyled>
+            <LabelStyled>
+              <section>
+              Picture<ImageAddStyled/>
+              </section>
+              <InputStyled name="picture" type="file" onChange={upload} />
+            </LabelStyled>
+            <LabelStyled>
+              Email
+              <InputStyled name="email" type="email" value={email} onChange={event => setEmail(event.target.value)} />
+            </LabelStyled>
+            <TagsWrapper>
+            <LabelStyled>
+              Type
+              <SelectStyled name="type" onChange={event => setTags({...tags, type: event.target.value})}>
+                <OptionStyled value="Dog"selected={"Dog" === tags.type}>Dog</OptionStyled>
+                <OptionStyled value="Cat"selected={"Cat" === tags.type}>Cat</OptionStyled>
+                <OptionStyled value="Rabbit"selected={"Rabbit" === tags.type}>Rabbit</OptionStyled>
+              </SelectStyled>
+            </LabelStyled>
+            <LabelStyled>
+              Size
+              <select name="size" onChange={event => setTags({...tags, size: event.target.value})}>
+                <option value="Small" selected={"Small" === tags.size}>Small</option>
+                <option value="Medium" selected={"Medium" === tags.size}>Medium</option>
+                <option value="Large" selected={"Large" === tags.size}>Large</option>
+              </select>
+            </LabelStyled>
+            <LabelStyled>
+              Availability
+              <SelectStyled name="availability" onChange={event => setTags({...tags, availability: event.target.value})}>
+                <option value="Flexible" selected={"Flexible" === tags.availability}>Flexible</option>
+                <option value="Weekends" selected={"Weekends" === tags.availability}>Weekends</option>
+                <option value="FixedDates" selected={"FixedDates" === tags.availability}>Fixed Dates</option>
+              </SelectStyled>
+            </LabelStyled>
+          </TagsWrapper>
+            <ButtonStyled>send</ButtonStyled>
+          </FormStyled>
+        </Wrapper>
       </Page>
   )
 }
-
+const Wrapper = styled.div`
+  margin: 15px;
+  background-color: var(--white);
+`
+const ImgStyled = styled.img` 
+  height: 40vh;
+  width: 100%;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+`
 const FormStyled = styled.form`
   display: grid;
   gap: 25px;
-  padding: 20px;
+  padding: 0;
+  justify-content: center;
+  margin-top: 10px;
 `
 const LabelStyled = styled.label`
   display: grid;
   gap: 10px;
 `
+const InputStyled = styled.input`
+  width: 100%;
+  font-size: 1rem;
+  border: var(--grey) solid 1px;
+  :focus {
+    border: var(--blue) solid 1px;
+  }
+`
+const TextAreaStyled = styled.textarea`
+  width: 100%;
+  font-size: 1rem;
+  border: var(--grey) solid 1px;
+  :focus {
+    border: var(--blue) solid 1px;
+  }
+`
+
 const ButtonStyled = styled.button`
-  padding: 10px;
-  margin: 20px;
-  font-size: 18px;
-  border-radius: 3px;
-  color: white;
-  background-color: var(--grey);
+  text-decoration: none;
+  background-image: linear-gradient(45deg,#014499,#008ace);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--white);
 `
 const ImageAddStyled = styled(ImageAdd)`
   height:25px;

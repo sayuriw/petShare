@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { Link, Redirect } from 'react-router-dom'
 import Page from '../common/Page'
-import logo from '../data/petshare.png'
+import logo from '../data/petshareSpaced.png'
 import { fetchUserLogin, setToStorage } from '../utils/userServices'
+import { UsersContext } from '../providers'
 
 export default function LoginPage({
   setIsLoggedIn,
   loginError,
   setLoginError
 }) {
+  const [user, setUser] = useContext(UsersContext)
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [isCreated, setIsCreated] = useState(false)
@@ -24,12 +26,14 @@ export default function LoginPage({
 
     fetchUserLogin(LoginData).then(json => {
       if (json.success) {
-        setToStorage('user', { token: json.token })
-        setToStorage('userId', { userId: json.userId })
+        console.log('lll',json)
+        setToStorage('user', { token: json.token, userId: json.userId })
+        //setToStorage('BookmarkedCards', { bookmarks: json.bookmarkedCards})
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')
         setIsCreated(true)
+        setUser({_id: json.userId, bookmarkedCards: json.bookmarkedCards})
         setIsLoggedIn(true)
       } else {
         setLoginError(json.message)
@@ -43,8 +47,8 @@ export default function LoginPage({
     <Page title={logo} showFilter={false}>
       <BoxStyled>
         <ErrorMessageStyled>{loginError !== 'Signed in' && loginError}</ErrorMessageStyled>
-        <LoginFormStyled onSubmit={event => handleSubmit(event)}>
-          <LabelStyled>
+        <LoginFormStyled onSubmit={handleSubmit}>
+          <label>
             Email
             <InputStyled
               name="email"
@@ -52,8 +56,8 @@ export default function LoginPage({
               value={loginEmail}
               onChange={onTextboxChangeLoginEmail}
             />
-          </LabelStyled>
-          <LabelStyled>
+          </label>
+          <label>
             Password
             <InputStyled
               name="password"
@@ -61,7 +65,7 @@ export default function LoginPage({
               value={loginPassword}
               onChange={onTextboxChangeLoginPassword}
             />
-          </LabelStyled>
+          </label>
           <ButtonStyled>Login</ButtonStyled>
         </LoginFormStyled>
         <p>
@@ -80,6 +84,7 @@ export default function LoginPage({
   }
 }
 
+
 const ErrorMessageStyled = styled.p`
   color: red;
 `
@@ -88,11 +93,10 @@ const BoxStyled = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 80px;
   background-color: white;
   padding: 20px;
 `
-
 const LoginFormStyled = styled.form`
   display: grid;
   gap: 25px;
@@ -101,26 +105,26 @@ const LoginFormStyled = styled.form`
   justify-content: center;
   margin-top: 10px;
 `
-const LabelStyled = styled.label``
 const InputStyled = styled.input`
   width: 100%;
   font-size: 1rem;
   border: var(--grey) solid 1px;
   :focus {
-    border: var(--blue) solid 1px;
+    border: var(--blue) solid 2px;
   }
 `
-
 const ButtonStyled = styled.button`
-  padding: 10px;
-  margin: 20px;
-  font-size: 18px;
-  border-radius: 3px;
-  color: white;
-  background-color: var(--grey);
+  text-decoration: none;
+  background-image: linear-gradient(45deg,#014499,#008ace);
+  padding: 8px 10px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--white);
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
+  font-weight: 700;
   color: var(--blue);
   padding-left: 5px;
 `
