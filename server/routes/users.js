@@ -191,7 +191,6 @@ router.get('/logout', (req, res, next) => {
 })
 
 //Verifizierung
-
 router.get('/verify', (req, res, next) => {
   const { query } = req
   const { token } = query
@@ -220,6 +219,21 @@ router.get('/verify', (req, res, next) => {
           message: 'Good'
         })
       }
+    }
+  )
+})
+
+router.get('/:id', (req, res, next) => {
+  User.findById(
+    req.params.id,
+
+    (err, user) => {
+      if (err) {
+        return res.send({
+          message: 'Server error'
+        })
+      }
+      return res.send(user)
     }
   )
 })
@@ -267,12 +281,6 @@ router.patch('/:id', async (req, res, next) => {
   } else {
     return res.send({ success: false })
   }
-})
-
-router.get('/:id', (req, res) => {
-  User.find({ id: req.params.id })
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
 })
 
 module.exports = router

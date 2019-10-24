@@ -4,30 +4,32 @@ import { getCards, patchCard, deleteCard } from '../utils/cardServices'
 import Card from '../components/cards/Card'
 import Page from '../common/Page'
 import logo from '../data/petShareLogo.png'
-import { PetsContext } from './App'
-import { getFromStorage, updateUser, setToStorage } from '../utils/userServices'
+import { PetsContext, UsersContext } from '../providers'
+import { getFromStorage, updateUser } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
+  
   const sessionUser = getFromStorage('userId')
   const sessionUserId = sessionUser.userId
 
   const [pets, setPets] = useContext(PetsContext)
+  const [user, setUser] = useContext(UsersContext)
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
-  const [currentUser, setCurrentUser] = useState(sessionUserId)
-  const [currentUserBookmarks, setCurrentUserBookmarks] = useState(getFromStorage('BookmarkedCards'))
+  const [currentUser, setCurrentUser] = useState(user)
 
-  
-  useEffect(() => {
-    setPets(
-      pets.map(pet => ({
-        ...pet,
-        isBookmarked: currentUserBookmarks.includes(pet._id)
-      }))
-    )
-    setToStorage('bookmarkedCards', currentUserBookmarks)
-  }, [currentUserBookmarks])
+
+  //   useEffect(() => {
+  //     setPets(
+  //     pets.map(pet => ({
+  //       ...pet,
+  //       isBookmarked: user.bookmarkedCards.includes(pet._id) ? pet.isBookmarked : !pet.isBookmarked
+  //     }))
+  //   )
+  // }, [user])
+
+  console.log('bookmarked', user)
 
   useEffect(() => {
     filterBookmark()
@@ -106,14 +108,31 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   }
 
   function handleBookmarkClick(pet) {
-    updateUser(currentUser, {
+    updateUser(sessionUserId, {
       petId: pet._id,
-      isBookmarked: false
-    }).then(updatedUser => {
-      setCurrentUserBookmarks(updatedUser.bookmarkedCards)
-    })
-    filterBookmark()
-  }
+    }).then(updatedUser =>setUser(updatedUser))
+    
+      const bookmarks = user.bookmarkedCards
+      if (bookmarks.includes(pet._id)) {
+        const bookmark = bookmarks.find(bookmark => bookmark === pet._id)
+        const index = pets.findIndex(pet => pet._id === bookmark)
+        setPets([
+          ...pets.slice(0, index),
+          { ...pet, isBookmarked: !pet.isBookmarked },
+          ...pets.slice(index + 1)
+        ])
+      //filterBookmark()
+      } else {
+        const index = pets.findIndex(pet => pet._id)
+        setPets([
+          ...pets.slice(0, index),
+          { ...pet, isBookmarked: pet.isBookmarked },
+          ...pets.slice(index + 1)
+        ])
+        //console.log('geht nicht')
+      } 
+    }
+  
 
   function onEditClick(id, editData) {
     patchCard(id, editData).then(editPet => {

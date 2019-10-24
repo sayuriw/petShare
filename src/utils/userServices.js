@@ -1,21 +1,18 @@
 //REGISTER SERVICES
-// export function getUser(id, data) {
-//   return fetchUsers({ method: 'GET', id, data })
-// }
 
 export function postUser(data) {
-  return fetchUsers({ method: 'POST', data })
+  return fetchLoginUsers({ method: 'POST', data })
 }
 
 export function patchRegisterUser(id, data) {
-  return fetchUsers({ method: 'PATCH', id, data })
+  return fetchLoginUsers({ method: 'PATCH', id, data })
 }
 
 export function deleteUser(id) {
-  return fetchUsers({ method: 'DELETE', id })
+  return fetchLoginUsers({ method: 'DELETE', id })
 }
 
-function fetchUsers({ method = 'GET', id = '', data } = {}) {
+function fetchLoginUsers({ method = 'GET', id = '', data } = {}) {
   return fetch('/users/signup/' + id, {
     method,
     body: JSON.stringify(data),
@@ -60,7 +57,7 @@ export function setToStorage(key, obj) {
     console.error(err)
   }
 }
-// verifying user
+
 
 // editUser
 
@@ -74,7 +71,7 @@ export function updateUser(id, data) {
   }).then(res => res.json())
 }
 
-export function getUser (id, data) {
+export function getCurrentUser (id, data) {
   return fetch('users/' + id, {
     method: 'GET',
     body: JSON.stringify(data),
@@ -82,5 +79,4 @@ export function getUser (id, data) {
       'content-type': 'application/json'
     }
   }).then(res => res.json())
-
 }

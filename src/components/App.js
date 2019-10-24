@@ -8,30 +8,30 @@ import NavBarLoggedIn from './NavbarLoggedIn'
 import CreateCardPage from './CreateCardPage'
 import LoginPage from './LoginPage'
 import { patchCard, postCard } from '../utils/cardServices'
-import { getFromStorage } from '../utils/userServices'
+import { getFromStorage, getCurrentUser } from '../utils/userServices'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { PetsContext, UsersContext } from '../providers'
 
-export const PetsContext = React.createContext([[], () => {}])
-
-function PetsProvider({ children }) {
-  const [pets, setPets] = useState([])
-  return (
-    <PetsContext.Provider value={[pets, setPets]}>
-      {children}
-    </PetsContext.Provider>
-  )
-}
 
 export default function App() {
   const [pets, setPets] = useContext(PetsContext)
+  const [user, setUser] = useContext(UsersContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loginError, setLoginError] = useState('')
 
-  useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
+
+  const sessionUser = getFromStorage('userId')
+  const sessionUserId = sessionUser.userId
+
   useEffect(() => {
-    const userObj = getFromStorage('user')
-     if (userObj && userObj['token']) {
-      fetch('/users/verify?token=' + userObj.token)
+    getCurrentUser(sessionUserId).then(newUser => {
+    setUser(newUser)
+  })}, [])
+  
+
+  useEffect(() => {
+    const user = getFromStorage('user')
+      fetch('/users/verify?token=' + user.token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
@@ -41,11 +41,11 @@ export default function App() {
             setLoginError()
           }
         })
-    }
   }, [])
 
+  useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
+
   function renderDependingOnAuth() {
-    console.log(pets)
     if (isLoggedIn) {
       return (
       <AppStyled>
@@ -101,17 +101,16 @@ export default function App() {
     }
   }
     return (
-     <PetsProvider>
       <Router>
         <AppStyled>
           {renderDependingOnAuth()}
         </AppStyled>
       </Router>
-    </PetsProvider>
     )
   
 
   function handleEditClick(id, editData) {
+    console.log('handleEditClicked')
     patchCard(id, editData).then(editPet => {
       const index = pets.findIndex(pet => pet._id === editPet._id)
       setPets([...pets.slice(0, index), editPet, ...pets.slice(index + 1)])
