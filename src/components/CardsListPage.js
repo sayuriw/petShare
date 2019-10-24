@@ -16,13 +16,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
-  const [currentUser, setCurrentUser] = useState(user)
-
-    useEffect(() => {
-      console.log('pets', pets)
-  }, [])
-
-  console.log('bookmarked', user)
+  
 
   useEffect(() => {
     filterBookmark()
@@ -114,15 +108,13 @@ export default function CardsListPage({ showOnlyBookmarks }) {
     if (bookmarks.includes(pet._id)) {
       const bookmark = bookmarks.find(bookmark => bookmark === pet._id)
       const index = pets.findIndex(pet => pet._id === bookmark)
-      console.log(index)
       setPets([
         ...pets.slice(0, index),
         { ...pet, isBookmarked: false },
         ...pets.slice(index + 1)
       ])
-      //filterBookmark()
     } else {
-      const index = pets.findIndex(pet => pet._id)
+      const index = pets.indexOf(pet)
       setPets([
         ...pets.slice(0, index),
         { ...pet, isBookmarked: true },

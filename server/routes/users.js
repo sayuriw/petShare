@@ -241,8 +241,8 @@ router.get('/:id', (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   const { petId } = req.body
   const userId = req.params.id
-
   const userModel = await User.findById(userId)
+  
   if (userModel) {
     let bookmarkedCards = userModel.bookmarkedCards
 
@@ -250,9 +250,7 @@ router.patch('/:id', async (req, res, next) => {
       bookmarkedCards = [...bookmarkedCards, petId]
     } else {
       const petIndex = bookmarkedCards.findIndex(
-        bookmarkedCard => bookmarkedCard === petId
-      )
-
+        bookmarkedCard => bookmarkedCard === petId)
       bookmarkedCards = [
         ...bookmarkedCards.slice(0, petIndex),
         ...bookmarkedCards.slice(petIndex + 1)
@@ -262,22 +260,6 @@ router.patch('/:id', async (req, res, next) => {
     userModel.bookmarkedCards = bookmarkedCards
     const savedUser = await userModel.save()
     return res.json(savedUser)
-
-    /* User.findByIdAndUpdate(
-      userId,
-      { bookmarkedCards },
-      { new: true },
-      (err, newUser) => {
-        if (err) {
-          console.log(err)
-          return res.json({
-            success: false,
-            message: 'Server Error'
-          })
-        }
-        return res.json(newUser)
-      }
-    ) */
   } else {
     return res.send({ success: false })
   }
