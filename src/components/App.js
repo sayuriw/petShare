@@ -1,9 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom'
 import styled from 'styled-components'
 import { PetsContext, UsersContext } from '../providers'
 import { patchCard, postCard } from '../utils/cardServices'
-import { getCurrentUser, getFromStorage } from '../utils/userServices'
+import {
+  getCurrentUser,
+  getFromStorage,
+  verifyUser
+} from '../utils/userServices'
 import CardsListPage from './CardsListPage'
 import CreateCardPage from './CreateCardPage'
 import LoginPage from './LoginPage'
@@ -11,40 +20,35 @@ import LogoutPage from './LogoutPage'
 import NavBarLoggedIn from './NavbarLoggedIn'
 import RegisterPage from './RegisterPage'
 
-
 export default function App() {
   const [pets, setPets] = useContext(PetsContext)
   const [user, setUser] = useContext(UsersContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loginError, setLoginError] = useState('')
 
-
   useEffect(() => {
     const user = getFromStorage('user')
     if (user && user['token']) {
-      fetch('/users/verify?token=' + user.token)
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            setLoginError('')
-            getCurrentUser(user.userId).then(newUser => {
+      verifyUser(user.token).then(json => {
+        if (json.success) {
+          setLoginError('')
+          getCurrentUser(user.userId).then(newUser => {
             setUser(newUser)
             setIsLoggedIn(true)
           })
-          } else {
-            setLoginError()
-          }
-        })
+        } else {
+          setLoginError()
+        }
+      })
     }
   }, [])
 
-  
-  useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
+  useEffect(_ => console.log('logged in?', isLoggedIn), [isLoggedIn])
 
   function renderDependingOnAuth() {
     if (isLoggedIn) {
       return (
-      <AppStyled>
+        <AppStyled>
           <Switch>
             <Route exact path="/home" render={() => <CardsListPage />} />
             <Route
@@ -68,12 +72,20 @@ export default function App() {
                     onSubmit={handleEditClick}
                     editCardData={props.location.editCardData}
                   />
-                  )
-                }}
-              />
-            <Route path="/logout" render={() => ( <LogoutPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>)} />
-            </Switch>
-          <NavBarLoggedIn/>
+                )
+              }}
+            />
+            <Route
+              path="/logout"
+              render={() => (
+                <LogoutPage
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+              )}
+            />
+          </Switch>
+          <NavBarLoggedIn />
         </AppStyled>
       )
     } else {
@@ -81,31 +93,31 @@ export default function App() {
         <Switch>
           <Route exact path="/logout" render={() => <Redirect to="/" />} />
           <Route
-              exact
-              path="/"
-              render={() => (
-                <LoginPage
-                  loginError={loginError}
-                  setIsLoggedIn={setIsLoggedIn}
-                  setLoginError={setLoginError}
-                />
-              )}
-            />
-            <Route path="/register" render={() => <RegisterPage setIsLoggedIn={setIsLoggedIn} />} />
-          </Switch>
+            exact
+            path="/"
+            render={() => (
+              <LoginPage
+                loginError={loginError}
+                setIsLoggedIn={setIsLoggedIn}
+                setLoginError={setLoginError}
+              />
+            )}
+          />
+          <Route
+            path="/register"
+            render={() => <RegisterPage setIsLoggedIn={setIsLoggedIn} />}
+          />
+        </Switch>
       )
     }
   }
-    return (
-      <Router>
-        <AppStyled>
-          {renderDependingOnAuth()}
-        </AppStyled>
-      </Router>
-    )
-  
+  return (
+    <Router>
+      <AppStyled>{renderDependingOnAuth()}</AppStyled>
+    </Router>
+  )
+
   function handleEditClick(id, editData) {
-    console.log('handleEditClicked')
     patchCard(id, editData).then(editPet => {
       const index = pets.findIndex(pet => pet._id === editPet._id)
       setPets([...pets.slice(0, index), editPet, ...pets.slice(index + 1)])

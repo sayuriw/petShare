@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
@@ -7,9 +6,7 @@ import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
 import Page from '../common/Page'
 import createCard from '../images/CreateCard.png'
 import petIcon from '../images/paw-solid.svg'
-
-const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
-const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
+import { uploadPicture } from '../utils/cardServices'
 
 CreateCardPage.propTypes = {
   editcardData: PropTypes.object,
@@ -61,19 +58,7 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
     }
   }
   function upload(event) {
-    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`
-
-    const formData = new FormData()
-
-    formData.append('file', event.target.files[0])
-    formData.append('upload_preset', PRESET)
-
-    axios
-      .post(url, formData, {
-        headers: {
-          'Content-type': 'multipart/form-data'
-        }
-      })
+    uploadPicture(event)
       .then(response => {
         setPicture(response.data.url)
       })
@@ -145,15 +130,9 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
                 onChange={event =>
                   setTags({ ...tags, size: event.target.value })
                 }>
-                <option value="Small">
-                  Small
-                </option>
-                <option value="Medium">
-                  Medium
-                </option>
-                <option value="Large">
-                  Large
-                </option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
               </select>
             </LabelStyled>
             <LabelStyled>
@@ -164,18 +143,9 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
                 onChange={event =>
                   setTags({ ...tags, availability: event.target.value })
                 }>
-                <option
-                  value="Flexible">
-                  Flexible
-                </option>
-                <option
-                  value="Weekends">
-                  Weekends
-                </option>
-                <option
-                  value="FixedDates">
-                  Fixed Dates
-                </option>
+                <option value="Flexible">Flexible</option>
+                <option value="Weekends">Weekends</option>
+                <option value="FixedDates">Fixed Dates</option>
               </SelectStyled>
             </LabelStyled>
           </TagsWrapper>

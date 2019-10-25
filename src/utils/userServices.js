@@ -32,6 +32,17 @@ export function fetchUserLogin(data) {
   }).then(res => res.json())
 }
 
+//VERIFY USER
+export function verifyUser(data) {
+  return fetch('/users/verify?token=' + data).then(res => res.json())
+}
+
+//LOGOUT
+export function logoutUser(data) {
+  return fetch('users/logout?token=' + data).then(res => res.json())
+}
+
+//LOCAL STORAGE
 export function getFromStorage(key) {
   if (!key) {
     return null
@@ -58,8 +69,7 @@ export function setToStorage(key, obj) {
   }
 }
 
-
-// editUser
+// EDIT USER (HANDLE BOOKMARKS)
 
 export function updateUser(id, data) {
   return fetch('users/' + id, {
@@ -71,7 +81,7 @@ export function updateUser(id, data) {
   }).then(res => res.json())
 }
 
-export function getCurrentUser (id, data) {
+export function getCurrentUser(id, data) {
   return fetch('users/' + id, {
     method: 'GET',
     body: JSON.stringify(data),

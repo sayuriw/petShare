@@ -33,7 +33,6 @@ export default function LoginPage({
 
     fetchUserLogin(LoginData).then(json => {
       if (json.success) {
-        console.log('lll',json)
         setToStorage('user', { token: json.token, userId: json.userId })
         setLoginError(json.message)
         setLoginPassword('')

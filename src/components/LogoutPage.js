@@ -4,16 +4,15 @@ import { Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import logout from '../images/logout1.png'
-import { getFromStorage, setToStorage } from '../utils/userServices'
+import { getFromStorage, setToStorage, logoutUser } from '../utils/userServices'
 
 Logout.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
 
-export default function Logout({isLoggedIn, setIsLoggedIn}) {
-  
-  const [token, setToken] = useState(getFromStorage('user'))
+export default function Logout({ isLoggedIn, setIsLoggedIn }) {
+  const [user, setUser] = useState(getFromStorage('user'))
 
   return !isLoggedIn ? (
     <Redirect to="/" />
@@ -21,21 +20,17 @@ export default function Logout({isLoggedIn, setIsLoggedIn}) {
     <Page title={logout} showFilter={false}>
       <BoxStyled>
         <p>Are you sure you want to logout?</p>
-        <ButtonStyled onClick={event => handlelogout(event)}>
-          Logout
-        </ButtonStyled>
+        <ButtonStyled onClick={handlelogout}>Logout</ButtonStyled>
       </BoxStyled>
     </Page>
   )
 
-  function handlelogout(event) {
-    fetch('users/logout?token=' + token.token)
-      .then(res => res.json())
-      .then(() => {
-        setToStorage('user')
-        setToken('')
-        setIsLoggedIn(false)
-      })
+  function handlelogout() {
+    logoutUser(user.token).then(() => {
+      setToStorage('user')
+      setUser('')
+      setIsLoggedIn(false)
+    })
   }
 }
 
@@ -57,6 +52,4 @@ const ButtonStyled = styled.button`
   border-radius: 10px;
   font-size: 16px;
   color: var(--white);
-
 `
-

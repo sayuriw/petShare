@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
@@ -12,7 +12,6 @@ RegisterPage.propTypes = {
 }
 
 export default function RegisterPage({ setIsLoggedIn }) {
-  
   const [user, setUser] = useContext(UsersContext)
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
@@ -23,19 +22,18 @@ export default function RegisterPage({ setIsLoggedIn }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    
+
     const registerData = {
       email,
       password: password,
       repeatedPassword: repeatPassword,
       name: name
-    }  
+    }
     postUser(registerData).then(json => {
-      
       if (json.success) {
         setError(json.message)
         setToStorage('user', { token: json.token, userId: json.userId })
-        setUser({_id: json.userId, bookmarkedCards: json.bookmarkedCards})
+        setUser({ _id: json.userId, bookmarkedCards: json.bookmarkedCards })
         setEmail('')
         setPassword('')
         setName('')
@@ -48,13 +46,16 @@ export default function RegisterPage({ setIsLoggedIn }) {
     })
   }
 
-  return (
-    isCreated ? <Redirect exact to="/home" /> :
+  return isCreated ? (
+    <Redirect exact to="/home" />
+  ) : (
     <Page title={logo} showFilter={false}>
       <BoxStyled>
         <p>
           Already have an Account?
-          <LinkStyled exact to="/">Login</LinkStyled>
+          <LinkStyled exact to="/">
+            Login
+          </LinkStyled>
         </p>
         <ErrorMessageStyled>{error}</ErrorMessageStyled>
         <FormStyled onSubmit={event => handleSubmit(event)}>
@@ -110,7 +111,6 @@ const BoxStyled = styled.section`
   background-color: white;
   padding: 20px;
 `
-
 const FormStyled = styled.form`
   display: grid;
   gap: 25px;
@@ -122,7 +122,6 @@ const FormStyled = styled.form`
 const ErrorMessageStyled = styled.p`
   color: red;
 `
-
 const InputStyled = styled.input`
   width: 90%;
   font-size: 1rem;
@@ -131,10 +130,9 @@ const InputStyled = styled.input`
     border: var(--blue) solid 2px;
   }
 `
-
 const ButtonStyled = styled.button`
   text-decoration: none;
-  background-image: linear-gradient(45deg,#014499,#008ace);
+  background-image: linear-gradient(45deg, #014499, #008ace);
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
@@ -147,4 +145,3 @@ const LinkStyled = styled(Link)`
   color: var(--blue);
   padding-left: 5px;
 `
-

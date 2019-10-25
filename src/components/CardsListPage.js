@@ -9,11 +9,10 @@ import { deleteCard, getCards, patchCard } from '../utils/cardServices'
 import { getFromStorage, updateUser } from '../utils/userServices'
 
 CardsListPage.propTypes = {
-  showOnlyBookmarks: PropTypes.bool,
+  showOnlyBookmarks: PropTypes.bool
 }
 
 export default function CardsListPage({ showOnlyBookmarks }) {
-  
   const sessionUser = getFromStorage('user')
   const sessionUserId = sessionUser.userId
   const [pets, setPets] = useContext(PetsContext)
@@ -21,7 +20,6 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
-  
 
   useEffect(() => {
     filterBookmark()
@@ -29,7 +27,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
 
   useEffect(() => {
     handleTagClick(selectedFilter, selectedTag)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pets])
 
   const allTags = {}
@@ -69,8 +67,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
 
   function filterBookmark() {
     getCards(pets).then(pets => {
-      const pets2 = 
-      pets.map(pet => ({
+      const pets2 = pets.map(pet => ({
         ...pet,
         isBookmarked: user.bookmarkedCards.includes(pet._id)
       }))

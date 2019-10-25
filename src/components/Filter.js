@@ -7,11 +7,10 @@ import { CancelCircle } from 'styled-icons/icomoon/CancelCircle'
 Filter.propTypes = {
   activeTag: PropTypes.string,
   onTagClick: PropTypes.func,
-  tags: PropTypes.object,
+  tags: PropTypes.object
 }
 
 export default function Filter({ activeTag, onTagClick, tags }) {
-  
   const [isSelectorPopupOpen, setIsSelectorPopupOpen] = useState(false)
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false)
   const [selectedSelector, setSelectedSelector] = useState('all')
@@ -31,11 +30,11 @@ export default function Filter({ activeTag, onTagClick, tags }) {
     setIsSelectorPopupOpen(false)
   }
 
-  // function handleTagClick(selectedSelector, tag) {
-  //   onTagClick(selectedSelector, tag)
-  //   setIsSelectorPopupOpen(false)
-  //   setIsFilterPopupOpen(false)
-  // }
+  function handleTagClick(selectedSelector, tag) {
+    setIsSelectorPopupOpen(false)
+    setIsFilterPopupOpen(false)
+    onTagClick(selectedSelector, tag)
+  }
 
   return (
     <>
@@ -50,7 +49,9 @@ export default function Filter({ activeTag, onTagClick, tags }) {
         isPopped={isSelectorPopupOpen}>
         <SelectorStyled onClick={resetFilter}>all</SelectorStyled>
         {Object.keys(tags).map(selector => (
-          <SelectorStyled onClick={() => openFilterPopup(selector)} key={selector}>
+          <SelectorStyled
+            onClick={() => openFilterPopup(selector)}
+            key={selector}>
             {selector}
           </SelectorStyled>
         ))}
@@ -60,7 +61,7 @@ export default function Filter({ activeTag, onTagClick, tags }) {
           tags[selectedSelector].map(tag => (
             <PStyled
               active={activeTag === tag ? true : false}
-              onClick={() => onTagClick(selectedSelector, tag)}
+              onClick={() => handleTagClick(selectedSelector, tag)}
               key={tag}>
               {tag}
             </PStyled>
