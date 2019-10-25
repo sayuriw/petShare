@@ -1,11 +1,18 @@
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
-import logout from '../data/logout1.png'
+import logout from '../images/logout1.png'
 import { getFromStorage, setToStorage } from '../utils/userServices'
 
+Logout.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+}
+
 export default function Logout({isLoggedIn, setIsLoggedIn}) {
+  
   const [token, setToken] = useState(getFromStorage('user'))
 
   return !isLoggedIn ? (

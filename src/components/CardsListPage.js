@@ -1,16 +1,21 @@
+import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Page from '../common/Page'
 import Card from '../components/cards/Card'
-import logo from '../data/petShareLogo.png'
+import logo from '../images/petShareLogo.png'
 import { PetsContext, UsersContext } from '../providers'
 import { deleteCard, getCards, patchCard } from '../utils/cardServices'
 import { getFromStorage, updateUser } from '../utils/userServices'
 
+CardsListPage.propTypes = {
+  showOnlyBookmarks: PropTypes.bool,
+}
+
 export default function CardsListPage({ showOnlyBookmarks }) {
+  
   const sessionUser = getFromStorage('user')
   const sessionUserId = sessionUser.userId
-
   const [pets, setPets] = useContext(PetsContext)
   const [user, setUser] = useContext(UsersContext)
   const [petsFiltered, setPetsFiltered] = useState(pets)
@@ -63,7 +68,6 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   )
 
   function filterBookmark() {
-    console.log('user',user)
     getCards(pets).then(pets => {
       const pets2 = 
       pets.map(pet => ({

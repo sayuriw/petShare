@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react'
+import PropTypes from 'prop-types' 
 import { Link, Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
-import logo from '../data/petshareSpaced.png'
+import logo from '../images/petshareSpaced.png'
 import { UsersContext } from '../providers'
 import { postUser, setToStorage } from '../utils/userServices'
 
-export default function Register({ setIsLoggedIn }) {
+RegisterPage.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired
+}
+
+export default function RegisterPage({ setIsLoggedIn }) {
   
   const [user, setUser] = useContext(UsersContext)
   const [error, setError] = useState('')

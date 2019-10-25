@@ -1,61 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 import { FilterList } from 'styled-icons/material/FilterList'
+import { CancelCircle } from 'styled-icons/icomoon/CancelCircle'
+
+Filter.propTypes = {
+  activeTag: PropTypes.string,
+  onTagClick: PropTypes.func,
+  tags: PropTypes.object,
+}
 
 export default function Filter({ activeTag, onTagClick, tags }) {
-  const [isPopped, setIsPopped] = useState(false)
-  const [tagIsPopped, setTagIsPopped] = useState(false)
-  const [selectedFilter, setSelectedFilter] = useState('all')
+  
+  const [isSelectorPopupOpen, setIsSelectorPopupOpen] = useState(false)
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false)
+  const [selectedSelector, setSelectedSelector] = useState('all')
 
-  function togglePopup(tag) {
-    if (selectedFilter === tag) {
-      setTagIsPopped(!tagIsPopped)
-    } else {
-      setSelectedFilter(tag)
-      setIsPopped(true)
-    }
-  }
-  function handleTagClick(event) {
-    event.stopPropagation()
-    setTagIsPopped(!tagIsPopped)
-    setIsPopped(!isPopped)
-    const clickedTag = event.currentTarget.textContent
-    onTagClick(selectedFilter, clickedTag)
+  useEffect(() => {
+    isSelectorPopupOpen || setIsFilterPopupOpen(false)
+  }, [isSelectorPopupOpen])
+
+  function openFilterPopup(selector) {
+    setIsFilterPopupOpen(true)
+    setSelectedSelector(selector)
   }
 
-  function handleFilterClick() {
-    setIsPopped(!isPopped)
-    tagIsPopped ? setTagIsPopped(!tagIsPopped) : setTagIsPopped(tagIsPopped)
+  function resetFilter() {
+    setSelectedSelector('all')
+    onTagClick('all')
+    setIsSelectorPopupOpen(false)
   }
+
+  // function handleTagClick(selectedSelector, tag) {
+  //   onTagClick(selectedSelector, tag)
+  //   setIsSelectorPopupOpen(false)
+  //   setIsFilterPopupOpen(false)
+  // }
 
   return (
     <>
-      <FilterStyled onClick={handleFilterClick}>
+      <CancelStyled onClick={resetFilter} />
+      <FilterStyled
+        onClick={() => setIsSelectorPopupOpen(!isSelectorPopupOpen)}>
         Filter
         <FilterIconStyled />
       </FilterStyled>
-      <FilterWrapperStyled className="Navigation" isPopped={isPopped}>
-        <SelectorStyled
-          onClick={event => {
-            setIsPopped(false)
-            setTagIsPopped(false)
-            setSelectedFilter(event.currentTarget.textContent)
-            onTagClick('all')
-          }}>
-          all
-        </SelectorStyled>
-        {Object.keys(tags).map(tag => (
-          <SelectorStyled onClick={() => togglePopup(tag)} key={tag}>
-            {tag}
+      <FilterWrapperStyled
+        className="Navigation"
+        isPopped={isSelectorPopupOpen}>
+        <SelectorStyled onClick={resetFilter}>all</SelectorStyled>
+        {Object.keys(tags).map(selector => (
+          <SelectorStyled onClick={() => openFilterPopup(selector)} key={selector}>
+            {selector}
           </SelectorStyled>
         ))}
       </FilterWrapperStyled>
-      <TagWrapperStyled className="Navigation" isPopped={tagIsPopped}>
-        {selectedFilter === 'all' ||
-          tags[selectedFilter].map(tag => (
+      <TagWrapperStyled className="Navigation" isPopped={isFilterPopupOpen}>
+        {selectedSelector === 'all' ||
+          tags[selectedSelector].map(tag => (
             <PStyled
               active={activeTag === tag ? true : false}
-              onClick={handleTagClick}
+              onClick={() => onTagClick(selectedSelector, tag)}
               key={tag}>
               {tag}
             </PStyled>
@@ -64,10 +69,18 @@ export default function Filter({ activeTag, onTagClick, tags }) {
     </>
   )
 }
+const CancelStyled = styled(CancelCircle)`
+  height: 45px;
+  width: 45px;
+  padding: 5px;
+  margin-right: 6px;
+  color: var(--background-grey);
+`
+
 const FilterStyled = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 47px;
   padding: 3px 10px;
   margin-top: 20px;
   margin: 10px;
@@ -105,7 +118,7 @@ const TagWrapperStyled = styled.div`
   position: fixed;
   top: 60px;
   margin: 10px;
-  transition: right 0.3s ease-in-out;
+  transition: right 0.1s ease-in-out;
   z-index: 99;
 `
 const SelectorStyled = styled.p`

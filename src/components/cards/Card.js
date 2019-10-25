@@ -6,7 +6,7 @@ import { Menu } from 'styled-icons/boxicons-regular/Menu'
 import { Edit } from 'styled-icons/boxicons-solid/Edit'
 import { Heart } from 'styled-icons/icomoon/Heart'
 import { DeleteForever } from 'styled-icons/material/DeleteForever'
-import petIcon from '../../data/paw-solid.svg'
+import petIcon from '../../images/paw-solid.svg'
 import Img from './Img'
 import Tag from './Tag'
 

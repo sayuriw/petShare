@@ -1,137 +1,200 @@
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
 import Page from '../common/Page'
-import createCard from '../data/CreateCard.png'
-import petIcon from '../data/paw-solid.svg'
+import createCard from '../images/CreateCard.png'
+import petIcon from '../images/paw-solid.svg'
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
 
+CreateCardPage.propTypes = {
+  editcardData: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired
+}
 
-export default function CreateCardPage({editCardData, onSubmit}) {
-
-  const [title, setTitle] = useState(editCardData.title ? editCardData.title : '' )
-  const [description, setDescription] = useState(editCardData.description ? editCardData.description : '')
-  const [email, setEmail] = useState(editCardData.email ? editCardData.email : '')
+export default function CreateCardPage({ editCardData, onSubmit }) {
+  const [title, setTitle] = useState(
+    editCardData.title ? editCardData.title : ''
+  )
+  const [description, setDescription] = useState(
+    editCardData.description ? editCardData.description : ''
+  )
+  const [email, setEmail] = useState(
+    editCardData.email ? editCardData.email : ''
+  )
   const [tags, setTags] = useState(editCardData.tags ? editCardData.tags : '')
-  const [picture, setPicture] = useState(editCardData.picture ? editCardData.picture : '')
+  const [picture, setPicture] = useState(
+    editCardData.picture ? editCardData.picture : ''
+  )
   const [isCreated, setIsCreated] = useState(false)
-  
+
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
-        data.tags = {
-          type: data.type,
-          size: data.size,
-          availability: data.availability
-        }
+    data.tags = {
+      type: data.type,
+      size: data.size,
+      availability: data.availability
+    }
     data.picture = picture
     const newEditCardData = {
       ...editCardData,
-          title, description, email, tags, picture
+      title,
+      description,
+      email,
+      tags,
+      picture
     }
-      
+
     if (editCardData.id) {
       onSubmit(editCardData.id, newEditCardData)
       setIsCreated(true)
     } else {
       onSubmit(data)
       setIsCreated(true)
- }
-}
-function upload(event) {
-  const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`
-
-  const formData = new FormData()
-
-
-  formData.append('file', event.target.files[0])
-  formData.append('upload_preset', PRESET)
-
-  axios.post(url, formData, {
-    headers: {
-      'Content-type': 'multipart/form-data'
     }
-  })
-  .then(response => {
-    setPicture(response.data.url)
-  })
-  .catch(err => {
-    console.error(err)
-  })
-}
+  }
+  function upload(event) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`
 
-  return (
-    isCreated ? <Redirect exact to="/home" /> :
+    const formData = new FormData()
+
+    formData.append('file', event.target.files[0])
+    formData.append('upload_preset', PRESET)
+
+    axios
+      .post(url, formData, {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        setPicture(response.data.url)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  return isCreated ? (
+    <Redirect exact to="/home" />
+  ) : (
     <Page title={createCard} showFilter={false}>
       <Wrapper>
-        <ImgStyled src={picture ? picture : petIcon }/>
+        <ImgStyled src={picture ? picture : petIcon} />
         <FormStyled onSubmit={handleSubmit}>
-            <LabelStyled>
-              Title
-              <InputStyled name="title" value={title} onChange={event => setTitle(event.target.value)} />
-            </LabelStyled>
-            <LabelStyled>
-              Description
-              <TextAreaStyled name="description" value={description} onChange={event => setDescription(event.target.value)}rows="4" cols="30" />
-            </LabelStyled>
-            <LabelStyled>
-              <section>
-              Picture<ImageAddStyled/>
-              </section>
-              <InputStyled name="picture" type="file" onChange={upload} />
-            </LabelStyled>
-            <LabelStyled>
-              Email
-              <InputStyled name="email" type="email" value={email} onChange={event => setEmail(event.target.value)} />
-            </LabelStyled>
-            <TagsWrapper>
+          <LabelStyled>
+            Title
+            <InputStyled
+              name="title"
+              value={title}
+              onChange={event => setTitle(event.target.value)}
+            />
+          </LabelStyled>
+          <LabelStyled>
+            Description
+            <TextAreaStyled
+              name="description"
+              value={description}
+              onChange={event => setDescription(event.target.value)}
+              rows="4"
+              cols="30"
+            />
+          </LabelStyled>
+          <LabelStyled>
+            <section>
+              Picture
+              <ImageAddStyled />
+            </section>
+            <InputStyled name="picture" type="file" onChange={upload} />
+          </LabelStyled>
+          <LabelStyled>
+            Email
+            <InputStyled
+              name="email"
+              type="email"
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+            />
+          </LabelStyled>
+          <TagsWrapper>
             <LabelStyled>
               Type
-              <SelectStyled name="type" onChange={event => setTags({...tags, type: event.target.value})}>
-                <OptionStyled value="Dog"selected={"Dog" === tags.type}>Dog</OptionStyled>
-                <OptionStyled value="Cat"selected={"Cat" === tags.type}>Cat</OptionStyled>
-                <OptionStyled value="Rabbit"selected={"Rabbit" === tags.type}>Rabbit</OptionStyled>
+              <SelectStyled
+                name="type"
+                defaultValue={tags.type}
+                onChange={event =>
+                  setTags({ ...tags, type: event.target.value })
+                }>
+                <OptionStyled value="Dog">Dog</OptionStyled>
+                <OptionStyled value="Cat">Cat</OptionStyled>
+                <OptionStyled value="Rabbit">Rabbit</OptionStyled>
               </SelectStyled>
             </LabelStyled>
             <LabelStyled>
               Size
-              <select name="size" onChange={event => setTags({...tags, size: event.target.value})}>
-                <option value="Small" selected={"Small" === tags.size}>Small</option>
-                <option value="Medium" selected={"Medium" === tags.size}>Medium</option>
-                <option value="Large" selected={"Large" === tags.size}>Large</option>
+              <select
+                name="size"
+                defaultValue={tags.size}
+                onChange={event =>
+                  setTags({ ...tags, size: event.target.value })
+                }>
+                <option value="Small">
+                  Small
+                </option>
+                <option value="Medium">
+                  Medium
+                </option>
+                <option value="Large">
+                  Large
+                </option>
               </select>
             </LabelStyled>
             <LabelStyled>
               Availability
-              <SelectStyled name="availability" onChange={event => setTags({...tags, availability: event.target.value})}>
-                <option value="Flexible" selected={"Flexible" === tags.availability}>Flexible</option>
-                <option value="Weekends" selected={"Weekends" === tags.availability}>Weekends</option>
-                <option value="FixedDates" selected={"FixedDates" === tags.availability}>Fixed Dates</option>
+              <SelectStyled
+                name="availability"
+                defaultValue={tags.availavility}
+                onChange={event =>
+                  setTags({ ...tags, availability: event.target.value })
+                }>
+                <option
+                  value="Flexible">
+                  Flexible
+                </option>
+                <option
+                  value="Weekends">
+                  Weekends
+                </option>
+                <option
+                  value="FixedDates">
+                  Fixed Dates
+                </option>
               </SelectStyled>
             </LabelStyled>
           </TagsWrapper>
-            <ButtonStyled>send</ButtonStyled>
-          </FormStyled>
-        </Wrapper>
-      </Page>
+          <ButtonStyled>send</ButtonStyled>
+        </FormStyled>
+      </Wrapper>
+    </Page>
   )
 }
 const Wrapper = styled.div`
   margin: 15px;
   background-color: var(--white);
 `
-const ImgStyled = styled.img` 
+const ImgStyled = styled.img`
   height: 40vh;
   width: 100%;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  background-color: var(--background-grey)
+  background-color: var(--background-grey);
 `
 const FormStyled = styled.form`
   display: grid;
@@ -163,14 +226,14 @@ const TextAreaStyled = styled.textarea`
 
 const ButtonStyled = styled.button`
   text-decoration: none;
-  background-image: linear-gradient(45deg,#014499,#008ace);
+  background-image: linear-gradient(45deg, #014499, #008ace);
   padding: 8px 10px;
   border-radius: 10px;
   font-size: 16px;
   color: var(--white);
 `
 const ImageAddStyled = styled(ImageAdd)`
-  height:25px;
+  height: 25px;
   width: 25px;
   margin-left: 5px;
 `

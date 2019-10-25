@@ -1,10 +1,17 @@
 import React, { useContext, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
-import logo from '../data/petshareSpaced.png'
+import logo from '../images/petshareSpaced.png'
 import { UsersContext } from '../providers'
 import { fetchUserLogin, setToStorage } from '../utils/userServices'
+
+LoginPage.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
+  setLoginError: PropTypes.func,
+  loginError: PropTypes.string
+}
 
 export default function LoginPage({
   setIsLoggedIn,
@@ -53,7 +60,7 @@ export default function LoginPage({
               name="email"
               type="text"
               value={loginEmail}
-              onChange={onTextboxChangeLoginEmail}
+              onChange={event => setLoginEmail(event.target.value)}
             />
           </label>
           <label>
@@ -62,7 +69,7 @@ export default function LoginPage({
               name="password"
               type="password"
               value={loginPassword}
-              onChange={onTextboxChangeLoginPassword}
+              onChange={event => setLoginPassword(event.target.value)}
             />
           </label>
           <ButtonStyled>Login</ButtonStyled>
@@ -74,13 +81,6 @@ export default function LoginPage({
       </BoxStyled>
     </Page>
   )
-  function onTextboxChangeLoginEmail(event) {
-    setLoginEmail(event.target.value)
-  }
-
-  function onTextboxChangeLoginPassword(event) {
-    setLoginPassword(event.target.value)
-  }
 }
 
 

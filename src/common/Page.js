@@ -5,7 +5,11 @@ import Filter from '../components/Filter'
 
 Page.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.node
+  children: PropTypes.node,
+  tags: PropTypes.object,
+  activeTag: PropTypes.string,
+  onTagClick: PropTypes.func,
+  showFilter: PropTypes.bool
 }
 
 export default function Page({ title, children, tags, activeTag, onTagClick, showFilter=true }) {
