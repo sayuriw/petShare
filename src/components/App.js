@@ -1,16 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react'
-import CardsListPage from './CardsListPage'
-import { Redirect } from 'react-router-dom'
-import RegisterPage from './RegisterPage'
-import LogoutPage from './LogoutPage'
+import React, { useContext, useEffect, useState } from 'react'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import NavBarLoggedIn from './NavbarLoggedIn'
+import { PetsContext, UsersContext } from '../providers'
+import { patchCard, postCard } from '../utils/cardServices'
+import { getCurrentUser, getFromStorage } from '../utils/userServices'
+import CardsListPage from './CardsListPage'
 import CreateCardPage from './CreateCardPage'
 import LoginPage from './LoginPage'
-import { patchCard, postCard } from '../utils/cardServices'
-import { getFromStorage, getCurrentUser } from '../utils/userServices'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { PetsContext, UsersContext } from '../providers'
+import LogoutPage from './LogoutPage'
+import NavBarLoggedIn from './NavbarLoggedIn'
+import RegisterPage from './RegisterPage'
 
 
 export default function App() {
@@ -20,9 +19,6 @@ export default function App() {
   const [loginError, setLoginError] = useState('')
 
 
-  // const sessionUser = getFromStorage('userId')
-  // const sessionUserId = sessionUser.userId
-
   useEffect(() => {
     const user = getFromStorage('user')
     if (user && user['token']) {
@@ -31,9 +27,7 @@ export default function App() {
         .then(json => {
           if (json.success) {
             setLoginError('')
-            console.log(user)
             getCurrentUser(user.userId).then(newUser => {
-              console.log(newUser)
             setUser(newUser)
             setIsLoggedIn(true)
           })
@@ -44,23 +38,7 @@ export default function App() {
     }
   }, [])
 
-  // useEffect(() => {
-  //   getCurrentUser(sessionUserId).then(newUser => {
-  //   setUser(newUser)
-  // })}, [])
-  //   const user = getFromStorage('user')
-  //     fetch('/users/verify?token=' + user.token)
-  //       .then(res => res.json())
-  //       .then(json => {
-  //         if (json.success) {
-  //           setLoginError('')
-  //           setIsLoggedIn(true)
-  //         } else {
-  //           setLoginError()
-  //         }
-  //       })
-  // }, [])
-
+  
   useEffect(_ => console.log("logged in?", isLoggedIn), [isLoggedIn])
 
   function renderDependingOnAuth() {
@@ -126,7 +104,6 @@ export default function App() {
       </Router>
     )
   
-
   function handleEditClick(id, editData) {
     console.log('handleEditClicked')
     patchCard(id, editData).then(editPet => {

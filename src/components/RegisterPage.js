@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Page from '../common/Page'
-import { Link, Redirect } from 'react-router-dom'
 import logo from '../data/petshareSpaced.png'
-import { postUser, setToStorage } from '../utils/userServices'
 import { UsersContext } from '../providers'
+import { postUser, setToStorage } from '../utils/userServices'
 
 export default function Register({ setIsLoggedIn }) {
   
@@ -20,7 +20,7 @@ export default function Register({ setIsLoggedIn }) {
     event.preventDefault()
     
     const registerData = {
-      email: email,
+      email,
       password: password,
       repeatedPassword: repeatPassword,
       name: name
@@ -28,7 +28,6 @@ export default function Register({ setIsLoggedIn }) {
     postUser(registerData).then(json => {
       
       if (json.success) {
-        console.log(json)
         setError(json.message)
         setToStorage('user', { token: json.token, userId: json.userId })
         setUser({_id: json.userId, bookmarkedCards: json.bookmarkedCards})
@@ -111,7 +110,7 @@ const FormStyled = styled.form`
   display: grid;
   gap: 25px;
   padding-top: 0;
-  padding: 0px;
+  padding: 0;
   justify-content: center;
   margin-top: 10px;
 `

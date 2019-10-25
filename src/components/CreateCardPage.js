@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
-import styled from 'styled-components/macro'
-import Page from '../common/Page'
-import { Redirect } from 'react-router-dom'
-import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
 import axios from 'axios'
-import petIcon from '../data/paw-solid.svg'
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
+import Page from '../common/Page'
 import createCard from '../data/CreateCard.png'
+import petIcon from '../data/paw-solid.svg'
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET
-
 
 
 export default function CreateCardPage({editCardData, onSubmit}) {
@@ -75,7 +74,7 @@ function upload(event) {
         <FormStyled onSubmit={handleSubmit}>
             <LabelStyled>
               Title
-              <InputStyled name="title" value={title} onChange={event => setTitle(event.target.value)} autoFocus />
+              <InputStyled name="title" value={title} onChange={event => setTitle(event.target.value)} />
             </LabelStyled>
             <LabelStyled>
               Description

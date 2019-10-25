@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState } from 'react'
 
 export const PetsContext = React.createContext([[], () => {}])
 export const UsersContext = React.createContext([[], () => {}])

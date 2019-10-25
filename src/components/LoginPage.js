@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react'
-import styled from 'styled-components/macro'
+import React, { useContext, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import styled from 'styled-components/macro'
 import Page from '../common/Page'
 import logo from '../data/petshareSpaced.png'
-import { fetchUserLogin, setToStorage } from '../utils/userServices'
 import { UsersContext } from '../providers'
+import { fetchUserLogin, setToStorage } from '../utils/userServices'
 
 export default function LoginPage({
   setIsLoggedIn,
@@ -28,7 +28,6 @@ export default function LoginPage({
       if (json.success) {
         console.log('lll',json)
         setToStorage('user', { token: json.token, userId: json.userId })
-        //setToStorage('BookmarkedCards', { bookmarks: json.bookmarkedCards})
         setLoginError(json.message)
         setLoginPassword('')
         setLoginEmail('')

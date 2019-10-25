@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getCards, patchCard, deleteCard } from '../utils/cardServices'
-import Card from '../components/cards/Card'
 import Page from '../common/Page'
+import Card from '../components/cards/Card'
 import logo from '../data/petShareLogo.png'
 import { PetsContext, UsersContext } from '../providers'
+import { deleteCard, getCards, patchCard } from '../utils/cardServices'
 import { getFromStorage, updateUser } from '../utils/userServices'
 
 export default function CardsListPage({ showOnlyBookmarks }) {
@@ -24,6 +24,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
 
   useEffect(() => {
     handleTagClick(selectedFilter, selectedTag)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pets])
 
   const allTags = {}
@@ -67,7 +68,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
       const pets2 = 
       pets.map(pet => ({
         ...pet,
-        isBookmarked: user.bookmarkedCards.includes(pet._id) ? true : false
+        isBookmarked: user.bookmarkedCards.includes(pet._id)
       }))
       pets2.sort((a, b) => {
         const dateA = new Date(b.createdDate).getTime()
