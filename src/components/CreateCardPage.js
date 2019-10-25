@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
-import Img from '../components/cards/Img'
 import Page from '../common/Page'
 import { Redirect } from 'react-router-dom'
 import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
-import logo from '../data/petshare.png'
 import axios from 'axios'
 import petIcon from '../data/paw-solid.svg'
 import createCard from '../data/CreateCard.png'
@@ -134,6 +132,7 @@ const ImgStyled = styled.img`
   width: 100%;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  background-color: var(--background-grey)
 `
 const FormStyled = styled.form`
   display: grid;

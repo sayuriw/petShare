@@ -71,12 +71,12 @@ router.post('/signup', (req, res, next) => {
         password: User.generateHash(password),
         name
       })
-        .then(() =>
+        .then((user) =>
           res.send({
             success: true,
             message: 'You are now registered',
-            // userId: User._id,
-            // bookmarkedCards: User.bookmarkedCards
+            userId: user._id,
+            bookmarkedCards: user.bookmarkedCards
             
           })
         )
