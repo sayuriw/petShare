@@ -31,7 +31,6 @@ export default function Filter({ activeTag, onTagClick, tags }) {
   }
 
   function handleTagClick(selectedSelector, tag) {
-    setIsSelectorPopupOpen(false)
     setIsFilterPopupOpen(false)
     onTagClick(selectedSelector, tag)
   }

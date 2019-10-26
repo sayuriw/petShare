@@ -6,7 +6,6 @@ import Page from '../common/Page'
 import logo from '../images/petshareSpaced.png'
 import { UsersContext } from '../providers'
 import { fetchUserLogin, setToStorage } from '../utils/userServices'
-import { resolve } from 'dns'
 
 LoginPage.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,

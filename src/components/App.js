@@ -29,8 +29,8 @@ export default function App() {
   useEffect(() => {
     const user = getFromStorage('user')
     if (user && user['token']) {
-      verifyUser(user.token).then(json => {
-        if (json.success) {
+      verifyUser(user.token).then(res => {
+        if (res.success) {
           setLoginError('')
           getCurrentUser(user.userId).then(newUser => {
             setUser(newUser)
@@ -78,10 +78,7 @@ export default function App() {
             <Route
               path="/logout"
               render={() => (
-                <LogoutPage
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                />
+                <LogoutPage  isLoggedInState={[isLoggedIn, setIsLoggedIn]}/>
               )}
             />
           </Switch>
