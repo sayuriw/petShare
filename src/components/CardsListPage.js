@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react'
+import PropTypes from 'prop-types'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getCards, patchCard, deleteCard } from '../utils/cardServices'
-import Card from '../components/cards/Card'
 import Page from '../common/Page'
-import logo from '../data/petShareLogo.png'
+import Card from '../components/cards/Card'
+import logo from '../images/petShareLogo.png'
 import { PetsContext, UsersContext } from '../providers'
+import { deleteCard, getCards, patchCard } from '../utils/cardServices'
 import { getFromStorage, updateUser } from '../utils/userServices'
+
+CardsListPage.propTypes = {
+  showOnlyBookmarks: PropTypes.bool
+}
 
 export default function CardsListPage({ showOnlyBookmarks }) {
   const sessionUser = getFromStorage('user')
   const sessionUserId = sessionUser.userId
-
   const [pets, setPets] = useContext(PetsContext)
   const [user, setUser] = useContext(UsersContext)
   const [petsFiltered, setPetsFiltered] = useState(pets)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
-  
 
   useEffect(() => {
     filterBookmark()
@@ -24,6 +27,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
 
   useEffect(() => {
     handleTagClick(selectedFilter, selectedTag)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pets])
 
   const allTags = {}
@@ -62,19 +66,17 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   )
 
   function filterBookmark() {
-    console.log('user',user)
     getCards(pets).then(pets => {
-      const pets2 = 
-      pets.map(pet => ({
+      const bookmarkedPets = pets.map(pet => ({
         ...pet,
-        isBookmarked: user.bookmarkedCards.includes(pet._id) ? true : false
+        isBookmarked: user.bookmarkedCards.includes(pet._id)
       }))
-      pets2.sort((a, b) => {
+      bookmarkedPets.sort((a, b) => {
         const dateA = new Date(b.createdDate).getTime()
         const dateB = new Date(a.createdDate).getTime()
         return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
       })
-      setPets(showOnlyBookmarks ? pets2.filter(pet => pet.isBookmarked) : pets2)
+      setPets(showOnlyBookmarks ? bookmarkedPets.filter(pet => pet.isBookmarked) : bookmarkedPets)
     })
   }
 

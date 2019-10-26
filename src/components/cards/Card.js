@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import styled from 'styled-components/macro'
-import Img from './Img'
-import petIcon from '../../data/paw-solid.svg'
 import PropTypes from 'prop-types'
-import Tag from './Tag'
-import { Edit } from 'styled-icons/typicons/Edit'
-import { DeleteForever } from 'styled-icons/material/DeleteForever'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components/macro'
 import { Menu } from 'styled-icons/boxicons-regular/Menu'
+import { Edit } from 'styled-icons/boxicons-solid/Edit'
 import { Heart } from 'styled-icons/icomoon/Heart'
+import { DeleteForever } from 'styled-icons/material/DeleteForever'
+import petIcon from '../../images/paw-solid.svg'
+import Img from './Img'
+import Tag from './Tag'
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
@@ -74,7 +74,7 @@ export default function Card({
         ))}
         <ButtonsAreaStyled>
           <BookmarkStyled onClick={handleBookmarkClick} active={isBookmarked}>
-            <HeartStyled />
+            <Heart/>
           </BookmarkStyled>
           <ContactMeStyled href={'mailto:' + email}>CONTACT</ContactMeStyled>
         </ButtonsAreaStyled>
@@ -91,28 +91,31 @@ const CardStyled = styled.section`
 `
 const MenuStyled = styled(Menu)`
   position: absolute;
-  height: 35px;
-  width: 35px;
+  height: 45px;
+  width: 45px;
   right: 10px;
+  padding: 5px;
 `
 const MenuWrapperStyled = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   position: absolute;
-  right: 10px;
-  top: 32px;
+  right: 51px;
+  top: -1px;
 `
 const DeleteSymbol = styled(DeleteForever)`
-  height: 35px;
-  width: 35px;
+  height: 45px;
+  width: 45px;
+  padding: 5px;
 `
 const EditSymbol = styled(Edit)`
-  height: 35px;
-  width: 35px;
+  height: 45px;
+  width: 45px;
+  padding: 5px;
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: #4F4F4F;
 `
 const TextAreaStyled = styled.div`
   margin: 10px;
@@ -132,8 +135,6 @@ const BookmarkStyled = styled.div`
   right: 9px;
   top: 7px;
 `
-
-const HeartStyled = styled(Heart)``
 const ContactMeStyled = styled.a`
   text-decoration: none;
   background-image: linear-gradient(45deg, #014499, #008ace);

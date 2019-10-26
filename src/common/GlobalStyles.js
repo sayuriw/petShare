@@ -14,6 +14,10 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    background: white
+  }
+  
   body {
     margin: 0;
     background: var(--background-grey);

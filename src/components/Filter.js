@@ -1,59 +1,86 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 import { FilterList } from 'styled-icons/material/FilterList'
+import { CancelCircle } from 'styled-icons/icomoon/CancelCircle'
 
-export default function Filter ({activeTag, onTagClick, tags}) { 
-  const [isPopped, setIsPopped] = useState(false)
-  const [tagIsPopped, setTagIsPopped] = useState(false)
-  const [selectedFilter, setSelectedFilter] = useState('all')
-  
+Filter.propTypes = {
+  activeTag: PropTypes.string,
+  onTagClick: PropTypes.func,
+  tags: PropTypes.object
+}
 
-  function togglePopup(tag) {
-    if (selectedFilter === tag) {
-      setTagIsPopped(!tagIsPopped)
-      
-    }
-    else {
-      setSelectedFilter(tag)
-      setIsPopped(true)
-    }
-  }
-  function handleTagClick(event) {
-    event.stopPropagation()
-    setTagIsPopped(!tagIsPopped)
-    setIsPopped(!isPopped)
-    const clickedTag = event.currentTarget.textContent
-    onTagClick(selectedFilter, clickedTag )
+export default function Filter({ activeTag, onTagClick, tags }) {
+  const [isSelectorPopupOpen, setIsSelectorPopupOpen] = useState(false)
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false)
+  const [selectedSelector, setSelectedSelector] = useState('all')
+
+  useEffect(() => {
+    isSelectorPopupOpen || setIsFilterPopupOpen(false)
+  }, [isSelectorPopupOpen])
+
+  function openFilterPopup(selector) {
+    setIsFilterPopupOpen(true)
+    setSelectedSelector(selector)
   }
 
-  function handleFilterClick() {
-    setIsPopped(!isPopped)
+  function resetFilter() {
+    setSelectedSelector('all')
+    onTagClick('all')
+    setIsSelectorPopupOpen(false)
+  }
+
+  function handleTagClick(selectedSelector, tag) {
+    setIsFilterPopupOpen(false)
+    onTagClick(selectedSelector, tag)
   }
 
   return (
     <>
-    <FilterStyled  onClick={handleFilterClick}>Filter<FilterIconStyled/></FilterStyled>
-      <FilterWrapperStyled className="Navigation" isPopped={isPopped}> 
-      <SelectorStyled onClick={event => {
-        setIsPopped(false)
-        setTagIsPopped(false)
-        setSelectedFilter(event.currentTarget.textContent)
-        onTagClick('all')
-      }}>all</SelectorStyled>
-      { Object.keys(tags).map(tag => <SelectorStyled onClick={() => togglePopup(tag)}key={tag}>{tag}</SelectorStyled>) }
-    </FilterWrapperStyled>
-      <TagWrapperStyled className="Navigation" isPopped={tagIsPopped}>
-        { selectedFilter === 'all' || tags[selectedFilter].map(tag => 
-        <PStyled active={activeTag === tag ? true : false} onClick={handleTagClick} key={tag}>{tag}</PStyled>
-        )}
+      <CancelStyled onClick={resetFilter} />
+      <FilterStyled
+        onClick={() => setIsSelectorPopupOpen(!isSelectorPopupOpen)}>
+        Filter
+        <FilterIconStyled />
+      </FilterStyled>
+      <FilterWrapperStyled
+        className="Navigation"
+        isPopped={isSelectorPopupOpen}>
+        <SelectorStyled onClick={resetFilter}>all</SelectorStyled>
+        {Object.keys(tags).map(selector => (
+          <SelectorStyled
+            onClick={() => openFilterPopup(selector)}
+            key={selector}>
+            {selector}
+          </SelectorStyled>
+        ))}
+      </FilterWrapperStyled>
+      <TagWrapperStyled className="Navigation" isPopped={isFilterPopupOpen}>
+        {selectedSelector === 'all' ||
+          tags[selectedSelector].map(tag => (
+            <PStyled
+              active={activeTag === tag}
+              onClick={() => handleTagClick(selectedSelector, tag)}
+              key={tag}>
+              {tag}
+            </PStyled>
+          ))}
       </TagWrapperStyled>
     </>
   )
 }
+const CancelStyled = styled(CancelCircle)`
+  height: 45px;
+  width: 45px;
+  padding: 5px;
+  margin-right: 6px;
+  color: var(--background-grey);
+`
+
 const FilterStyled = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 47px;
   padding: 3px 10px;
   margin-top: 20px;
   margin: 10px;
@@ -62,12 +89,12 @@ const FilterStyled = styled.button`
   color: var(--grey);
   background-color: var(--background-grey);
   outline: none;
-  border: none; 
+  border: none;
 `
 const FilterWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
-  background-color:var(--white);
+  background-color: var(--white);
   right: ${({ isPopped }) => (isPopped ? '-5px' : '-300px')};
   height: 38vh;
   text-align: left;
@@ -91,7 +118,7 @@ const TagWrapperStyled = styled.div`
   position: fixed;
   top: 60px;
   margin: 10px;
-  transition: right 0.3s ease-in-out;
+  transition: right 0.1s ease-in-out;
   z-index: 99;
 `
 const SelectorStyled = styled.p`
@@ -100,7 +127,7 @@ const SelectorStyled = styled.p`
   color: #686469;
   text-decoration: none;
   transition: color 0.3s linear;
-  background-color: #FFFFFF
+  background-color: #ffffff;
 `
 const PStyled = styled.p`
   font-size: 1.2rem;
@@ -108,15 +135,13 @@ const PStyled = styled.p`
   color: #686469;
   text-decoration: none;
   transition: color 0.3s linear;
-  background-color: #FFFFFF
+  background-color: #ffffff;
 `
 const FilterIconStyled = styled(FilterList)`
-  height:30px;
+  height: 30px;
   width: 30px;
   border-radius: 5px;
   margin-left: 2px;
   color: var(--grey);
   background-color: var(--background-grey);
-` 
-  
-
+`
