@@ -14,19 +14,11 @@ CreateCardPage.propTypes = {
 }
 
 export default function CreateCardPage({ editCardData, onSubmit }) {
-  const [title, setTitle] = useState(
-    editCardData.title ? editCardData.title : ''
-  )
-  const [description, setDescription] = useState(
-    editCardData.description ? editCardData.description : ''
-  )
-  const [email, setEmail] = useState(
-    editCardData.email ? editCardData.email : ''
-  )
-  const [tags, setTags] = useState(editCardData.tags ? editCardData.tags : '')
-  const [picture, setPicture] = useState(
-    editCardData.picture ? editCardData.picture : ''
-  )
+  const [title, setTitle] = useState(editCardData.title || '')
+  const [description, setDescription] = useState(editCardData.description || '')
+  const [email, setEmail] = useState(editCardData.email || '')
+  const [tags, setTags] = useState(editCardData.tags || '')
+  const [picture, setPicture] = useState(editCardData.picture || '')
   const [isCreated, setIsCreated] = useState(false)
 
   function handleSubmit(event) {
@@ -49,14 +41,11 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
       picture
     }
 
-    if (editCardData.id) {
-      onSubmit(editCardData.id, newEditCardData)
-      setIsCreated(true)
-    } else {
-      onSubmit(data)
-      setIsCreated(true)
-    }
+    editCardData.id ? onSubmit(editCardData.id, newEditCardData): onSubmit(data)
+    
+    setIsCreated(true)
   }
+
   function upload(event) {
     uploadPicture(event)
       .then(response => {

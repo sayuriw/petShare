@@ -23,7 +23,7 @@ export default createGlobalStyle`
     background: var(--background-grey);
     font-family: 'Quicksand', sans-serif, Helvetica;
     color: #4F4F4F;
-    font-size: 17px;   
+    font-size: 17px;
   }
 `
 

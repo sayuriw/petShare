@@ -71,7 +71,7 @@ router.post('/signup', (req, res, next) => {
         password: User.generateHash(password),
         name
       })
-        .then((user) =>
+        .then(user =>
           res.send({
             success: true,
             message: 'You are now registered',

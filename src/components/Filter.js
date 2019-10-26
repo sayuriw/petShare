@@ -60,7 +60,7 @@ export default function Filter({ activeTag, onTagClick, tags }) {
         {selectedSelector === 'all' ||
           tags[selectedSelector].map(tag => (
             <PStyled
-              active={activeTag === tag ? true : false}
+              active={activeTag === tag}
               onClick={() => handleTagClick(selectedSelector, tag)}
               key={tag}>
               {tag}

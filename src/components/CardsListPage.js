@@ -67,16 +67,16 @@ export default function CardsListPage({ showOnlyBookmarks }) {
 
   function filterBookmark() {
     getCards(pets).then(pets => {
-      const pets2 = pets.map(pet => ({
+      const bookmarkedPets = pets.map(pet => ({
         ...pet,
         isBookmarked: user.bookmarkedCards.includes(pet._id)
       }))
-      pets2.sort((a, b) => {
+      bookmarkedPets.sort((a, b) => {
         const dateA = new Date(b.createdDate).getTime()
         const dateB = new Date(a.createdDate).getTime()
         return dateA < dateB ? -1 : dateA > dateB ? 1 : 0
       })
-      setPets(showOnlyBookmarks ? pets2.filter(pet => pet.isBookmarked) : pets2)
+      setPets(showOnlyBookmarks ? bookmarkedPets.filter(pet => pet.isBookmarked) : bookmarkedPets)
     })
   }
 
