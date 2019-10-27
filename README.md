@@ -1,68 +1,49 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# PetShare App
 
-## Available Scripts
+This app was created during the [Neue Fische](https://www.neuefische.de/) Web Development Bootcamp in Hamburg. It's goal is to put pet owner in contact with people that love animals and want to have the chance to spend time with one. The pet owner can create a profile for his pet. People interested in spending time with a pet can go throw the listing and contact the owner. 
 
-In the project directory, you can run:
+## preview
 
-### `npm start`
+![petShare](https://res.cloudinary.com/petshare-de/image/upload/v1572209577/Sayuri_Wichmann_PesShare_b7cs0p.png)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Technical Information
 
-### `npm test`
+- MongoDB
+- Express.js
+- React
+- Node.js
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React-router-dom
+- MongoDB
+- npm
+- nodemon
+- mongoose
+- styled-components
+- passport.js
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Runs on localhost
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Requirements
 
-### `npm run eject`
+- Node.js
+- MongoDB runns on **localhost:27017**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Setup
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+``git@github.com:sayuriw/petShare.git``
+``cd petshare``<br/>
+``npm start``
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Cloudinary
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- An account by [Cloudinary](https://cloudinary.com) will me necessary.
+- Anable unsigned uploading
+- Copy the preset name (the 8 character hash below name)
+- Create a `.env.local` file in the root directory of this project and add your cloudname and preset:
+```
+REACT_APP_CLOUDINARY_CLOUDNAME='your_cloudname'
+REACT_APP_CLOUDINARY_PRESET='your_preset'
+```
