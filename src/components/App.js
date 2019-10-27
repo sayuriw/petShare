@@ -78,7 +78,7 @@ export default function App() {
             <Route
               path="/logout"
               render={() => (
-                <LogoutPage  isLoggedInState={[isLoggedIn, setIsLoggedIn]}/>
+                <LogoutPage  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
               )}
             />
           </Switch>

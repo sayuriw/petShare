@@ -106,14 +106,14 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
                 onChange={event =>
                   setTags({ ...tags, type: event.target.value })
                 }>
-                <OptionStyled value="Dog">Dog</OptionStyled>
-                <OptionStyled value="Cat">Cat</OptionStyled>
-                <OptionStyled value="Rabbit">Rabbit</OptionStyled>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Rabbit">Rabbit</option>
               </SelectStyled>
             </LabelStyled>
             <LabelStyled>
               Size
-              <select
+              <SelectStyled
                 name="size"
                 defaultValue={tags.size}
                 onChange={event =>
@@ -122,7 +122,7 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
                 <option value="Small">Small</option>
                 <option value="Medium">Medium</option>
                 <option value="Large">Large</option>
-              </select>
+              </SelectStyled>
             </LabelStyled>
             <LabelStyled>
               Availability
@@ -161,6 +161,7 @@ const FormStyled = styled.form`
   padding: 0;
   justify-content: center;
   margin-top: 10px;
+  margin-bottom: 10px;
 `
 const LabelStyled = styled.label`
   display: grid;

@@ -13,7 +13,7 @@ Logout.propTypes = {
 
 export default function Logout({ isLoggedIn, setIsLoggedIn }) {
   const [user, setUser] = useState(getFromStorage('user'))
-
+  
   return !isLoggedIn ? (
     <Redirect to="/" />
   ) : (
