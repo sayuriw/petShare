@@ -4,7 +4,7 @@ This app was created during the [Neue Fische](https://www.neuefische.de/) Web De
 
 ## preview
 
-![petShare](https://res.cloudinary.com/petshare-de/image/upload/v1572209577/Sayuri_Wichmann_PesShare_b7cs0p.png)
+<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572209577/Sayuri_Wichmann_PesShare_b7cs0p.png" width='200px'/>
 
 
 ## Tech Stack
