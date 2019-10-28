@@ -21,6 +21,7 @@ export default function CardsListPage({ showOnlyBookmarks }) {
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [selectedTag, setSelectedTag] = useState('')
 
+  console.log(sessionUser)
   useEffect(() => {
     filterBookmark()
   }, [showOnlyBookmarks])

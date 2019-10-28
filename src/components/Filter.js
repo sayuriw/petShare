@@ -31,7 +31,7 @@ export default function Filter({ activeTag, onTagClick, tags }) {
   }
 
   function handleTagClick(selectedSelector, tag) {
-    setIsFilterPopupOpen(false)
+    setIsSelectorPopupOpen(false)
     onTagClick(selectedSelector, tag)
   }
 
@@ -95,14 +95,15 @@ const FilterWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  right: ${({ isPopped }) => (isPopped ? '-5px' : '-300px')};
-  height: 38vh;
+  right: ${({ isPopped }) => (isPopped ? '0' : '-700px')};
+  height: 25vh;
   text-align: left;
-  padding: 5px 25px 5px 5px;
+  padding: 5px;
+  padding-top: 15px;
   border-radius: 5px;
-  position: fixed;
-  top: 65px;
-  margin: 5px;
+  position: absolute;
+  top: 70px;
+  margin: 0px;
   transition: right 0.3s ease-in-out;
   z-index: 100;
 `
@@ -110,13 +111,13 @@ const TagWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background: var(--white);
-  right: ${({ isPopped }) => (isPopped ? '116px' : '-300px')};
-  height: 30vh;
+  right: ${({ isPopped }) => (isPopped ? '107px' : '-700px')};
+  height: 16vh;
   text-align: left;
-  padding: 5px 25px 5px 5px;
+  padding: 5px;
   border-radius: 5px;
-  position: fixed;
-  top: 60px;
+  position: absolute;
+  top: 90px;
   margin: 10px;
   transition: right 0.1s ease-in-out;
   z-index: 99;
@@ -124,6 +125,7 @@ const TagWrapperStyled = styled.div`
 const SelectorStyled = styled.p`
   font-size: 1.2rem;
   padding: 2px;
+  margin:5px;
   color: #686469;
   text-decoration: none;
   transition: color 0.3s linear;
@@ -132,6 +134,7 @@ const SelectorStyled = styled.p`
 const PStyled = styled.p`
   font-size: 1.2rem;
   padding: 0px;
+  margin:5px;
   color: #686469;
   text-decoration: none;
   transition: color 0.3s linear;

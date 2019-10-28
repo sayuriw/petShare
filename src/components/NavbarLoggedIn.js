@@ -9,7 +9,7 @@ import { LogOut } from 'styled-icons/boxicons-regular/LogOut'
 export default function NavbarLoggedIn() {
   return (
     <NavbarStyled>
-      <NavLinkStyled exact to="/home">
+      <NavLinkStyled exact to="/">
         <HomeStyled />
       </NavLinkStyled>
       <NavLinkStyled to="/favorites">

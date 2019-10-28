@@ -7,6 +7,14 @@ router.get('/', (req, res) => {
     .catch(err => res.json(err))
 })
 
+router.get('/delete-test-cards', (req, res) => {
+  Card.find({ title: 'New test Card' }).then(cards => {
+    const promises = cards.map(card => card.remove())
+    Promise.all(promises).then(() => res.json({ success: true }))
+  })
+})
+
+
 router.get('/:id', (req, res) => {
   Card.find({ id: req.params.id })
     .then(cards => res.json(cards))
@@ -30,5 +38,6 @@ router.delete('/:id', (req, res) => {
     .then(card => res.json(card))
     .catch(err => res.json(err))
 })
+
 
 module.exports = router

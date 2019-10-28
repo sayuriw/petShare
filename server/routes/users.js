@@ -226,6 +226,13 @@ router.get('/verify', (req, res, next) => {
   )
 })
 
+router.get('/delete-test-users', (req, res) => {
+  User.find({ name: 'TestUser' }).then(users => {
+    const promises = users.map(user => user.remove())
+    Promise.all(promises).then(() => res.json({ success: true }))
+  })
+})
+
 router.get('/:id', (req, res, next) => {
   User.findById(
     req.params.id,
