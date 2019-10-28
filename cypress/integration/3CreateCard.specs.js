@@ -1,3 +1,21 @@
+// Cypress.Commands.add('login', () => {
+//   cy.request({
+//     method: 'POST',
+//     url: 'http://localhost:3333/Users/login',
+//     body: { 
+//         email: 'xxx@de.com',
+//         password: 'xxxxxx'
+//       }
+    
+//   }).then(resp => {
+    
+//     localStorage.setItem('user', {
+//       token: resp.body.token,
+//       userId: resp.body.userId
+//     })
+//   })
+// })
+
 context('CreateCard', () => {
   before(() => {
     cy.visit('/')

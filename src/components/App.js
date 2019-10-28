@@ -137,4 +137,13 @@ const AppStyled = styled.div`
   top: 0;
   bottom: 0;
   height: 100%;
+  @media (min-width: 900px) {
+      width: 375px;
+      height: 667px;
+      border: 20px solid black;
+      border-width: 45px 20px;
+      border-radius: 20px;
+      box-shadow: 30px 40px 30px #2264;
+      margin: 40px auto;
+    }
 `

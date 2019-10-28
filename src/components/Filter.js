@@ -32,6 +32,7 @@ export default function Filter({ activeTag, onTagClick, tags }) {
 
   function handleTagClick(selectedSelector, tag) {
     setIsFilterPopupOpen(false)
+    setIsSelectorPopupOpen(false)
     onTagClick(selectedSelector, tag)
   }
 
@@ -95,12 +96,12 @@ const FilterWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  right: ${({ isPopped }) => (isPopped ? '-5px' : '-300px')};
+  right: ${({ isPopped }) => (isPopped ? '-5px' : '-700px')};
   height: 38vh;
   text-align: left;
   padding: 5px 25px 5px 5px;
   border-radius: 5px;
-  position: fixed;
+  position: absolute;
   top: 65px;
   margin: 5px;
   transition: right 0.3s ease-in-out;
@@ -110,12 +111,12 @@ const TagWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background: var(--white);
-  right: ${({ isPopped }) => (isPopped ? '116px' : '-300px')};
+  right: ${({ isPopped }) => (isPopped ? '116px' : '-700px')};
   height: 30vh;
   text-align: left;
   padding: 5px 25px 5px 5px;
   border-radius: 5px;
-  position: fixed;
+  position: absolute;
   top: 60px;
   margin: 10px;
   transition: right 0.1s ease-in-out;

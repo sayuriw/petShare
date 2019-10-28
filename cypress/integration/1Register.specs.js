@@ -1,4 +1,4 @@
-context('Actions', () => {
+context('Register', () => {
   beforeEach(() => {
     cy.visit('/register')
   })
