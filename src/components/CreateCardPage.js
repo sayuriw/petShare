@@ -206,6 +206,4 @@ const TagsWrapper = styled.section`
 const SelectStyled = styled.select`
   display: grid;
 `
-const OptionStyled = styled.option`
-  display: grid;
-`
+

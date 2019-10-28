@@ -34,7 +34,7 @@ The app was built using [create-react-app](https://github.com/facebook/create-re
 ### Requirements
 
 - Node.js
-- MongoDB runns on **localhost:27017**
+- MongoDB runs on **localhost:27017**
 - Cloudinary
 
 ## Setup
