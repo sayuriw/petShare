@@ -57,7 +57,7 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
   }
 
   return isCreated ? (
-    <Redirect exact to="/home" />
+    <Redirect exact to="/" />
   ) : (
     <Page title={createCard} showFilter={false}>
       <Wrapper>

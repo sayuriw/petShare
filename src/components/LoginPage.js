@@ -47,7 +47,7 @@ export default function LoginPage({
   }
 
   return isCreated ? (
-    <Redirect to="/home" />
+    <Redirect to="/" />
   ) : (
     <Page title={logo} showFilter={false}>
       <BoxStyled>

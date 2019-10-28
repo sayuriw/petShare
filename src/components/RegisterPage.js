@@ -47,7 +47,7 @@ export default function RegisterPage({ setIsLoggedIn }) {
   }
 
   return isCreated ? (
-    <Redirect exact to="/home" />
+    <Redirect exact to="/" />
   ) : (
     <Page title={logo} showFilter={false}>
       <BoxStyled>
