@@ -3,8 +3,7 @@
 This app was created during the [Neue Fische](https://www.neuefische.de/) Web Development Bootcamp in Hamburg in Fall 2019. It's goal is to put pet owner in contact with people that love animals and want to have the chance to spend time with one. The pet owner can create a profile for his pet. People interested in spending time with a pet can go throw the listing and contact the owner. 
 
 ## preview
-<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572294309/localhost_3000__iPhone_6_7_8_y979j5.png" width='200px'/>
-<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572294288/localhost_3000__iPhone_6_7_8_1_pqagbo.png" width='200px'/>
+<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572294309/localhost_3000__iPhone_6_7_8_y979j5.png" width='200px'/><img src="https://res.cloudinary.com/petshare-de/image/upload/v1572294288/localhost_3000__iPhone_6_7_8_1_pqagbo.png" width='200px'/>
 
 
 
