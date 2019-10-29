@@ -3,8 +3,9 @@
 This app was created during the [Neue Fische](https://www.neuefische.de/) Web Development Bootcamp in Hamburg in Fall 2019. It's goal is to put pet owner in contact with people that love animals and want to have the chance to spend time with one. The pet owner can create a profile for his pet. People interested in spending time with a pet can go throw the listing and contact the owner. 
 
 ## preview
+<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572294309/localhost_3000__iPhone_6_7_8_y979j5.png" width='200px'/>
+<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572294288/localhost_3000__iPhone_6_7_8_1_pqagbo.png" width='200px'/>
 
-<img src="https://res.cloudinary.com/petshare-de/image/upload/v1572209577/Sayuri_Wichmann_PesShare_b7cs0p.png" width='200px'/>
 
 
 ## Tech Stack
@@ -19,7 +20,6 @@ The app was built using [create-react-app](https://github.com/facebook/create-re
 ### Aditional dependencies
 
 - React-router-dom
-- MongoDB
 - cypress
 - bcrypt.js
 - npm
@@ -27,7 +27,6 @@ The app was built using [create-react-app](https://github.com/facebook/create-re
 - nodemon
 - mongoose
 - styled-components
-- passport.js
 
 ## Runs on localhost
 
@@ -39,7 +38,7 @@ The app was built using [create-react-app](https://github.com/facebook/create-re
 
 ## Setup
 
-``git@github.com:sayuriw/petShare.git``
+``git@github.com:sayuriw/petShare.git``<br/>
 ``cd petshare``<br/>
 ``npm start``
 
