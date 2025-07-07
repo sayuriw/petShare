@@ -4,40 +4,40 @@ const UserSession = require('../models/Session')
 
 //user sign up
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
   const { password, repeatedPassword, name } = req.body
   let { email } = req.body
 
   if (!name) {
-    res.send({
+    return res.send({
       success: false,
       message: 'Name field can not be blank.'
     })
   }
 
   if (!email) {
-    res.send({
+    return res.send({
       success: false,
       message: 'Email field can not be blank.'
     })
   }
 
   if (!password) {
-    res.send({
+    return res.send({
       success: false,
       message: 'Please give your password.'
     })
   }
 
   if (!repeatedPassword) {
-    res.send({
+    return res.send({
       success: false,
       message: 'Please repeat your password.'
     })
   }
 
   if (repeatedPassword !== password) {
-    res.send({
+    return res.send({
       success: false,
       message: 'Password does not match.'
     })
@@ -45,54 +45,42 @@ router.post('/signup', (req, res, next) => {
 
   email = email.toLowerCase()
 
-  // verify email
-
-  User.find(
-    {
-      email: email
-    },
-    (err, existingUsers) => {
-      if (err) {
-        return res.send({
-          success: false,
-          message: 'Server error'
-        })
-      } else if (existingUsers.length > 0) {
-        res.send({
-          success: false,
-          message: 'Error: account already exists.'
-        })
-      }
-
-      // save new user
+  try {
+    // verify email
+    const existingUsers = await User.find({ email: email })
     
-        User.create({
-        email,
-        password: User.generateHash(password),
-        name
+    if (existingUsers.length > 0) {
+      return res.send({
+        success: false,
+        message: 'Error: account already exists.'
       })
-        .then(user =>
-          res.send({
-            success: true,
-            message: 'You are now registered',
-            userId: user._id,
-            bookmarkedCards: user.bookmarkedCards
-            
-          })
-        )
-        .catch(() =>
-          res.send({
-            success: false,
-            message: 'Error (Server Error).'
-          })
-        )
     }
-  )
+
+    // save new user
+    const user = await User.create({
+      email,
+      password: User.generateHash(password),
+      name
+    })
+
+    return res.send({
+      success: true,
+      message: 'You are now registered',
+      userId: user._id,
+      bookmarkedCards: user.bookmarkedCards
+    })
+  } catch (err) {
+    console.error(err)
+    return res.send({
+      success: false,
+      message: 'Error (Server Error).'
+    })
+  }
 })
 
 //user login
 
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   const { password } = req.body
   let { email } = req.body
 
@@ -112,140 +100,137 @@ router.post('/login', (req, res, next) => {
 
   email = email.toLowerCase()
 
-  User.find(
-    {
-      email: email
-    },
-    (err, users) => {
-      if (err) {
-        console.log('err 2:', err)
-        return res.send({
-          success: false,
-          message: 'server Error'
-        })
-      }
-      if (users.length !== 1) {
-        return res.send({
-          success: false,
-          message: 'Error: invalid email'
-        })
-      }
-      const user = users[0]
-      if (!user.validPassword(password)) {
-        return res.send({
-          success: false,
-          message: 'Error: wrong password'
-        })
-      } //  currect user
-      const userSession = new UserSession()
-      userSession.userId = user._id
-      userSession.bookmarkedCards = user.bookmarkedCards
-      userSession.save((err, doc) => {
-        if (err) {
-          console.log(err)
-          return res.send({
-            success: false,
-            message: 'Server Error'
-          })
-        }
-        return res.send({
-          success: true,
-          message: 'Signed in',
-          userId: userSession.userId,
-          bookmarkedCards: user.bookmarkedCards,
-          token: doc._id
-        })
+  try {
+    const users = await User.find({ email: email })
+    
+    if (users.length !== 1) {
+      return res.send({
+        success: false,
+        message: 'Error: invalid email'
       })
     }
-  )
+
+    const user = users[0]
+    if (!user.validPassword(password)) {
+      return res.send({
+        success: false,
+        message: 'Error: wrong password'
+      })
+    }
+
+    const userSession = new UserSession()
+    userSession.userId = user._id
+    userSession.bookmarkedCards = user.bookmarkedCards
+    
+    const doc = await userSession.save()
+    
+    return res.send({
+      success: true,
+      message: 'Signed in',
+      userId: userSession.userId,
+      bookmarkedCards: user.bookmarkedCards,
+      token: doc._id
+    })
+  } catch (err) {
+    console.error(err)
+    return res.send({
+      success: false,
+      message: 'Server Error'
+    })
+  }
 })
 
 // user logout
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', async (req, res, next) => {
   const { query } = req
   const { token } = query
 
-  UserSession.findOneAndUpdate(
-    {
-      _id: token,
-      isDeleted: false
-    },
-    {
-      $set: {
-        isDeleted: true
+  try {
+    await UserSession.findOneAndUpdate(
+      {
+        _id: token,
+        isDeleted: false
+      },
+      {
+        $set: {
+          isDeleted: true
+        }
       }
-    },
-    null,
-    (err, sessions) => {
-      if (err) {
-        console.log(err)
-        return res.send({
-          success: false,
-          message: 'Server Error'
-        })
-      }
-      return res.send({
-        success: true,
-        message: 'You are logged out'
-      })
-    }
-  )
+    )
+
+    return res.send({
+      success: true,
+      message: 'You are logged out'
+    })
+  } catch (err) {
+    console.error(err)
+    return res.send({
+      success: false,
+      message: 'Server Error'
+    })
+  }
 })
 
 //Verifizierung
-router.get('/verify', (req, res, next) => {
+router.get('/verify', async (req, res, next) => {
   const { query } = req
   const { token } = query
 
-  UserSession.find(
-    {
+  try {
+    const sessions = await UserSession.find({
       _id: token,
       isDeleted: false
-    },
-    (err, sessions) => {
-      if (err) {
-        console.log(err)
-        return res.send({
-          success: false,
-          message: 'Err'
-        })
-      }
-      if (sessions.length !== 1) {
-        return res.send({
-          success: false,
-          message: 'Error: Invalid session'
-        })
-      } else {
-        return res.send({
-          success: true,
-          message: 'Good'
-        })
-      }
+    })
+
+    if (sessions.length !== 1) {
+      return res.send({
+        success: false,
+        message: 'Error: Invalid'
+      })
     }
-  )
+
+    return res.send({
+      success: true,
+      message: 'Verified'
+    })
+  } catch (err) {
+    console.error(err)
+    return res.send({
+      success: false,
+      message: 'Error: Server Error'
+    })
+  }
 })
 
-router.get('/delete-test-users', (req, res) => {
-  User.find({ name: 'TestUser' }).then(users => {
-    const promises = users.map(user => user.remove())
-    Promise.all(promises).then(() => res.json({ success: true }))
-  })
+router.get('/delete-test-users', async (req, res) => {
+  try {
+    const users = await User.find({ name: 'TestUser' })
+    await Promise.all(users.map(user => user.remove()))
+    res.json({ success: true })
+  } catch (err) {
+    console.error(err)
+    res.json({ success: false, message: 'Server Error' })
+  }
 })
 
-router.get('/:id', (req, res, next) => {
-  User.findById(
-    req.params.id,
-
-    (err, user) => {
-      if (err) {
-        return res.send({
-          message: 'Server error'
-        })
-      }
-      return res.send(user)
+router.get('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return res.send({
+        success: false,
+        message: 'User not found'
+      })
     }
-  )
+    return res.send(user)
+  } catch (err) {
+    console.error(err)
+    return res.send({
+      success: false,
+      message: 'Server error'
+    })
+  }
 })
 
 router.patch('/:id', async (req, res, next) => {

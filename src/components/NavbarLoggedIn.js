@@ -1,15 +1,14 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
-import { DocumentAdd } from 'styled-icons/typicons/DocumentAdd'
-import { Paw } from 'styled-icons/fa-solid/Paw'
-import { Home } from 'styled-icons/fa-solid/Home'
-import { LogOut } from 'styled-icons/boxicons-regular/LogOut'
+import { DocumentAdd } from '@styled-icons/typicons'
+import { Paw, Home } from '@styled-icons/fa-solid'
+import { LogOut } from '@styled-icons/boxicons-regular'
 
 export default function NavbarLoggedIn() {
   return (
     <NavbarStyled>
-      <NavLinkStyled exact to="/">
+      <NavLinkStyled to="/">
         <HomeStyled />
       </NavLinkStyled>
       <NavLinkStyled to="/favorites">

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components/macro'
-import { FilterList } from 'styled-icons/material/FilterList'
-import { CancelCircle } from 'styled-icons/icomoon/CancelCircle'
+import styled from 'styled-components'
+import { FilterList } from '@styled-icons/material'
+import { CancelCircle } from '@styled-icons/icomoon'
 
 Filter.propTypes = {
   activeTag: PropTypes.string,
@@ -45,7 +45,7 @@ export default function Filter({ activeTag, onTagClick, tags }) {
       </FilterStyled>
       <FilterWrapperStyled
         className="Navigation"
-        isPopped={isSelectorPopupOpen}>
+        $isPopped={isSelectorPopupOpen}>
         <SelectorStyled onClick={resetFilter}>all</SelectorStyled>
         {Object.keys(tags).map(selector => (
           <SelectorStyled
@@ -55,11 +55,11 @@ export default function Filter({ activeTag, onTagClick, tags }) {
           </SelectorStyled>
         ))}
       </FilterWrapperStyled>
-      <TagWrapperStyled className="Navigation" isPopped={isFilterPopupOpen}>
+      <TagWrapperStyled className="Navigation" $isPopped={isFilterPopupOpen}>
         {selectedSelector === 'all' ||
           tags[selectedSelector].map(tag => (
             <PStyled
-              active={activeTag === tag}
+              $active={activeTag === tag}
               onClick={() => handleTagClick(selectedSelector, tag)}
               key={tag}>
               {tag}
@@ -95,7 +95,7 @@ const FilterWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  right: ${({ isPopped }) => (isPopped ? '0' : '-700px')};
+  right: ${({ $isPopped }) => ($isPopped ? '0' : '-700px')};
   height: 25vh;
   text-align: left;
   padding: 5px;
@@ -111,7 +111,7 @@ const TagWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background: var(--white);
-  right: ${({ isPopped }) => (isPopped ? '107px' : '-700px')};
+  right: ${({ $isPopped }) => ($isPopped ? '107px' : '-700px')};
   height: 16vh;
   text-align: left;
   padding: 5px;
@@ -135,7 +135,7 @@ const PStyled = styled.p`
   font-size: 1.2rem;
   padding: 0px;
   margin:5px;
-  color: #686469;
+  color: ${({ $active }) => ($active ? 'var(--highlight)' : '#686469')};
   text-decoration: none;
   transition: color 0.3s linear;
   background-color: #ffffff;

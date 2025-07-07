@@ -1,43 +1,74 @@
 const router = require('express').Router()
 const Card = require('../models/Card')
 
-router.get('/', (req, res) => {
-  Card.find()
-    .then(cards => res.json(cards))
-    .catch(err => res.json(err))
+router.get('/', async (req, res) => {
+  try {
+    const cards = await Card.find()
+    res.json(cards)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: 'Server Error' })
+  }
 })
 
-router.get('/delete-test-cards', (req, res) => {
-  Card.find({ title: 'New test Card' }).then(cards => {
-    const promises = cards.map(card => card.remove())
-    Promise.all(promises).then(() => res.json({ success: true }))
-  })
+router.get('/delete-test-cards', async (req, res) => {
+  try {
+    const cards = await Card.find({ title: 'New test Card' })
+    await Promise.all(cards.map(card => card.remove()))
+    res.json({ success: true })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: 'Server Error' })
+  }
 })
 
-
-router.get('/:id', (req, res) => {
-  Card.find({ id: req.params.id })
-    .then(cards => res.json(cards))
-    .catch(err => res.json(err))
+router.get('/:id', async (req, res) => {
+  try {
+    const cards = await Card.find({ id: req.params.id })
+    if (!cards || cards.length === 0) {
+      return res.status(404).json({ success: false, message: 'Cards not found' })
+    }
+    res.json(cards)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: 'Server Error' })
+  }
 })
 
-router.post('/', (req, res) => {
-  Card.create(req.body)
-    .then(card => res.json(card))
-    .catch(err => res.json(err))
+router.post('/', async (req, res) => {
+  try {
+    const card = await Card.create(req.body)
+    res.status(201).json(card)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: 'Server Error' })
+  }
 })
 
-router.patch('/:id', (req, res) => {
-  Card.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then(card => res.json(card))
-    .catch(err => res.json(err))
+router.patch('/:id', async (req, res) => {
+  try {
+    const card = await Card.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    if (!card) {
+      return res.status(404).json({ success: false, message: 'Card not found' })
+    }
+    res.json(card)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: 'Server Error' })
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  Card.findByIdAndDelete(req.params.id)
-    .then(card => res.json(card))
-    .catch(err => res.json(err))
+router.delete('/:id', async (req, res) => {
+  try {
+    const card = await Card.findByIdAndDelete(req.params.id)
+    if (!card) {
+      return res.status(404).json({ success: false, message: 'Card not found' })
+    }
+    res.json(card)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: 'Server Error' })
+  }
 })
-
 
 module.exports = router

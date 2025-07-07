@@ -81,10 +81,9 @@ export function updateUser(id, data) {
   }).then(res => res.json())
 }
 
-export function getCurrentUser(id, data) {
+export function getCurrentUser(id) {
   return fetch('users/' + id, {
     method: 'GET',
-    body: JSON.stringify(data),
     headers: {
       'content-type': 'application/json'
     }

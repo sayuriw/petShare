@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
-import styled from 'styled-components/macro'
+import { Navigate } from 'react-router-dom'
+import styled from 'styled-components'
 import Page from '../common/Page'
 import logout from '../images/logout1.png'
 import { getFromStorage, setToStorage, logoutUser } from '../utils/userServices'
@@ -15,7 +15,7 @@ export default function Logout({ isLoggedIn, setIsLoggedIn }) {
   const [user, setUser] = useState(getFromStorage('user'))
   
   return !isLoggedIn ? (
-    <Redirect to="/" />
+    <Navigate to="/" replace />
   ) : (
     <Page title={logout} showFilter={false}>
       <BoxStyled>

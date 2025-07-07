@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Link, Redirect } from 'react-router-dom'
-import styled from 'styled-components/macro'
+import { Link, Navigate } from 'react-router-dom'
+import styled from 'styled-components'
 import Page from '../common/Page'
 import logo from '../images/petshareSpaced.png'
 import { UsersContext } from '../providers'
@@ -47,7 +47,7 @@ export default function LoginPage({
   }
 
   return isCreated ? (
-    <Redirect to="/" />
+    <Navigate to="/" replace />
   ) : (
     <Page title={logo} showFilter={false}>
       <BoxStyled>

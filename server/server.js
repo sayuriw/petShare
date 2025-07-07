@@ -5,10 +5,7 @@ const users = require('./routes/users')
 const cards = require('./routes/cards')
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/petshare', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect('mongodb://localhost:27017/petshare')
 
 server.listen(3333, () => console.log('Server ready on port 3333'))
 server.use(express.json())

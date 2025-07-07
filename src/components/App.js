@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
-  Redirect,
+  Navigate,
   Route,
-  Switch
+  Routes,
+  useLocation
 } from 'react-router-dom'
 import styled from 'styled-components'
 import { PetsContext, UsersContext } from '../providers'
@@ -19,6 +20,16 @@ import LoginPage from './LoginPage'
 import LogoutPage from './LogoutPage'
 import NavBarLoggedIn from './NavbarLoggedIn'
 import RegisterPage from './RegisterPage'
+
+function EditRoute({ handleEditClick }) {
+  const location = useLocation()
+  return (
+    <CreateCardPage
+      onSubmit={handleEditClick}
+      editCardData={location?.state?.editCardData}
+    />
+  )
+}
 
 export default function App() {
   const [pets, setPets] = useContext(PetsContext)
@@ -41,81 +52,9 @@ export default function App() {
         }
       })
     }
-  }, [])
+  }, [setUser])
 
-  useEffect(_ => console.log('logged in?', isLoggedIn), [isLoggedIn])
-
-  function renderDependingOnAuth() {
-    if (isLoggedIn) {
-      return (
-        <AppStyled>
-          <Switch>
-            <Route exact path="/" render={() => <CardsListPage />} />
-            <Route
-              exact
-              path="/favorites"
-              render={() => {
-                return <CardsListPage showOnlyBookmarks={true} />
-              }}
-            />
-            <Route
-              path="/newCard"
-              render={() => (
-                <CreateCardPage onSubmit={createCard} editCardData={{}} />
-              )}
-            />
-            <Route
-              path="/edit"
-              render={props => {
-                return (
-                  <CreateCardPage
-                    onSubmit={handleEditClick}
-                    editCardData={props.location.editCardData}
-                  />
-                )
-              }}
-            />
-            <Route
-              path="/logout"
-              render={() => (
-                <LogoutPage
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                />
-              )}
-            />
-          </Switch>
-          <NavBarLoggedIn />
-        </AppStyled>
-      )
-    } else {
-      return (
-        <Switch>
-          <Route exact path="/logout" render={() => <Redirect to="/" />} />
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <LoginPage
-                loginError={loginError}
-                setIsLoggedIn={setIsLoggedIn}
-                setLoginError={setLoginError}
-              />
-            )}
-          />
-          <Route
-            path="/register"
-            render={() => <RegisterPage setIsLoggedIn={setIsLoggedIn} />}
-          />
-        </Switch>
-      )
-    }
-  }
-  return (
-    <Router>
-      <AppStyled>{renderDependingOnAuth()}</AppStyled>
-    </Router>
-  )
+  useEffect(() => console.log('logged in?', isLoggedIn), [isLoggedIn])
 
   function handleEditClick(id, editData) {
     patchCard(id, editData).then(editPet => {
@@ -129,6 +68,63 @@ export default function App() {
       setPets([pet, ...pets])
     })
   }
+
+  return (
+    <Router>
+      <AppStyled>
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={<CardsListPage />} />
+              <Route
+                path="/favorites"
+                element={<CardsListPage showOnlyBookmarks={true} />}
+              />
+              <Route
+                path="/newCard"
+                element={
+                  <CreateCardPage onSubmit={createCard} editCardData={{}} />
+                }
+              />
+              <Route
+                path="/edit"
+                element={<EditRoute handleEditClick={handleEditClick} />}
+              />
+              <Route
+                path="/logout"
+                element={
+                  <LogoutPage
+                    isLoggedIn={isLoggedIn}
+                    setIsLoggedIn={setIsLoggedIn}
+                  />
+                }
+              />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/"
+                element={
+                  <LoginPage
+                    loginError={loginError}
+                    setIsLoggedIn={setIsLoggedIn}
+                    setLoginError={setLoginError}
+                  />
+                }
+              />
+              <Route
+                path="/register"
+                element={<RegisterPage setIsLoggedIn={setIsLoggedIn} />}
+              />
+              <Route path="/logout" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </>
+          )}
+        </Routes>
+        {isLoggedIn && <NavBarLoggedIn />}
+      </AppStyled>
+    </Router>
+  )
 }
 
 const AppStyled = styled.div`

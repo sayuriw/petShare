@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
-import styled from 'styled-components/macro'
-import { ImageAdd } from 'styled-icons/boxicons-regular/ImageAdd'
+import { Navigate } from 'react-router-dom'
+import styled from 'styled-components'
+import { ImageAdd } from '@styled-icons/boxicons-regular'
 import Page from '../common/Page'
 import createCard from '../images/CreateCard.png'
 import petIcon from '../images/paw-solid.svg'
@@ -57,7 +57,7 @@ export default function CreateCardPage({ editCardData, onSubmit }) {
   }
 
   return isCreated ? (
-    <Redirect exact to="/" />
+    <Navigate to="/" replace />
   ) : (
     <Page title={createCard} showFilter={false}>
       <Wrapper>
